@@ -7,4 +7,33 @@
 
 @theme {
   --font-nunito: "Nunito", "serif";
+  --color-primary: #0057b8;
+  --color-success: #3aa34d;
+  --color-warning: #ff7f50;
+  --color-bg_hover: #87ceeb;
+  --color-clean_bg: #f5f5f5;
+  --color-text_contrast: #333333;
 }
+
+/*
+**Soft Sky Blue (#87CEEB)** is a great choice! It adds a calm and friendly feel, making the UI more engaging and less stressful for users during exams.  
+
+Here’s how you can use it effectively in **The Online Exam Management System**:  
+
+### 🎨 **Updated Color Combination**  
+✅ **Royal Blue (#0057B8)** – Primary branding color (Navbar, buttons, headers).  
+✅ **Tropical Green (#3AA34D)** – Success indicators (Correct answers, progress, active status).  
+✅ **Sunset Orange (#FF7F50)** – Warnings, error messages, and call-to-action highlights.  
+✅ **Soft Sky Blue (#87CEEB)** – Backgrounds, hover effects, and UI elements to reduce eye strain.  
+✅ **Light Gray (#F5F5F5)** – Clean background areas.  
+✅ **Dark Charcoal (#333333)** – Text and contrast for better readability.  
+
+### 🎨 **Example Usage**  
+- **Soft Sky Blue:** Backgrounds of dashboard cards, hover effects, progress bars.  
+- **Royal Blue:** Primary action buttons, headings, and navigation bar.  
+- **Tropical Green:** Correct answers, success notifications, and active status indicators.  
+- **Sunset Orange:** Warnings, countdown timers, and urgent alerts.  
+- **Dark Charcoal:** Text for readability against light backgrounds.  
+
+Would you like me to create a simple UI concept using this color scheme? 🚀
+*/
