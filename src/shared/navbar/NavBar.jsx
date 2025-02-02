@@ -5,16 +5,53 @@ const NavBar = () => {
   const navLinks = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `hover:bg-hover_color hover:text-white text-text_color ${
+              isActive ? "bg-primary_color text-white" : ""
+            }`
+          }
+        >
+          Home
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink
+          to="/exams"
+          className={({ isActive }) =>
+            `hover:bg-hover_color hover:text-white text-text_color ${
+              isActive ? "bg-primary_color text-white" : ""
+            }`
+          }
+        >
+          Exams
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/exams">Exams</NavLink>
+        <NavLink
+          to="/about"
+          className={({ isActive }) =>
+            `hover:bg-hover_color hover:text-white text-text_color ${
+              isActive ? "bg-primary_color text-white" : ""
+            }`
+          }
+        >
+          About
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/about">About</NavLink>
-      </li>
-      <li>
-        <NavLink to="/blogs">Blog</NavLink>
+        <NavLink
+          to="/blogs"
+          className={({ isActive }) =>
+            `hover:bg-hover_color hover:text-white text-text_color ${
+              isActive ? "bg-primary_color text-white" : ""
+            }`
+          }
+        >
+          Blog
+        </NavLink>
       </li>
     </>
   );
@@ -41,7 +78,7 @@ const NavBar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow space-y-2"
           >
             {/* dynamic nav list  */}
             {navLinks}
@@ -58,7 +95,7 @@ const NavBar = () => {
       </div>
       <div className="navbar-center hidden lg:flex">
         {/* dynamic nav list  */}
-        <ul className="menu menu-horizontal px-1">{navLinks}</ul>
+        <ul className="menu menu-horizontal px-1 space-x-2">{navLinks}</ul>
       </div>
       <div className="navbar-end">
         <Link to="/login" className="btn primary-btn rounded-xl">
