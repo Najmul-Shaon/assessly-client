@@ -8,7 +8,7 @@ const ErrorPage = () => {
         <img src={errorImage} className="w-full" alt="" />
       </figure>
       <Link to="/">
-        <button className="btn btn-primary bg-primary">Back to Home</button>
+        <button className="btn accent-btn rounded-xl">Back to Home</button>
       </Link>
     </div>
   );

@@ -2,42 +2,42 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary dark:bg-gray-900 mt-24">
+    <footer className="bg-secondary_color dark:bg-gray-900 mt-24">
       <div className="mx-auto w-full ">
         <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 max-w-screen-xl mx-auto">
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white font-dancing_script">
-              Match Mate
+            <h2 className="mb-6 text-sm font-semibold text-primary_color uppercase font-dancing_script">
+              Assessly
             </h2>
 
-            <ul className="text-gray-500 dark:text-gray-400 font-medium">
+            <ul className="text-footer_text_color font-medium">
               <li className="mb-4">
-                <Link to="/about" className=" hover:underline">
+                <Link to="/" className=" hover:underline">
                   Home
                 </Link>
               </li>
               <li className="mb-4">
-                <Link to="/about" className=" hover:underline">
-                  Biodatas
+                <Link to="/exams" className=" hover:underline">
+                  Exams
                 </Link>
               </li>
               <li className="mb-4">
                 <Link to="/about" className=" hover:underline">
-                  About Us
+                  About
                 </Link>
               </li>
               <li className="mb-4">
-                <Link to="/about" className=" hover:underline">
-                  Contact Us
+                <Link to="/blogs" className=" hover:underline">
+                  Blog
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+            <h2 className="mb-6 text-sm font-semibold text-footer_text_color uppercase">
               Soical Platform
             </h2>
-            <ul className="text-gray-500 dark:text-gray-400 font-medium">
+            <ul className="text-footer_text_color font-medium">
               <li className="mb-4">
                 <a
                   href="https://www.facebook.com/najmulshaonnhs/"
@@ -69,10 +69,10 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+            <h2 className="mb-6 text-sm font-semibold text-footer_text_color uppercase">
               Legal
             </h2>
-            <ul className="text-gray-500 dark:text-gray-400 font-medium">
+            <ul className="text-footer_text_color font-medium">
               <li className="mb-4">
                 <a href="#" className="hover:underline">
                   Privacy Policy
@@ -91,10 +91,10 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+            <h2 className="mb-6 text-sm font-semibold text-footer_text_color uppercase">
               Download
             </h2>
-            <ul className="text-gray-500 dark:text-gray-400 font-medium">
+            <ul className="text-footer_text_color font-medium">
               <li className="mb-4">
                 <a href="#" className="hover:underline">
                   iOS
@@ -118,16 +118,16 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="bg-gray-100 dark:bg-gray-700">
+        <div className="bg-white dark:bg-gray-700">
           <div className="px-4 py-6 flex flex-col md:flex-row items-center md:items-center md:justify-between max-w-screen-xl mx-auto">
-            <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center">
+            <span className="text-sm text-footer_text_color sm:text-center">
               © {new Date().getFullYear()} Assessly™. All Rights Reserved.
             </span>
             <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">
               <a
                 href="https://www.facebook.com/najmulshaonnhs/"
                 target="_blank"
-                className="text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                className="text-[#1877F2]"
               >
                 <svg
                   className="w-6 h-6"
@@ -148,7 +148,7 @@ const Footer = () => {
               <a
                 href="https://x.com/"
                 target="_blank"
-                className="text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                className="text-[#1DA1F2]"
               >
                 <svg
                   className="w-6 h-6"
@@ -168,7 +168,7 @@ const Footer = () => {
               <a
                 href="https://github.com/Najmul-Shaon"
                 target="_blank"
-                className="text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                className="text-[#211F1F]"
               >
                 <svg
                   className="w-6 h-6"

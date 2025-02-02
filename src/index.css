@@ -6,34 +6,85 @@
 @plugin "daisyui";
 
 @theme {
+  /* google font  */
   --font-nunito: "Nunito", "serif";
-  --color-primary: #0057b8;
-  --color-success: #3aa34d;
-  --color-warning: #ff7f50;
-  --color-bg_hover: #87ceeb;
-  --color-clean_bg: #f5f5f5;
-  --color-text_contrast: #333333;
+  /* overll colors  */
+  --color-primary_color: #008080;
+  --color-secondary_color: #f5f5f5;
+  --color-accent_color: #ff6f61;
+  --color-text_color: #1c1c2b;
+  --color-footer_text_color: #333333;
+}
+/* button class  */
+.primary-btn {
+  color: #ffffff;
+  background-color: #008080;
 }
 
+.primary-btn:hover {
+  background-color: #006666;
+}
+
+.secondary-btn {
+  color: #333333;
+  background-color: #f5f5f5;
+}
+
+.secondary-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.accent-btn {
+  color: #FFFFFF;
+  background-color: #FF6F61;
+}
+
+.accent-btn:hover {
+  background-color: #E65A50;
+}
+
+/* overall colors  */
+
 /*
-**Soft Sky Blue (#87CEEB)** is a great choice! It adds a calm and friendly feel, making the UI more engaging and less stressful for users during exams.  
+Primary Color: Deep Purple (#008080)
+    ** Used for buttons, headers, important sections, and major interactive elements.
 
-Here’s how you can use it effectively in **The Online Exam Management System**:  
+Secondary Color: Light Yellow (#F5F5F5)
+    ** Used for backgrounds, secondary buttons, and less prominent sections.
 
-### 🎨 **Updated Color Combination**  
-✅ **Royal Blue (#0057B8)** – Primary branding color (Navbar, buttons, headers).  
-✅ **Tropical Green (#3AA34D)** – Success indicators (Correct answers, progress, active status).  
-✅ **Sunset Orange (#FF7F50)** – Warnings, error messages, and call-to-action highlights.  
-✅ **Soft Sky Blue (#87CEEB)** – Backgrounds, hover effects, and UI elements to reduce eye strain.  
-✅ **Light Gray (#F5F5F5)** – Clean background areas.  
-✅ **Dark Charcoal (#333333)** – Text and contrast for better readability.  
+Accent Color: Bright Pink (#FF6F61)
+    ** Used sparingly to highlight important elements like call-to-action buttons, alerts, or active states.
 
-### 🎨 **Example Usage**  
-- **Soft Sky Blue:** Backgrounds of dashboard cards, hover effects, progress bars.  
-- **Royal Blue:** Primary action buttons, headings, and navigation bar.  
-- **Tropical Green:** Correct answers, success notifications, and active status indicators.  
-- **Sunset Orange:** Warnings, countdown timers, and urgent alerts.  
-- **Dark Charcoal:** Text for readability against light backgrounds.  
+Text Color: Black (#1C1C2B)
+    ** Used for body text, headings, and labels to keep things readable.
 
-Would you like me to create a simple UI concept using this color scheme? 🚀
-*/
+    */
+
+/* buttons color */
+/*
+  For buttons, you can use a combination of **primary and accent colors** depending on their importance and action type:  
+
+1. **Primary Buttons (Main Actions: Submit, Start Exam, Login, etc.)**  
+   - **Color**: **Deep Teal (#008080)** (Primary Color)  
+   - **Text**: White (#FFFFFF) for contrast  
+   - **Hover Effect**: A darker shade like **#006666**  
+
+2. **Secondary Buttons (Less Important Actions: Cancel, Back, etc.)**  
+   - **Color**: Light Yellow (#F5F5F5) (Secondary Color)  
+   - **Text**: Dark Gray (#333333) or Deep Teal (#008080)  
+   - **Hover Effect**: Slightly darker shade of yellow like **#E0E0E0**  
+
+3. **Accent Buttons (Alerts, Warnings, Special Actions: Retake Exam, Urgent Notifications, etc.)**  
+   - **Color**: Bright Pink (#FF6F61) (Accent Color)  
+   - **Text**: White (#FFFFFF) for readability  
+   - **Hover Effect**: A darker pink like **#E65A50**  
+    
+    */
+
+/* footer colors  */
+
+/*
+Background: Light Yellow (#F5F5F5) (Secondary Color)
+Text: Deep Teal (#008080) or Dark Gray (#333333)
+Links & Hover Effects: Bright Pink (#FF6F61)
+    */
