@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import logo from "../../assets/logo v2.png";
 
 const NavBar = () => {
   const navLinks = (
@@ -46,14 +47,23 @@ const NavBar = () => {
             {navLinks}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <div>
+          <Link to="/">
+            <figure className="w-12">
+              <img className="w-full" src={logo} alt="site logo" />
+            </figure>
+            <h1>Assessly</h1>
+          </Link>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         {/* dynamic nav list  */}
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <Link to="/login" className="btn primary-btn rounded-xl">
+          Login
+        </Link>
       </div>
     </nav>
   );

@@ -6,13 +6,13 @@ const About = () => {
       <Helmet>
         <title>Assessley | About</title>
       </Helmet>
-      <div className="bg-bg_hover py-10 px-6">
+      <div className="bg-secondary_color py-10 px-6">
         <div className="max-w-6xl mx-auto text-center">
           {/* Header Section */}
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            Welcome to <span className="text-primary">Assessly</span>
+          <h1 className="text-4xl font-bold text-text_color mb-4">
+            Welcome to <span className="text-primary_color">Assessly</span>
           </h1>
-          <p className="text-lg text-text_contrast">Assess with Confidence</p>
+          <p className="text-lg text-text_color">Assess with Confidence</p>
         </div>
 
         {/* Content Section */}
@@ -49,7 +49,7 @@ const About = () => {
           <p className="text-xl font-medium text-gray-800">
             Ready to take challenge?
             <br />
-            <span className="text-primary font-semibold">
+            <span className="text-primary_color font-semibold">
               Join Assessly today!
             </span>
           </p>

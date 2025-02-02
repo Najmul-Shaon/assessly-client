@@ -3,6 +3,7 @@ import RootLayout from "../layouts/RootLayout";
 import About from "../pages/About/About";
 import CommingSoon from "../components/commingSoon/commingSoon";
 import ErrorPage from "../pages/errorPage/ErrorPage";
+import Home from "../pages/home/Home";
 
 export const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h3>this is home</h3>,
+        element: <Home></Home>,
       },
       {
         path: "/exams",
