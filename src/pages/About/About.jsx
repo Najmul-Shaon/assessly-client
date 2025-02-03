@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 
 const About = () => {
   return (
-    <>
+    <div className="mt-20">
       <Helmet>
         <title>Assessley | About</title>
       </Helmet>
@@ -55,7 +55,7 @@ const About = () => {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
