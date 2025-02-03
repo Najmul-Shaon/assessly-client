@@ -35,7 +35,7 @@ const Banner = () => {
             loop={true}
             speed={300}
           />
-        </span>{" "}
+        </span>
         Online Exams for Students Everywhere
       </p>
 
