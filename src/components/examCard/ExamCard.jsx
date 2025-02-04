@@ -1,4 +1,4 @@
-import {  FaUsers } from "react-icons/fa";
+import { FaUsers } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
@@ -39,11 +39,20 @@ const ExamCard = () => {
           </div>
         </div>
 
-        <Link>
-          <button className="btn primary-btn w-full my-4">
-            Take Challange
-          </button>
-        </Link>
+        <div className="grid grid-cols-2 gap-4">
+          {/* todo: make exam id dynamic  */}
+          <Link to={`/exam/details/1`}>
+            <button className="btn secondary-btn my-4 w-full text-lg">
+              Details
+            </button>
+          </Link>
+          {/* todo: make exam id dynamic  */}
+          <Link to={`/exam/purchase/1`}>
+            <button className="btn primary-btn my-4 w-full text-lg">
+              Take Challange
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
