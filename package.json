@@ -23,6 +23,7 @@
     "react-tooltip": "^5.28.0",
     "react-ts-typewriter": "^0.1.8-b",
     "sort-by": "^1.2.0",
+    "swiper": "^11.2.2",
     "tailwindcss": "^4.0.3"
   },
   "devDependencies": {

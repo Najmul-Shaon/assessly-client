@@ -6,7 +6,7 @@ import WhyUs from "./whyUs/WhyUs";
 
 const Home = () => {
   return (
-    <div className="mt-18 lg:20">
+    <div className="mt-18 lg:mt-20">
       <Banner></Banner>
       <PopulerExams></PopulerExams>
       <PopulerBlogs></PopulerBlogs>
