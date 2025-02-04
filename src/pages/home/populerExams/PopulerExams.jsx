@@ -9,7 +9,10 @@ const PopulerExams = () => {
         header={"Populer Exams"}
         subHeader={"Top Exams That Shape Your Future"}
       ></SectionTitle>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+      <div
+        // data-aos="zoom-out-up"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+      >
         {/* todo: make render exam card data from db  */}
         <ExamCard></ExamCard>
         <ExamCard></ExamCard>
