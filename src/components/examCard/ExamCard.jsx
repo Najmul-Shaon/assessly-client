@@ -1,6 +1,7 @@
 import { FaUsers } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 
 const ExamCard = () => {
   return (
@@ -23,15 +24,30 @@ const ExamCard = () => {
           Beginner Diploma In Basic English Grammar - Better Search Rang!
         </h3>
         <div className="mt-3 flex items-center justify-between">
-          <div className="flex items-center text-red-500 text-sm">
+          <div
+            className="flex items-center text-red-500 text-sm"
+            data-tooltip-id="reviews"
+            data-tooltip-place="top-end"
+            data-tooltip-content="Reviews"
+          >
             <span className="flex ml-1 text-primary_color">★★★☆☆</span>
             <span className="text-text_color ml-1">(125)</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div
+            className="flex items-center gap-1"
+            data-tooltip-id="takeChallange"
+            data-tooltip-place="top-end"
+            data-tooltip-content="Challengers"
+          >
             <FaUsers />
             <span>139</span>
           </div>
-          <div className="text-xl font-bold text-accent_color flex items-center">
+          <div
+            className="text-xl font-bold text-accent_color flex items-center"
+            data-tooltip-id="price"
+            data-tooltip-place="top-end"
+            data-tooltip-content="price"
+          >
             <span>
               <FaBangladeshiTakaSign></FaBangladeshiTakaSign>
             </span>
@@ -54,6 +70,9 @@ const ExamCard = () => {
           </Link>
         </div>
       </div>
+      <Tooltip id="price" />
+      <Tooltip id="takeChallange" />
+      <Tooltip id="reviews" />
     </div>
   );
 };

@@ -19,6 +19,7 @@
     "react-helmet-async": "^2.0.5",
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.5",
+    "react-tooltip": "^5.28.0",
     "react-ts-typewriter": "^0.1.8-b",
     "sort-by": "^1.2.0",
     "tailwindcss": "^4.0.3"
