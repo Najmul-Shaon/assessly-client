@@ -7,7 +7,6 @@ import { FaRegRectangleXmark } from "react-icons/fa6";
 
 const Exams = () => {
   const [isFilterView, setIsFilterView] = useState(false);
-  console.log(isFilterView);
   return (
     <div className="">
       <div className="mt-18 bg-primaryColor/10 py-8">
@@ -34,13 +33,12 @@ const Exams = () => {
       )}
       <div className="grid grid-cols-12 max-w-screen-xl mx-auto px-4 mt-12 gap-6">
         {/* filter area  */}
-        <div className="lg:col-span-2 hidden lg:inline">
+        <div className="lg:col-span-3 hidden lg:inline">
           <FilterArea></FilterArea>
         </div>
 
         {/* exam card area  */}
-        <div className="col-span-12 lg:col-span-10">
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> */}
+        <div className="col-span-12 lg:col-span-9">
           {/* sorting area */}
           <div className="flex justify-between lg:justify-end gap-6 items-center bg-secondaryColor p-4 rounded-xl">
             {/* filter section for small and medium devices  */}
@@ -49,7 +47,7 @@ const Exams = () => {
                 onClick={() => setIsFilterView(!isFilterView)}
                 className="text-primaryColor text-xl"
               >
-                <FaFilter></FaFilter>
+                <FaFilter className="inline-flex"></FaFilter> Filter
               </span>
             </div>
 
@@ -108,7 +106,7 @@ const Exams = () => {
         </div>
       </div>
       {/* suggestion section  */}
-      <div className="mt-12 max-w-screen-xl mx-auto px-4">
+      {/* <div className="mt-12 max-w-screen-xl mx-auto px-4">
         <div className="divider font-bold text-primaryColor text-2xl mb-8">
           Similar Challanges
         </div>
@@ -118,7 +116,7 @@ const Exams = () => {
           <ExamCard></ExamCard>
           <ExamCard></ExamCard>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
