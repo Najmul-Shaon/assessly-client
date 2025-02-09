@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo v2.png";
 import { AiOutlineLogin } from "react-icons/ai";
+import { FaUserPlus } from "react-icons/fa";
 
 const NavBar = () => {
   const navLinks = (
@@ -9,7 +10,7 @@ const NavBar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `hover:bg-hover_color hover:text-white text-text_color btn-sm ${
+            `hover:bg-hover_color hover:text-white text-text_color btn-sm md:btn-lg ${
               isActive ? "bg-primary_color text-white" : ""
             }`
           }
@@ -105,7 +106,7 @@ const NavBar = () => {
               <AiOutlineLogin className="text-xl"></AiOutlineLogin> Login
             </Link>
             <Link to="/register" className="btn btn-sm secondary-btn">
-              <AiOutlineLogin className="text-xl"></AiOutlineLogin> Register
+              <FaUserPlus  className="text-xl"></FaUserPlus > Register
             </Link>
           </div>
         </div>
