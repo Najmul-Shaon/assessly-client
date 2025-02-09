@@ -24,7 +24,7 @@ const ExamCard = () => {
           Beginner Diploma In Basic English Grammar - Better Search Rang!
         </h3>
         <div className="mt-3 flex items-center justify-between">
-          <div
+          {/* <div
             className="flex items-center text-footer.text.color text-sm"
             data-tooltip-id="reviews"
             data-tooltip-place="top-end"
@@ -32,7 +32,7 @@ const ExamCard = () => {
           >
             <span className="flex ml-1 text-primaryColor">★★★☆☆</span>
             <span className="text-textColor ml-1">(125)</span>
-          </div>
+          </div> */}
           <div
             className="flex items-center gap-1"
             data-tooltip-id="takeChallange"
@@ -63,7 +63,7 @@ const ExamCard = () => {
           {/* todo: make exam id dynamic  */}
           <Link to={`/exam/purchase/1`}>
             <button className="btn primary-btn my-4 w-full">
-              Take Challange
+              Try Now
             </button>
           </Link>
         </div>

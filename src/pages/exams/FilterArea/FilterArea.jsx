@@ -6,9 +6,9 @@ const FilterArea = () => {
     <div className="bg-secondaryColor border border-gray-300 rounded-2xl p-6">
       <div>
         <FaFilter className="inline-flex me-2 text-primaryColor"></FaFilter>{" "}
-        <span>Filter by:</span>
+        <span className="font-bold">Filter by:</span>
       </div>
-      <div className="divider">Class:</div>
+      <div className="divider font-semibold">Class:</div>
       {/* filter by class  */}
       <div>
         <div>
@@ -40,7 +40,7 @@ const FilterArea = () => {
           <label htmlFor="class12"> Class 12</label>
         </div>
       </div>
-      <div className="divider">Subject:</div>
+      <div className="divider font-semibold">Subject:</div>
       {/* filter by subject  */}
       <div>
         <div>

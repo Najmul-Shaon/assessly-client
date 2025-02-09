@@ -1,5 +1,5 @@
 import { CiCalendarDate } from "react-icons/ci";
-import { FaPen, FaUsers } from "react-icons/fa";
+import { FaPen } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 
@@ -24,7 +24,7 @@ const BlogCard = () => {
           Beginner Diploma In Basic English Grammar - Better Search Rang!
         </h3>
         <div className="mt-3 flex items-center justify-between">
-          <div
+          {/* <div
             className="flex items-center gap-1"
             data-tooltip-id="totalRead"
             data-tooltip-place="top-start"
@@ -33,7 +33,7 @@ const BlogCard = () => {
             <p className="flex items-center gap-1 text-base">
               <FaUsers /> 140
             </p>
-          </div>
+          </div> */}
           <div
             className="flex items-center text-textColor text-sm"
             data-tooltip-id="published"
@@ -59,7 +59,7 @@ const BlogCard = () => {
 
         {/* todo: make exam id dynamic  */}
         <Link to={`/exam/purchase/1`}>
-          <button className="btn primary-btn my-4 w-full text-lg">
+          <button className="btn primary-btn my-4 w-full">
             Read Now
           </button>
         </Link>

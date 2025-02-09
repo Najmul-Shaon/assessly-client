@@ -3,7 +3,7 @@ import ExamCard from "../../components/examCard/ExamCard";
 import FilterArea from "./FilterArea/FilterArea";
 import { FaFilter } from "react-icons/fa";
 import { useState } from "react";
-import { FaRegRectangleXmark, FaStar } from "react-icons/fa6";
+import { FaRegRectangleXmark } from "react-icons/fa6";
 
 const Exams = () => {
   const [isFilterView, setIsFilterView] = useState(false);
@@ -15,11 +15,11 @@ const Exams = () => {
       </div>
 
       {isFilterView && (
-        <div className="flex absolute z-40">
+        <div className="flex absolute z-40 lg:hidden">
           <FilterArea></FilterArea>
           <span
             onClick={() => setIsFilterView(!isFilterView)}
-            className="-ms-8 mt-2 text-2xl text-accentColor"
+            className="-ms-8 mt-2 text-2xl text-accentColor top-80"
           >
             <FaRegRectangleXmark />
           </span>
@@ -29,7 +29,7 @@ const Exams = () => {
       {isFilterView && (
         <div
           onClick={() => setIsFilterView(!isFilterView)}
-          className="min-w-screen min-h-screen absolute bg-primaryColor opacity-50 z-30"
+          className="fixed inset-0 bg-primaryColor opacity-50 lg:hidden z-30"
         ></div>
       )}
       <div className="grid grid-cols-12 max-w-screen-xl mx-auto px-4 mt-12 gap-6">
@@ -105,6 +105,18 @@ const Exams = () => {
           <button className="join-item btn btn-sm">2</button>
           <button className="join-item btn btn-sm">3</button>
           <button className="join-item btn btn-sm">4</button>
+        </div>
+      </div>
+      {/* suggestion section  */}
+      <div className="mt-12 max-w-screen-xl mx-auto px-4">
+        <div className="divider font-bold text-primaryColor text-2xl mb-8">
+          Similar Challanges
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <ExamCard></ExamCard>
+          <ExamCard></ExamCard>
+          <ExamCard></ExamCard>
+          <ExamCard></ExamCard>
         </div>
       </div>
     </div>
