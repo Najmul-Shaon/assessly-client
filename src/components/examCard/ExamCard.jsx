@@ -1,11 +1,9 @@
 import { FaUsers } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
 const ExamCard = () => {
-  const {pathname} = useLocation();
-  console.log(pathname);
   return (
     <div className="bg-primaryColor/10 rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primaryColor/40">
       <img
@@ -60,9 +58,7 @@ const ExamCard = () => {
         <div className="grid grid-cols-2 gap-4">
           {/* todo: make exam id dynamic  */}
           <Link to={`/exam/details/1`}>
-            <button className="btn secondary-btn my-4 w-full">
-              Details
-            </button>
+            <button className="btn secondary-btn my-4 w-full">Details</button>
           </Link>
           {/* todo: make exam id dynamic  */}
           <Link to={`/exam/purchase/1`}>

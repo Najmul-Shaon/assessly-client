@@ -1,25 +1,54 @@
 import SectionTitle from "../../components/sectionTiltle/SectionTitle";
 import ExamCard from "../../components/examCard/ExamCard";
 import FilterArea from "./FilterArea/FilterArea";
+import { FaFilter } from "react-icons/fa";
+import { useState } from "react";
+import { FaStar } from "react-icons/fa6";
 
 const Exams = () => {
+  const [isFilterView, setIsFilterView] = useState(true);
+  console.log(isFilterView);
   return (
     <div className="">
       <div className="mt-18 bg-primaryColor/10 py-8">
         <SectionTitle header={"All Exams"}></SectionTitle>{" "}
       </div>
+      {/* ********************************************************** */}
+      <div className="my-12 flex justify-center">
+        {isFilterView && (
+          <p onClick={() => setIsFilterView(!isFilterView)}>
+            <FaFilter></FaFilter>
+          </p>
+        )}
+        {!isFilterView && (
+          <p onClick={() => setIsFilterView(!isFilterView)}>
+            <FaStar></FaStar>
+          </p>
+        )}
+        {/* ********************************************************** */}
+      </div>
       <div className="grid grid-cols-12 max-w-screen-xl mx-auto px-4 mt-12 gap-6">
         {/* filter area  */}
-        <div className="col-span-2">
+        <div className="lg:col-span-2 hidden lg:inline">
           <FilterArea></FilterArea>
         </div>
         {/* exam card area  */}
-        <div className="col-span-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* sorting area */}
-            <div className="col-span-3 flex justify-end gap-6 items-center bg-secondaryColor p-4 rounded-xl">
-              <div className="flex items-center gap-2 justify-end">
-                <p>Show:</p>
+        <div className="col-span-12 lg:col-span-10">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> */}
+          {/* sorting area */}
+          <div className="flex justify-between lg:justify-end gap-6 items-center bg-secondaryColor p-4 rounded-xl">
+            {/* filter section for small and medium devices  */}
+            <div className="inline lg:hidden">
+              {isFilterView && (
+                <p className="text-primaryColor text-xl">
+                  <FaFilter></FaFilter>
+                </p>
+              )}
+            </div>
+            {/* per page count  */}
+            <div className="hidden lg:inline">
+              <div className="flex items-center gap-2 ">
+                <p className="text-sm lg:text-md">Show:</p>
                 <select
                   defaultValue={12}
                   name="pagePerView"
@@ -32,37 +61,33 @@ const Exams = () => {
                   <option value="48">48</option>
                 </select>
               </div>
-              <div className="flex items-center gap-2 justify-end">
-                <p>Sort by:</p>
-                <select
-                  defaultValue="Default"
-                  name="sortBy"
-                  id="sortBy"
-                  className="rounded-lg px-2 py-1 bg-white"
-                >
-                  <option value="Default">Default</option>
-                  <option value="Class (Small → Large)">
-                    Class (Small → Large)
-                  </option>
-                  <option value="Class (Large → Small)">
-                    Class (Large → Small)
-                  </option>
-                </select>
-              </div>
             </div>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
+            {/* sort item  */}
+            <div className="flex items-center gap-2">
+              <p className="text-sm lg:text-md">Sort by:</p>
+              <select
+                defaultValue="Default"
+                name="sortBy"
+                id="sortBy"
+                className="rounded-lg px-2 py-1 bg-white"
+              >
+                <option value="Default">Default</option>
+                <option value="Class (Small → Large)">
+                  Class (Small → Large)
+                </option>
+                <option value="Class (Large → Small)">
+                  Class (Large → Small)
+                </option>
+              </select>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
             <ExamCard></ExamCard>
             <ExamCard></ExamCard>
             <ExamCard></ExamCard>
             <ExamCard></ExamCard>
           </div>
+          {/* </div> */}
         </div>
       </div>
       {/* pagination  */}
