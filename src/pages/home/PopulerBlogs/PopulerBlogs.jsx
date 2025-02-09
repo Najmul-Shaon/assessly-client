@@ -24,7 +24,9 @@ const PopulerBlogs = () => {
         </div>
         <div className="flex items-center justify-center mt-10">
           <Link to="/blogs">
-            <button className="btn primary-btn">Read More</button>
+            <button className="btn primary-btn shadow-lg shadow-primary_color/60">
+              Read More
+            </button>
           </Link>
         </div>
       </div>

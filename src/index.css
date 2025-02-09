@@ -20,19 +20,27 @@
 .primary-btn {
   color: #ffffff;
   background-color: #008080;
+  border: none;
+  transform: scale(1);
+  transition: transform 300ms ease-in-out;
 }
 
 .primary-btn:hover {
   background-color: #006666;
+  transform: scale(1.1);
 }
 
 .secondary-btn {
   color: #333333;
   background-color: #f5f5f5;
+  border: 1px gainsboro groove;
+  transform: scale(1);
+  transition: transform 300ms ease-in-out;
 }
 
 .secondary-btn:hover {
   background-color: #e0e0e0;
+  transform: scale(1.1);
 }
 
 .accent-btn {

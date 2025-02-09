@@ -23,7 +23,9 @@ const PopulerExams = () => {
       </div>
       <div className="flex items-center justify-center my-10">
         <Link to="/exams">
-          <button className="btn primary-btn">View All</button>
+          <button className="btn primary-btn shadow-lg border-none shadow-primary_color/60">
+            View All
+          </button>
         </Link>
       </div>
     </div>

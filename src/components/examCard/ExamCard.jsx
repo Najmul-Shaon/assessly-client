@@ -5,7 +5,7 @@ import { Tooltip } from "react-tooltip";
 
 const ExamCard = () => {
   return (
-    <div className="max-w-sm bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:scale-101 hover:shadow-2xl">
+    <div className="max-w-sm bg-white rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primary_color/40">
       <img
         className="w-full h-48 object-cover"
         src="https://images.pexels.com/photos/4492137/pexels-photo-4492137.jpeg"
