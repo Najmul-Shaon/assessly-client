@@ -3,35 +3,41 @@ import ExamCard from "../../components/examCard/ExamCard";
 import FilterArea from "./FilterArea/FilterArea";
 import { FaFilter } from "react-icons/fa";
 import { useState } from "react";
-import { FaStar } from "react-icons/fa6";
+import { FaRegRectangleXmark, FaStar } from "react-icons/fa6";
 
 const Exams = () => {
-  const [isFilterView, setIsFilterView] = useState(true);
+  const [isFilterView, setIsFilterView] = useState(false);
   console.log(isFilterView);
   return (
     <div className="">
       <div className="mt-18 bg-primaryColor/10 py-8">
         <SectionTitle header={"All Exams"}></SectionTitle>{" "}
       </div>
-      {/* ********************************************************** */}
-      <div className="my-12 flex justify-center">
-        {isFilterView && (
-          <p onClick={() => setIsFilterView(!isFilterView)}>
-            <FaFilter></FaFilter>
-          </p>
-        )}
-        {!isFilterView && (
-          <p onClick={() => setIsFilterView(!isFilterView)}>
-            <FaStar></FaStar>
-          </p>
-        )}
-        {/* ********************************************************** */}
-      </div>
+
+      {isFilterView && (
+        <div className="flex absolute z-40">
+          <FilterArea></FilterArea>
+          <span
+            onClick={() => setIsFilterView(!isFilterView)}
+            className="-ms-8 mt-2 text-2xl text-accentColor"
+          >
+            <FaRegRectangleXmark />
+          </span>
+        </div>
+      )}
+
+      {isFilterView && (
+        <div
+          onClick={() => setIsFilterView(!isFilterView)}
+          className="min-w-screen min-h-screen absolute bg-primaryColor opacity-50 z-30"
+        ></div>
+      )}
       <div className="grid grid-cols-12 max-w-screen-xl mx-auto px-4 mt-12 gap-6">
         {/* filter area  */}
         <div className="lg:col-span-2 hidden lg:inline">
           <FilterArea></FilterArea>
         </div>
+
         {/* exam card area  */}
         <div className="col-span-12 lg:col-span-10">
           {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> */}
@@ -39,12 +45,14 @@ const Exams = () => {
           <div className="flex justify-between lg:justify-end gap-6 items-center bg-secondaryColor p-4 rounded-xl">
             {/* filter section for small and medium devices  */}
             <div className="inline lg:hidden">
-              {isFilterView && (
-                <p className="text-primaryColor text-xl">
-                  <FaFilter></FaFilter>
-                </p>
-              )}
+              <span
+                onClick={() => setIsFilterView(!isFilterView)}
+                className="text-primaryColor text-xl"
+              >
+                <FaFilter></FaFilter>
+              </span>
             </div>
+
             {/* per page count  */}
             <div className="hidden lg:inline">
               <div className="flex items-center gap-2 ">
