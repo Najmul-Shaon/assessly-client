@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const BlogCard = () => {
   return (
-    <div className="max-w-sm bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:scale-101 hover:shadow-2xl">
+    <div className="bg-primaryColor/10 shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:scale-101 hover:shadow-2xl">
       <img
         className="w-full h-48 object-cover"
         src="https://images.pexels.com/photos/4492137/pexels-photo-4492137.jpeg"
@@ -35,7 +35,7 @@ const BlogCard = () => {
             </p>
           </div>
           <div
-            className="flex items-center text-text_color text-sm"
+            className="flex items-center text-textColor text-sm"
             data-tooltip-id="published"
             data-tooltip-place="top-start"
             data-tooltip-content="Published at"
@@ -46,7 +46,7 @@ const BlogCard = () => {
           </div>
 
           <div
-            className="text-md text-text_color flex items-center"
+            className="text-md text-textColor flex items-center"
             data-tooltip-id="author"
             data-tooltip-place="top-end"
             data-tooltip-content="Written by"

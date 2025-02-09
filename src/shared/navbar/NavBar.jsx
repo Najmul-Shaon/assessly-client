@@ -10,8 +10,8 @@ const NavBar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `hover:bg-hover_color hover:text-white text-text_color btn-sm md:btn-lg ${
-              isActive ? "bg-primary_color text-white" : ""
+            `hover:bg-hoverColor hover:text-white text-textColor btn-sm md:btn-md lg:btn-lg ${
+              isActive ? "bg-primaryColor text-white" : ""
             }`
           }
         >
@@ -23,8 +23,8 @@ const NavBar = () => {
         <NavLink
           to="/exams"
           className={({ isActive }) =>
-            `hover:bg-hover_color hover:text-white text-text_color btn-sm ${
-              isActive ? "bg-primary_color text-white" : ""
+            `hover:bg-hoverColor hover:text-white text-textColor btn-sm md:btn-md lg:btn-lg ${
+              isActive ? "bg-primaryColor text-white" : ""
             }`
           }
         >
@@ -35,8 +35,8 @@ const NavBar = () => {
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            `hover:bg-hover_color hover:text-white text-text_color btn-sm ${
-              isActive ? "bg-primary_color text-white" : ""
+            `hover:bg-hoverColor hover:text-white text-textColor btn-sm md:btn-md lg:btn-lg ${
+              isActive ? "bg-primaryColor text-white" : ""
             }`
           }
         >
@@ -47,8 +47,8 @@ const NavBar = () => {
         <NavLink
           to="/blogs"
           className={({ isActive }) =>
-            `hover:bg-hover_color hover:text-white text-text_color btn-sm ${
-              isActive ? "bg-primary_color text-white" : ""
+            `hover:bg-hoverColor hover:text-white text-textColor btn-sm md:btn-md lg:btn-lg ${
+              isActive ? "bg-primaryColor text-white" : ""
             }`
           }
         >
@@ -102,11 +102,17 @@ const NavBar = () => {
         </div>
         <div className="navbar-end">
           <div className="flex gap-2">
-            <Link to="/login" className="btn btn-sm primary-btn">
+            <Link
+              to="/login"
+              className="btn btn-sm md:btn-md primary-btn"
+            >
               <AiOutlineLogin className="text-xl"></AiOutlineLogin> Login
             </Link>
-            <Link to="/register" className="btn btn-sm secondary-btn">
-              <FaUserPlus  className="text-xl"></FaUserPlus > Register
+            <Link
+              to="/register"
+              className="btn btn-sm md:btn-md secondary-btn"
+            >
+              <FaUserPlus className="text-xl"></FaUserPlus> Register
             </Link>
           </div>
         </div>

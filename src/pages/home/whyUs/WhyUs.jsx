@@ -3,7 +3,7 @@ import whyImg from "../../../assets/choose-thumb-1.png";
 import { Link } from "react-router-dom";
 const WhyUs = () => {
   return (
-    <div className=" mt-24 bg-secondary_color py-12">
+    <div className=" mt-24 bg-secondaryColor py-12">
       <div className="max-w-screen-xl mx-auto px-4">
         <SectionTitle
           header={"why Assessly"}

@@ -2,15 +2,15 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary_color dark:bg-gray-900 mt-24">
+    <footer className="bg-secondaryColor dark:bg-gray-900 mt-24">
       <div className="mx-auto w-full ">
         <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 max-w-screen-xl mx-auto">
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-primary_color uppercase font-dancing_script">
+            <h2 className="mb-6 text-sm font-semibold text-primaryColor uppercase font-dancing_script">
               Assessly
             </h2>
 
-            <ul className="text-footer_text_color font-medium">
+            <ul className="text-footerTextColor font-medium">
               <li className="mb-4">
                 <Link to="/" className=" hover:underline">
                   Home
@@ -34,10 +34,10 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-footer_text_color uppercase">
+            <h2 className="mb-6 text-sm font-semibold text-footerTextColor uppercase">
               Soical Platform
             </h2>
-            <ul className="text-footer_text_color font-medium">
+            <ul className="text-footerTextColor font-medium">
               <li className="mb-4">
                 <a
                   href="https://www.facebook.com/najmulshaonnhs/"
@@ -69,10 +69,10 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-footer_text_color uppercase">
+            <h2 className="mb-6 text-sm font-semibold text-footerTextColor uppercase">
               Legal
             </h2>
-            <ul className="text-footer_text_color font-medium">
+            <ul className="text-footerTextColor font-medium">
               <li className="mb-4">
                 <a href="#" className="hover:underline">
                   Privacy Policy
@@ -91,10 +91,10 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-footer_text_color uppercase">
+            <h2 className="mb-6 text-sm font-semibold text-footerTextColor uppercase">
               Download
             </h2>
-            <ul className="text-footer_text_color font-medium">
+            <ul className="text-footerTextColor font-medium">
               <li className="mb-4">
                 <a href="#" className="hover:underline">
                   iOS
@@ -118,9 +118,10 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="bg-white dark:bg-gray-700">
+        {/* social items  */}
+        <div className="bg-gray-300 dark:bg-gray-700">
           <div className="px-4 py-6 flex flex-col md:flex-row items-center md:items-center md:justify-between max-w-screen-xl mx-auto">
-            <span className="text-sm text-footer_text_color sm:text-center">
+            <span className="text-sm text-footerTextColor sm:text-center">
               © {new Date().getFullYear()} Assessly™. All Rights Reserved.
             </span>
             <div className="flex mt-4 sm:justify-center md:mt-0 space-x-5 rtl:space-x-reverse">

@@ -3,14 +3,14 @@ import Typewriter from "react-ts-typewriter";
 
 const Banner = () => {
   return (
-    <div className="flex flex-col items-center text-center p-10 bg-secondary_color">
-      <p className="text-text_color text-lg">Assess with Confidence.</p>
-      <h1 className="text-2xl lg:text-4xl font-bold text-text_color mt-2 relative">
+    <div className="flex flex-col items-center text-center p-10 bg-secondaryColor">
+      <p className="text-textColor text-lg">Assess with Confidence.</p>
+      <h1 className="text-2xl lg:text-4xl font-bold text-textColor mt-2 relative">
         The Online Exam Management System
       </h1>
 
       <div className="relative inline-block mt-2">
-        <h2 className="text-2xl lg:text-4xl font-bold text-text_color">
+        <h2 className="text-2xl lg:text-4xl font-bold text-textColor">
           Conduct Secure Online Exams
         </h2>
         <svg
@@ -28,7 +28,7 @@ const Banner = () => {
         </svg>
       </div>
 
-      <p className="text-text_color text-lg mt-4">
+      <p className="text-textColor text-lg mt-4">
         <span>
           <Typewriter
             text={["Smart", "Secure", "Hassle-Free"]}

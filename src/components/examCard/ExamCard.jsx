@@ -1,11 +1,13 @@
 import { FaUsers } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
 const ExamCard = () => {
+  const {pathname} = useLocation();
+  console.log(pathname);
   return (
-    <div className="max-w-sm bg-white rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primary_color/40">
+    <div className="bg-primaryColor/10 rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primaryColor/40">
       <img
         className="w-full h-48 object-cover"
         src="https://images.pexels.com/photos/4492137/pexels-photo-4492137.jpeg"
@@ -25,13 +27,13 @@ const ExamCard = () => {
         </h3>
         <div className="mt-3 flex items-center justify-between">
           <div
-            className="flex items-center text-red-500 text-sm"
+            className="flex items-center text-footer.text.color text-sm"
             data-tooltip-id="reviews"
             data-tooltip-place="top-end"
             data-tooltip-content="Reviews"
           >
-            <span className="flex ml-1 text-primary_color">★★★☆☆</span>
-            <span className="text-text_color ml-1">(125)</span>
+            <span className="flex ml-1 text-primaryColor">★★★☆☆</span>
+            <span className="text-textColor ml-1">(125)</span>
           </div>
           <div
             className="flex items-center gap-1"
@@ -43,7 +45,7 @@ const ExamCard = () => {
             <span>139</span>
           </div>
           <div
-            className="text-xl font-bold text-accent_color flex items-center"
+            className="text-xl font-bold text-accentColor flex items-center"
             data-tooltip-id="price"
             data-tooltip-place="top-end"
             data-tooltip-content="price"
@@ -58,13 +60,13 @@ const ExamCard = () => {
         <div className="grid grid-cols-2 gap-4">
           {/* todo: make exam id dynamic  */}
           <Link to={`/exam/details/1`}>
-            <button className="btn secondary-btn my-4 w-full text-lg">
+            <button className="btn secondary-btn my-4 w-full">
               Details
             </button>
           </Link>
           {/* todo: make exam id dynamic  */}
           <Link to={`/exam/purchase/1`}>
-            <button className="btn primary-btn my-4 w-full text-lg">
+            <button className="btn primary-btn my-4 w-full">
               Take Challange
             </button>
           </Link>

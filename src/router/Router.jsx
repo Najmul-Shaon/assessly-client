@@ -4,6 +4,7 @@ import About from "../pages/About/About";
 import CommingSoon from "../components/commingSoon/commingSoon";
 import ErrorPage from "../pages/errorPage/ErrorPage";
 import Home from "../pages/home/Home";
+import Exams from "../pages/exams/Exams";
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/exams",
-        element: <CommingSoon></CommingSoon>,
+        element: <Exams></Exams>,
       },
       {
         path: "/about",
