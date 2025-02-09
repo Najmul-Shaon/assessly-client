@@ -17,8 +17,8 @@ const Exams = () => {
         <div className="flex absolute z-40 lg:hidden">
           <FilterArea></FilterArea>
           <span
-            onClick={() => setIsFilterView(!isFilterView)}
-            className="-ms-8 mt-2 text-2xl text-accentColor top-80"
+            onClick={() => setIsFilterView(false)}
+            className="right-4 absolute top-4 text-2xl text-accentColor cursor-pointer"
           >
             <FaRegRectangleXmark />
           </span>
@@ -27,7 +27,7 @@ const Exams = () => {
 
       {isFilterView && (
         <div
-          onClick={() => setIsFilterView(!isFilterView)}
+          onClick={() => setIsFilterView(false)}
           className="fixed inset-0 bg-primaryColor opacity-50 lg:hidden z-30"
         ></div>
       )}
@@ -44,10 +44,10 @@ const Exams = () => {
             {/* filter section for small and medium devices  */}
             <div className="inline lg:hidden">
               <span
-                onClick={() => setIsFilterView(!isFilterView)}
+                onClick={() => setIsFilterView(true)}
                 className="text-primaryColor text-xl"
               >
-                <FaFilter className="inline-flex"></FaFilter> Filter
+                <FaFilter></FaFilter>
               </span>
             </div>
 
