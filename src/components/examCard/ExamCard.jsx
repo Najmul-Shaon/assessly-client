@@ -63,7 +63,7 @@ const ExamCard = () => {
           {/* todo: make exam id dynamic  */}
           <Link to={`/exam/purchase/1`}>
             <button className="btn primary-btn my-4 w-full">
-              Try Now
+              Enroll Now
             </button>
           </Link>
         </div>
