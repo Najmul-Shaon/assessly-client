@@ -1,32 +1,34 @@
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa6";
-import loginImg from "../../assets/login.gif";
+import { FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa6";
+import registerImg from "../../assets/signup.gif";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { MdEmail } from "react-icons/md";
 
-export default function Login() {
-  const { login } = useAuth();
+export default function Register() {
+  const { createUser } = useAuth();
   const [showPass, setShowPass] = useState(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    login(data?.email, data?.password)
+    createUser(data?.email, data?.password)
       .then((result) => {
-        const user = result.user;
-        console.log(user);
+        const loggedUser = result.user;
+        reset();
+        console.log(loggedUser);
       })
       .catch((error) => {
         console.log(error);
       });
-    console.log(data?.email);
+    console.log(data);
   };
 
   return (
@@ -34,8 +36,8 @@ export default function Login() {
       <div className="order-2 md:order-none hidden md:inline">
         <img
           className="flex items-center justify-center"
-          src={loginImg}
-          alt="login image"
+          src={registerImg}
+          alt="register image"
         />
       </div>
       <div className="flex items-center justify-center order-1 md:order-none">
@@ -46,9 +48,25 @@ export default function Login() {
           className="p-8 rounded-xl shadow-xl max-w-sm w-full border"
         >
           <h2 className="text-2xl font-semibold text-center mb-6">
-            Welcome Back
+            Welcome to <span className="text-primaryColor">Assesly</span>
           </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {/* name  */}
+            <div className="relative">
+              <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <input
+                type="text"
+                {...register("userName", { required: "Username is required" })}
+                placeholder="Your name here"
+                className="w-full pl-10 pr-4 py-2 rounded-md focus:ring-2 focus:ring-white/50 outline-none"
+              />
+              {errors.userName && (
+                <p className="text-accentColor text-sm">
+                  {errors.userName.message}
+                </p>
+              )}
+            </div>
+            {/* user mail  */}
             <div className="relative">
               <MdEmail className="absolute left-3 top-1/2 transform -translate-y-1/2" />
               <input
@@ -60,6 +78,20 @@ export default function Login() {
               {errors.email && (
                 <p className="text-accentColor text-sm">
                   {errors.email.message}
+                </p>
+              )}
+            </div>
+            {/* user image  */}
+            <div className="relative">
+              <input
+                type="file"
+                accept="image/*"
+                {...register("userImage", { required: "Image is required" })}
+                className="w-full px-4 py-2 rounded-md focus:ring-2 focus:ring-white/50 outline-none file:rounded-md file:mr-3 file:px-4 file:bg-primaryColor/40"
+              />
+              {errors.userImage && (
+                <p className="text-red-500 text-sm">
+                  {errors.userImage.message}
                 </p>
               )}
             </div>
@@ -101,13 +133,13 @@ export default function Login() {
             </div>
 
             <button type="submit" className="btn primary-btn w-full">
-              Login
+              Register
             </button>
             <div>
               <p className="text-sm">
-                New here?{" "}
+                Already have an account?{" "}
                 <span className="text-accentColor">
-                  <Link to="/register">Register</Link>
+                  <Link to="/login">Login</Link>
                 </span>
               </p>
             </div>

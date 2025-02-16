@@ -2,8 +2,13 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo v2.png";
 import { AiOutlineLogin } from "react-icons/ai";
 import { FaUserPlus } from "react-icons/fa";
+import useAuth from "../../Hooks/useAuth";
+import { GoSignOut } from "react-icons/go";
+import useLogout from "../../Hooks/useLogout";
 
 const NavBar = () => {
+  const { user } = useAuth();
+  const handleLogout = useLogout();
   const navLinks = (
     <>
       <li>
@@ -101,13 +106,33 @@ const NavBar = () => {
           <ul className="menu menu-horizontal px-1 space-x-2">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <div className="flex gap-2">
-            <Link to="/login" className="btn btn-sm md:btn-md primary-btn">
-              <AiOutlineLogin className="text-xl"></AiOutlineLogin> Login
-            </Link>
-            <Link to="/sign-up" className="btn btn-sm md:btn-md secondary-btn">
-              <FaUserPlus className="text-xl"></FaUserPlus> Register
-            </Link>
+          <div className="flex gap-2 items-center">
+            {user && (
+              <div className="avatar online placeholder">
+                <div className="bg-neutral text-neutral-content w-10 rounded-full">
+                  <span className="text-xl">AI</span>
+                </div>
+              </div>
+            )}
+            {user && (
+              <GoSignOut
+                className="text-2xl"
+                onClick={handleLogout}
+              ></GoSignOut>
+            )}
+            {!user && (
+              <Link to="/login" className="btn btn-sm md:btn-md primary-btn">
+                <AiOutlineLogin className="text-xl"></AiOutlineLogin> Login
+              </Link>
+            )}
+            {!user && (
+              <Link
+                to="/register"
+                className="btn btn-sm md:btn-md secondary-btn"
+              >
+                <FaUserPlus className="text-xl"></FaUserPlus> Register
+              </Link>
+            )}
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.3",
     "aos": "^2.3.4",
+    "firebase": "^11.3.1",
     "framer-motion": "^12.4.1",
     "localforage": "^1.10.0",
     "match-sorter": "^8.0.0",
@@ -25,6 +26,7 @@
     "react-tooltip": "^5.28.0",
     "react-ts-typewriter": "^0.1.8-b",
     "sort-by": "^1.2.0",
+    "sweetalert2": "^11.17.2",
     "swiper": "^11.2.2",
     "tailwindcss": "^4.0.3"
   },

@@ -7,7 +7,6 @@ import { FaFilter } from "react-icons/fa";
 
 const Blogs = () => {
   const [isFilterView, setIsFilterView] = useState(false);
-  console.log(isFilterView);
   return (
     <div className="mt-20 scroll-smooth">
       {/* section title / cover  */}

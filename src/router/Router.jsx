@@ -7,6 +7,7 @@ import Exams from "../pages/exams/Exams";
 import Blogs from "../pages/blogs/Blogs";
 import Login from "../pages/Login/Login";
 import CommingSoon from "../components/commingSoon/CommingSoon";
+import Register from "../pages/Register/Register";
 
 export const router = createBrowserRouter([
   {
@@ -23,8 +24,8 @@ export const router = createBrowserRouter([
         element: <Login></Login>,
       },
       {
-        path: "/sign-up",
-        element: <CommingSoon></CommingSoon>,
+        path: "/register",
+        element: <Register></Register>,
       },
       {
         path: "/exams",
