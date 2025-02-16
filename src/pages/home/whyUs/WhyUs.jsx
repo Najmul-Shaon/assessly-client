@@ -1,6 +1,7 @@
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import whyImg from "../../../assets/choose-thumb-1.png";
 import { Link } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa";
 const WhyUs = () => {
   return (
     <div className=" mt-24 bg-secondaryColor py-12">
@@ -119,7 +120,7 @@ const WhyUs = () => {
             {/* action section  */}
             <div className="mt-4">
               <Link>
-                <button className="btn primary-btn">Take Challange Now</button>
+                <button className="btn primary-btn"><span>Take Challange Now</span> <FaArrowRight /></button>
               </Link>
             </div>
           </div>

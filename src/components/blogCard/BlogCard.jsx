@@ -1,5 +1,5 @@
 import { CiCalendarDate } from "react-icons/ci";
-import { FaPen } from "react-icons/fa";
+import { FaArrowRight, FaPen } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
 import { Link } from "react-router-dom";
 
@@ -59,8 +59,8 @@ const BlogCard = () => {
 
         {/* todo: make exam id dynamic  */}
         <Link to={`/exam/purchase/1`}>
-          <button className="btn primary-btn my-4 w-full">
-            Read Now
+          <button className="btn primary-btn my-4">
+            <span>Read Now</span> <FaArrowRight />
           </button>
         </Link>
       </div>

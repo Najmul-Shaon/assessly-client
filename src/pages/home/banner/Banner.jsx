@@ -1,3 +1,4 @@
+import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Typewriter from "react-ts-typewriter";
 
@@ -41,7 +42,7 @@ const Banner = () => {
 
       <Link to="/exams">
         <button className="mt-6 btn btn-lg primary-btn">
-          Take Challange Now
+          <span>Take Challange Now</span> <FaArrowRight />
         </button>
       </Link>
     </div>

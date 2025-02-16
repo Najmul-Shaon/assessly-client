@@ -1,4 +1,4 @@
-import { FaUsers } from "react-icons/fa";
+import { FaArrowRight, FaUsers } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
@@ -6,11 +6,13 @@ import { Tooltip } from "react-tooltip";
 const ExamCard = () => {
   return (
     <div className="bg-primaryColor/10 rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primaryColor/40">
-      <img
-        className="w-full h-48 object-cover"
-        src="https://images.pexels.com/photos/4492137/pexels-photo-4492137.jpeg"
-        alt="Course"
-      />
+      <Link to={`/exam/details/1`}>
+        <img
+          className="w-full h-48 object-cover"
+          src="https://images.pexels.com/photos/4492137/pexels-photo-4492137.jpeg"
+          alt="Course"
+        />
+      </Link>
       <div className="p-4">
         <div className="flex gap-2 mb-2">
           <span className="bg-green-100 text-green-700 text-xs font-medium px-3 py-1 rounded-md">
@@ -24,15 +26,6 @@ const ExamCard = () => {
           Beginner Diploma In Basic English Grammar - Better Search Rang!
         </h3>
         <div className="mt-3 flex items-center justify-between">
-          {/* <div
-            className="flex items-center text-footer.text.color text-sm"
-            data-tooltip-id="reviews"
-            data-tooltip-place="top-end"
-            data-tooltip-content="Reviews"
-          >
-            <span className="flex ml-1 text-primaryColor">★★★☆☆</span>
-            <span className="text-textColor ml-1">(125)</span>
-          </div> */}
           <div
             className="flex items-center gap-1"
             data-tooltip-id="takeChallange"
@@ -55,15 +48,22 @@ const ExamCard = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        {/* <div className="grid grid-cols-2 gap-4"> */}
+        {/* todo: make exam id dynamic  */}
+        {/* <Link to={`/exam/details/1`}>
+            <button className="btn secondary-btn my-4 w-full">Details</button>
+          </Link> */}
+        {/* todo: make exam id dynamic  */}
+        {/* <Link to={`/exam/purchase/1`}>
+            <button className="btn primary-btn my-4 w-full">Enroll Now</button>
+          </Link>
+        </div> */}
+        <div>
           {/* todo: make exam id dynamic  */}
           <Link to={`/exam/details/1`}>
-            <button className="btn secondary-btn my-4 w-full">Details</button>
-          </Link>
-          {/* todo: make exam id dynamic  */}
-          <Link to={`/exam/purchase/1`}>
-            <button className="btn primary-btn my-4 w-full">
-              Enroll Now
+            <button className="btn primary-btn my-4">
+              <span>Enroll Now</span>
+              <FaArrowRight />
             </button>
           </Link>
         </div>

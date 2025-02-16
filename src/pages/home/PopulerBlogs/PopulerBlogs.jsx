@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import BlogCard from "../../../components/blogCard/BlogCard";
+import { FaArrowRight } from "react-icons/fa";
 
 const PopulerBlogs = () => {
   return (
@@ -25,7 +26,7 @@ const PopulerBlogs = () => {
         <div className="flex items-center justify-center mt-10">
           <Link to="/blogs">
             <button className="btn primary-btn shadow-lg shadow-primaryColor/60">
-              Read More
+              <span>Read More</span> <FaArrowRight />
             </button>
           </Link>
         </div>

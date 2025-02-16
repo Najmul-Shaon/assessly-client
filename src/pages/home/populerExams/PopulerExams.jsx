@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import ExamCard from "../../../components/examCard/ExamCard";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
+import { FaArrowRight } from "react-icons/fa";
 
 const PopulerExams = () => {
   return (
@@ -24,7 +25,7 @@ const PopulerExams = () => {
       <div className="flex items-center justify-center my-10">
         <Link to="/exams">
           <button className="btn primary-btn shadow-lg border-none shadow-primaryColor/60">
-            View All
+            <span>View All</span> <FaArrowRight></FaArrowRight>
           </button>
         </Link>
       </div>
