@@ -102,16 +102,10 @@ const NavBar = () => {
         </div>
         <div className="navbar-end">
           <div className="flex gap-2">
-            <Link
-              to="/login"
-              className="btn btn-sm md:btn-md primary-btn"
-            >
+            <Link to="/login" className="btn btn-sm md:btn-md primary-btn">
               <AiOutlineLogin className="text-xl"></AiOutlineLogin> Login
             </Link>
-            <Link
-              to="/register"
-              className="btn btn-sm md:btn-md secondary-btn"
-            >
+            <Link to="/sign-up" className="btn btn-sm md:btn-md secondary-btn">
               <FaUserPlus className="text-xl"></FaUserPlus> Register
             </Link>
           </div>
