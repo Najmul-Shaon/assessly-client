@@ -110,7 +110,7 @@ const NavBar = () => {
           <ul className="menu menu-horizontal px-1 space-x-2">{navLinks}</ul>
         </div>
         <div className="navbar-end">
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center relative">
             {user && (
               <div
                 onClick={() => setIsDashboardView(!isDashboardView)}
@@ -128,7 +128,8 @@ const NavBar = () => {
             )}
             {user && isDashboardView && (
               <>
-                <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-18 md:top-20 right-10">
+                {/* <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 w-52 z-50"> */}
+                <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 z-50">
                   <ul>
                     <li>Dashboard</li>
                     <li>Home</li>
