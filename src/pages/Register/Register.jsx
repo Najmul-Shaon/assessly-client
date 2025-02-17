@@ -2,14 +2,22 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash, FaLock, FaUser } from "react-icons/fa6";
 import registerImg from "../../assets/signup.gif";
-import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { MdEmail } from "react-icons/md";
+import useAxiosPublic from "../../Hooks/axiosPublic";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/axiosSecure";
+import SocialLogin from "../../shared/socialLogin/SocialLogin";
 
+const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
+const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 export default function Register() {
-  const { createUser } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const { createUser, updateUserProfile } = useAuth();
+  const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
   const {
     register,
@@ -18,17 +26,66 @@ export default function Register() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    createUser(data?.email, data?.password)
-      .then((result) => {
-        const loggedUser = result.user;
-        reset();
-        console.log(loggedUser);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log(data);
+  const onSubmit = async (data) => {
+    const userImg = { image: data.userImage[0] };
+    // image upload to imgbb and then get an url
+    const res = await axiosPublic.post(imgHostingApi, userImg, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    if (res.data.success) {
+      createUser(data?.email, data?.password)
+        .then(() => {
+          updateUserProfile(data?.userName, res?.data?.data?.display_url)
+            .then(() => {
+              const userInfo = {
+                userName: data?.userName,
+                userImg: res?.data?.data?.display_url,
+                userEmail: data?.email,
+                userRole: "user",
+              };
+              axiosSecure
+                .post("/create-user", userInfo)
+                .then((res) => {
+                  console.log("post res from db", res.data);
+                  if (res.data.insertedId) {
+                    reset();
+                    Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: "Welcome to Assessly!",
+                      showConfirmButton: false,
+                      timer: 1000,
+                    });
+                    navigate("/");
+                  }
+                })
+                .catch(() => {
+                  Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "An Error Occured.",
+                    showConfirmButton: false,
+                    timer: 1000,
+                  });
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error.code);
+          if (error.code === "auth/email-already-in-use") {
+            Swal.fire({
+              title: "Opps!",
+              text: "Already have an account with this email.",
+              icon: "error",
+            });
+          }
+        });
+    }
   };
 
   return (
@@ -144,12 +201,7 @@ export default function Register() {
               </p>
             </div>
           </form>
-          <div className="divider">or</div>
-          <div className="flex justify-center">
-            <button className="btn btn-outline border-textColor/50 hover:bg-primaryColor hover:text-white">
-              <FcGoogle size={20} /> Login with Google
-            </button>
-          </div>
+          <SocialLogin />
         </motion.div>
       </div>
     </div>

@@ -12,6 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.0.3",
     "aos": "^2.3.4",
+    "axios": "^1.7.9",
     "firebase": "^11.3.1",
     "framer-motion": "^12.4.1",
     "localforage": "^1.10.0",

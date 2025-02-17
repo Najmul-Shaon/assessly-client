@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa6";
 import loginImg from "../../assets/login.gif";
-import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { MdEmail } from "react-icons/md";
 import Swal from "sweetalert2";
+import SocialLogin from "../../shared/socialLogin/SocialLogin";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -128,12 +128,8 @@ export default function Login() {
               </p>
             </div>
           </form>
-          <div className="divider">or</div>
-          <div className="flex justify-center">
-            <button className="btn btn-outline border-textColor/50 hover:bg-primaryColor hover:text-white">
-              <FcGoogle size={20} /> Login with Google
-            </button>
-          </div>
+          
+          <SocialLogin />
         </motion.div>
       </div>
     </div>
