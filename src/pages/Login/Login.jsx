@@ -3,24 +3,40 @@ import { motion } from "framer-motion";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa6";
 import loginImg from "../../assets/login.gif";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { MdEmail } from "react-icons/md";
+import Swal from "sweetalert2";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+
   const { login } = useAuth();
   const [showPass, setShowPass] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
     login(data?.email, data?.password)
       .then((result) => {
         const user = result.user;
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Welcome Back!",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        reset();
+        navigate(from, { replace: true });
         console.log(user);
       })
       .catch((error) => {

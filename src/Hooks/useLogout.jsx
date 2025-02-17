@@ -5,12 +5,12 @@ const useLogout = () => {
   const { logout } = useAuth();
   const handleLogout = () => {
     Swal.fire({
-      title: "Are you sure to log out?",
+      title: "Sure you want to log out?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#008080",
       cancelButtonColor: "#ff6f61",
-      confirmButtonText: "Yes!",
+      confirmButtonText: "Proceed",
     }).then((result) => {
       if (result.isConfirmed) {
         logout()
@@ -18,6 +18,8 @@ const useLogout = () => {
             Swal.fire({
               text: "Successfully logged out.",
               icon: "success",
+              showConfirmButton: false,
+              timer: 1000,
             });
           })
           .catch(() => {

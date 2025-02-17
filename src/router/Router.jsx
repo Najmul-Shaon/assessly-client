@@ -6,8 +6,8 @@ import Home from "../pages/home/Home";
 import Exams from "../pages/exams/Exams";
 import Blogs from "../pages/blogs/Blogs";
 import Login from "../pages/Login/Login";
-import CommingSoon from "../components/commingSoon/CommingSoon";
 import Register from "../pages/Register/Register";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {

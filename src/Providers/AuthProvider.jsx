@@ -13,7 +13,7 @@ import { app } from "../firebase/firebase.config";
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // to create a new user
   const createUser = (email, pass) => {
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   // to login
   const login = (email, pass) => {
     setLoading(true);
-    return signInWithEmailAndPassword(email, pass);
+    return signInWithEmailAndPassword(auth, email, pass);
   };
 
   //  to logout
