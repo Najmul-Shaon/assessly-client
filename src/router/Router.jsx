@@ -7,7 +7,6 @@ import Exams from "../pages/exams/Exams";
 import Blogs from "../pages/blogs/Blogs";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
-import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {

@@ -5,9 +5,13 @@ import { FaUserPlus } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
 import { GoSignOut } from "react-icons/go";
 import useLogout from "../../Hooks/useLogout";
+import { FaAngleDown } from "react-icons/fa6";
+import { useState } from "react";
 
 const NavBar = () => {
   const { user } = useAuth();
+  console.log("user from nav", user);
+  const [isDashboardView, setIsDashboardView] = useState(false);
   const handleLogout = useLogout();
   const navLinks = (
     <>
@@ -108,11 +112,39 @@ const NavBar = () => {
         <div className="navbar-end">
           <div className="flex gap-2 items-center">
             {user && (
-              <div className="avatar online placeholder">
-                <div className="bg-neutral text-neutral-content w-10 rounded-full">
-                  <span className="text-xl">AI</span>
+              <div
+                onClick={() => setIsDashboardView(!isDashboardView)}
+                className="flex items-center gap-4"
+              >
+                <div className="avatar">
+                  <div className="ring-primary ring-offset-base-100 w-6 rounded-full ring ring-offset-2">
+                    <img src={user?.photoURL} />
+                  </div>
                 </div>
+                <span>
+                  <FaAngleDown />
+                </span>
               </div>
+            )}
+            {user && isDashboardView && (
+              <>
+                <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-18 md:top-20 right-10">
+                  <ul>
+                    <li>Dashboard</li>
+                    <li>Home</li>
+                    <li>About</li>
+                    <li>Contact</li>
+                  </ul>
+                </div>
+              </>
+            )}
+            {isDashboardView && (
+              <>
+                <div
+                  onClick={() => setIsDashboardView(false)}
+                  className="fixed inset-0 z-60"
+                ></div>
+              </>
             )}
             {user && (
               <GoSignOut
