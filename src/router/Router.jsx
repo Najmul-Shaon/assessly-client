@@ -7,6 +7,8 @@ import Exams from "../pages/exams/Exams";
 import Blogs from "../pages/blogs/Blogs";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import ExamDetails from "../pages/exams/ExamDetails";
+import BlogDetails from "../pages/blogs/BlogDetails";
 
 export const router = createBrowserRouter([
   {
@@ -16,27 +18,35 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home></Home>,
+        element: <Home />,
       },
       {
         path: "/login",
-        element: <Login></Login>,
+        element: <Login />,
       },
       {
         path: "/register",
-        element: <Register></Register>,
+        element: <Register />,
       },
       {
         path: "/exams",
-        element: <Exams></Exams>,
+        element: <Exams />,
       },
       {
-        path: "/about",
-        element: <About></About>,
+        path: "/exam/details/:id",
+        element: <ExamDetails />,
       },
       {
         path: "/blogs",
-        element: <Blogs></Blogs>,
+        element: <Blogs />,
+      },
+      {
+        path: "/blog/details/:id",
+        element: <BlogDetails />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },

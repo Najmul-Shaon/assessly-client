@@ -1,7 +1,6 @@
 import { FaArrowRight, FaUsers } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { Tooltip } from "react-tooltip";
 
 const ExamCard = () => {
   return (
@@ -48,16 +47,6 @@ const ExamCard = () => {
           </div>
         </div>
 
-        {/* <div className="grid grid-cols-2 gap-4"> */}
-        {/* todo: make exam id dynamic  */}
-        {/* <Link to={`/exam/details/1`}>
-            <button className="btn secondary-btn my-4 w-full">Details</button>
-          </Link> */}
-        {/* todo: make exam id dynamic  */}
-        {/* <Link to={`/exam/purchase/1`}>
-            <button className="btn primary-btn my-4 w-full">Enroll Now</button>
-          </Link>
-        </div> */}
         <div>
           {/* todo: make exam id dynamic  */}
           <Link to={`/exam/details/1`}>
@@ -68,9 +57,6 @@ const ExamCard = () => {
           </Link>
         </div>
       </div>
-      <Tooltip id="price" />
-      <Tooltip id="takeChallange" />
-      <Tooltip id="reviews" />
     </div>
   );
 };

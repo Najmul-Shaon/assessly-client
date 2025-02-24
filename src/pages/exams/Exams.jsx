@@ -40,7 +40,7 @@ const Exams = () => {
         {/* exam card area  */}
         <div className="col-span-12 lg:col-span-9">
           {/* sorting area */}
-          <div className="flex justify-between lg:justify-end gap-6 items-center bg-secondaryColor p-4 rounded-xl">
+          <div className="flex justify-between lg:justify-end gap-6 items-center bg-primaryColor/10 p-4 rounded-xl">
             {/* filter section for small and medium devices  */}
             <div className="inline lg:hidden">
               <span
