@@ -31,7 +31,7 @@ const Exams = () => {
           className="fixed inset-0 bg-primaryColor opacity-50 lg:hidden z-30"
         ></div>
       )}
-      <div className="grid grid-cols-12 max-w-screen-xl mx-auto px-4 mt-12 gap-6">
+      <div className="grid grid-cols-12 max-w-screen-2xl mx-auto px-4 mt-12 gap-6">
         {/* filter area  */}
         <div className="lg:col-span-3 hidden lg:inline">
           <FilterArea></FilterArea>
@@ -106,7 +106,7 @@ const Exams = () => {
         </div>
       </div>
       {/* suggestion section  */}
-      {/* <div className="mt-12 max-w-screen-xl mx-auto px-4">
+      {/* <div className="mt-12 max-w-screen-2xl mx-auto px-4">
         <div className="divider font-bold text-primaryColor text-2xl mb-8">
           Similar Challanges
         </div>

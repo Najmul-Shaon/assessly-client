@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 const WhyUs = () => {
   return (
     <div className=" mt-24 bg-secondaryColor py-12">
-      <div className="max-w-screen-xl mx-auto px-4">
+      <div className="max-w-screen-2xl mx-auto px-4">
         <SectionTitle
           header={"why Assessly"}
           subHeader={"Effortless Online Exams, Accurate Results"}
@@ -120,7 +120,9 @@ const WhyUs = () => {
             {/* action section  */}
             <div className="mt-4">
               <Link>
-                <button className="btn primary-btn"><span>Take Challange Now</span> <FaArrowRight /></button>
+                <button className="btn primary-btn">
+                  <span>Take Challange Now</span> <FaArrowRight />
+                </button>
               </Link>
             </div>
           </div>

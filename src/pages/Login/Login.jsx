@@ -46,7 +46,7 @@ export default function Login() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-24 container mx-auto px-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center mt-24 max-w-screen-2xl mx-auto px-4">
       <div className="order-2 md:order-none hidden md:inline">
         <img
           className="flex items-center justify-center"
@@ -54,7 +54,7 @@ export default function Login() {
           alt="login image"
         />
       </div>
-      <div className="flex items-center justify-center order-1 md:order-none">
+      <div className="flex items-center justify-end order-1 md:order-none">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -128,7 +128,7 @@ export default function Login() {
               </p>
             </div>
           </form>
-          
+
           <SocialLogin />
         </motion.div>
       </div>

@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-secondaryColor dark:bg-gray-900 mt-24">
       <div className="mx-auto w-full ">
-        <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 max-w-screen-xl mx-auto">
+        <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4 max-w-screen-2xl mx-auto">
           <div>
             <h2 className="mb-6 text-sm font-semibold text-primaryColor uppercase font-dancing_script">
               Assessly
@@ -120,7 +120,7 @@ const Footer = () => {
         </div>
         {/* social items  */}
         <div className="bg-gray-300 dark:bg-gray-700">
-          <div className="px-4 py-6 flex flex-col md:flex-row items-center md:items-center md:justify-between max-w-screen-xl mx-auto">
+          <div className="px-4 py-6 flex flex-col md:flex-row items-center md:items-center md:justify-between max-w-screen-2xl mx-auto">
             <span className="text-sm text-footerTextColor sm:text-center">
               © {new Date().getFullYear()} Assessly™. All Rights Reserved.
             </span>

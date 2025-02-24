@@ -9,7 +9,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 const Reviews = () => {
   return (
-    <div className="mt-24 max-w-screen-xl mx-auto px-4">
+    <div className="mt-24 max-w-screen-2xl mx-auto px-4">
       <Swiper
         slidesPerView={3}
         spaceBetween={30}

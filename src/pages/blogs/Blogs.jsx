@@ -33,7 +33,7 @@ const Blogs = () => {
         ></div>
       )}
       {/*maintain max width section  */}
-      <div className="max-w-screen-xl mx-auto px-4">
+      <div className="max-w-screen-2xl mx-auto px-4">
         <div className="mt-8 flex items-center lg:justify-end justify-between">
           {/* filter section for small and medium devices  */}
           <div className="inline lg:hidden">

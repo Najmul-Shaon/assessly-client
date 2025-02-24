@@ -5,16 +5,18 @@ import { FaArrowRight } from "react-icons/fa";
 
 const PopulerExams = () => {
   return (
-    <div className="max-w-screen-xl mx-auto mt-24 px-4">
+    <div className="max-w-screen-2xl mx-auto mt-24 px-4">
       <SectionTitle
         header={"Populer Exams"}
         subHeader={"Top Exams That Shape Your Future"}
       ></SectionTitle>
       <div
         // data-aos="zoom-out-up"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12"
       >
         {/* todo: make render exam card data from db  */}
+        <ExamCard></ExamCard>
+        <ExamCard></ExamCard>
         <ExamCard></ExamCard>
         <ExamCard></ExamCard>
         <ExamCard></ExamCard>

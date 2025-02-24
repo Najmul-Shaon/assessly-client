@@ -3,7 +3,7 @@ import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 
 const Highliights = () => {
   return (
-    <div className="mt-24 max-w-screen-xl mx-auto px-4">
+    <div className="mt-24 max-w-screen-2xl mx-auto px-4">
       <SectionTitle
         header={"Key Stats & Insights"}
         subHeader={"Stay updated with the latest exam stats and progress"}
