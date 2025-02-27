@@ -1,4 +1,60 @@
 const BlogDetails = () => {
+  // ****************************
+  // const blogData = {
+  //   id: 1,
+  //   thumbnail: "https://source.unsplash.com/800x400/?education,books",
+  //   title: "The Importance of Lifelong Learning",
+  //   summary:
+  //     "Learning doesn’t stop after school. Discover why lifelong education is key to personal and professional growth.",
+  //   author: "John Doe",
+  //   authorImage: "https://source.unsplash.com/100x100/?person",
+  //   authorBio:
+  //     "An educator and writer passionate about lifelong learning and personal growth.",
+  //   date: "2025-02-20",
+  //   readingTime: "8 min",
+  //   toc: [
+  //     { title: "Why Lifelong Learning Matters", anchor: "why-learning" },
+  //     { title: "Key Benefits of Continuous Learning", anchor: "benefits" },
+  //     { title: "How to Start Your Learning Journey", anchor: "how-to-start" },
+  //   ],
+  //   content: [
+  //     {
+  //       anchor: "why-learning",
+  //       heading: "Why Lifelong Learning Matters",
+  //       text: "Education isn't just about getting a degree. It’s about constantly evolving, staying curious, and adapting to new challenges.",
+  //     },
+  //     {
+  //       anchor: "benefits",
+  //       heading: "Key Benefits of Continuous Learning",
+  //       text: "- Keeps your skills up-to-date in a rapidly changing world.\n- Boosts confidence and career opportunities.\n- Enhances problem-solving and critical thinking skills.",
+  //     },
+  //     {
+  //       anchor: "how-to-start",
+  //       heading: "How to Start Your Learning Journey",
+  //       text: "- Set learning goals based on your interests.\n- Explore online courses, books, and podcasts.\n- Apply what you learn through practice and teaching others.",
+  //       quote:
+  //         "The beautiful thing about learning is that no one can take it away from you. – B.B. King",
+  //     },
+  //   ],
+  //   tags: ["Education", "LifelongLearning", "PersonalGrowth"],
+  //   relatedArticles: [
+  //     { id: 2, title: "The Power of Online Learning" },
+  //     { id: 3, title: "Developing a Growth Mindset" },
+  //     { id: 4, title: "Top Free Educational Resources" },
+  //   ],
+  //   comments: [
+  //     {
+  //       user: "Alice Smith",
+  //       text: "Great insights! I love the emphasis on continuous learning.",
+  //     },
+  //     {
+  //       user: "David Johnson",
+  //       text: "Thanks for the tips! I'll start setting my learning goals today.",
+  //     },
+  //   ],
+  // };
+
+  // ****************************
   return (
     <div className="mt-20 bg-secondaryColor min-h-screen flex justify-center py-8">
       <div className="max-w-5xl w-full bg-white rounded-lg shadow-xl p-8">

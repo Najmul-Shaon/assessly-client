@@ -11,7 +11,7 @@ const ExamDetails = () => {
             <img
               src="https://images.pexels.com/photos/4492137/pexels-photo-4492137.jpeg"
               alt="exam.title"
-              className="w-32 h-32 md:w-96 md:h-48 object-cover rounded-lg shadow-lg mb-4 md:mb-0"
+              className="w-full h-32 md:w-96 md:h-48 object-cover rounded-lg shadow-lg mb-4 md:mb-0"
             />
 
             <div className="md:ml-6 text-center md:text-left">

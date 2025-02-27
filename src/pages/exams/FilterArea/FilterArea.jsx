@@ -1,9 +1,10 @@
 
 import { FaFilter } from "react-icons/fa6";
 
+
 const FilterArea = () => {
   return (
-    <div className="bg-primaryColor/10 border border-gray-300 rounded-2xl p-6 min-w-48 max-w-64">
+    <div className="bg-[#0080801A] border border-gray-300 rounded-2xl p-6 min-w-48 max-w-64">
       <div>
         <FaFilter className="inline-flex me-2 text-primaryColor"></FaFilter>{" "}
         <span className="font-bold">Filter by:</span>
