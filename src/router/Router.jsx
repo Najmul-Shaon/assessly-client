@@ -10,6 +10,8 @@ import Register from "../pages/Register/Register";
 import ExamDetails from "../pages/exams/ExamDetails";
 import BlogDetails from "../pages/blogs/BlogDetails";
 import Dashboard from "../layouts/Dashboard";
+import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
+import CommingSoon from "../components/commingSoon/CommingSoon";
 
 export const router = createBrowserRouter([
   {
@@ -57,5 +59,23 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <Dashboard />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "admin-home",
+        element: <AdminHome />,
+      },
+      {
+        path: "manage-exams",
+        element: <CommingSoon />,
+      },
+      {
+        path: "manage-users",
+        element: <CommingSoon />,
+      },
+      {
+        path: "manage-questions",
+        element: <CommingSoon />,
+      },
+    ],
   },
 ]);

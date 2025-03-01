@@ -7,12 +7,15 @@ import { GoSignOut } from "react-icons/go";
 import useLogout from "../../Hooks/useLogout";
 import { FaAngleDown } from "react-icons/fa6";
 import { useState } from "react";
+import useAdmin from "../../Hooks/useAdmin";
 
 const NavBar = () => {
   const { user } = useAuth();
   console.log("user from nav", user);
   const [isDashboardView, setIsDashboardView] = useState(false);
   const handleLogout = useLogout();
+  const { isAdmin } = useAdmin();
+  console.log(isAdmin);
   const navLinks = (
     <>
       <li>
@@ -129,13 +132,24 @@ const NavBar = () => {
             {user && isDashboardView && (
               <>
                 {/* <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 w-52 z-50"> */}
-                <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 z-100">
+                <div className="bg-white text-textColor shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 z-100 min-w-[130px]">
                   <ul>
-                    <Link to="/dashboard">
-                      <li>Dashboard</li>
-                    </Link>
+                    <li>
+                      <Link
+                        to={
+                          isAdmin
+                            ? "/dashboard/admin-home"
+                            : "/dashboard/user-home"
+                        }
+                        className="hover:text-primaryColor"
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
 
-                    <li>Home</li>
+                    <li>
+                      <Link>Dashboard2</Link>
+                    </li>
                     <li>About</li>
                     <li>Contact</li>
                   </ul>
