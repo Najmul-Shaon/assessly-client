@@ -20,7 +20,7 @@ const DashboardNavbar = ({ toggleSidebar }) => {
       </button>
 
       <h1 className="text-xl font-bold">
-        Assessly {isAdmin ? "Admin" : "User"} || <span className="text-primaryColor">{user.displayName}</span>
+        Assessly {isAdmin ? "Admin" : "User"} || <span className="text-primaryColor">{user?.displayName}</span>
       </h1>
 
       <div className="flex items-center gap-4">

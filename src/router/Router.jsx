@@ -12,6 +12,7 @@ import BlogDetails from "../pages/blogs/BlogDetails";
 import Dashboard from "../layouts/Dashboard";
 import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
 import CommingSoon from "../components/commingSoon/CommingSoon";
+import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
 
 export const router = createBrowserRouter([
   {
@@ -70,7 +71,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "manage-users",
-        element: <CommingSoon />,
+        element: <ManageUsers />,
       },
       {
         path: "manage-questions",
