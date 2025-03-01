@@ -19,7 +19,7 @@ const DashboardNavbar = ({ toggleSidebar }) => {
         <FaBars className="text-2xl" />
       </button>
 
-      <h1 className="text-xl font-bold">
+      <h1 className="text-md font-bold">
         Assessly {isAdmin ? "Admin" : "User"} || <span className="text-primaryColor">{user?.displayName}</span>
       </h1>
 

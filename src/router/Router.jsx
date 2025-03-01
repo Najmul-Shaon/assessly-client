@@ -13,6 +13,8 @@ import Dashboard from "../layouts/Dashboard";
 import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
 import CommingSoon from "../components/commingSoon/CommingSoon";
 import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
+import AllExams from "../Dashboard/Admin/ManageExams/AllExams";
+import AddExam from "../Dashboard/Admin/ManageExams/AddExam";
 
 export const router = createBrowserRouter([
   {
@@ -66,16 +68,20 @@ export const router = createBrowserRouter([
         element: <AdminHome />,
       },
       {
-        path: "manage-exams",
+        path: "all-exams",
+        element: <AllExams />,
+      },
+      {
+        path: "add-exam",
+        element: <AddExam />,
+      },
+      {
+        path: "manage-questions",
         element: <CommingSoon />,
       },
       {
         path: "manage-users",
         element: <ManageUsers />,
-      },
-      {
-        path: "manage-questions",
-        element: <CommingSoon />,
       },
     ],
   },

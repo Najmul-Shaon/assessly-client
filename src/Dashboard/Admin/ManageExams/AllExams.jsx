@@ -1,0 +1,52 @@
+import { useQuery } from "@tanstack/react-query";
+import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
+import useAxiosSecure from "../../../Hooks/axiosSecure";
+
+const AllExams = () => {
+  const axiosSecure = useAxiosSecure();
+  const { data: allExams = [] } = useQuery({
+    queryKey: ["allExams"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/get/all-exams");
+      return res.data;
+    },
+  });
+  return (
+    <div>
+      <SectionTitle header={"All Exams"} />
+
+      <div className="overflow-x-auto">
+        <table className="table table-zebra">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>Sl</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Joined</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allExams.map((singleExam, i) => (
+              <tr key={singleExam?._id}>
+                <th>{i + 1}</th>
+                <td>{singleExam?.userName}</td>
+                <td>{singleExam?.userEmail}</td>
+                <td>{singleExam?.userRole}</td>
+                <td>{new Date(singleExam?.createdAt).toLocaleDateString()}</td>
+                <td>
+                  <span className="text-accentColor me-1">Delete</span>||
+                  <span className="text-primaryColor ms-1">edit</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default AllExams;

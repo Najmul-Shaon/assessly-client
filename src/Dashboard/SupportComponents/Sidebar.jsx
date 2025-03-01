@@ -2,13 +2,18 @@ import { NavLink } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { IoStatsChartOutline } from "react-icons/io5";
 import useAdmin from "../../Hooks/useAdmin";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { useState } from "react";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const { isAdmin } = useAdmin();
 
+  const [isManageExamExpand, setIsManageExamExpand] = useState(false);
+  console.log(isManageExamExpand);
+
   return (
     <div
-      className={`bg-gray-500 text-white min-h-screen p-5 fixed md:static top-0 left-0 transition-all duration-300 ${
+      className={`bg-gray-500 text-white min-h-screen p-5 fixed md:static top-0 left-0 transition-all duration-300 z-110 ${
         isSidebarOpen ? "w-64" : "w-64 md:w-64"
       } ${isSidebarOpen ? "block" : "hidden md:block"}`}
     >
@@ -46,7 +51,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
           <>
             <NavLink
               to="admin-home"
-              onClick={toggleSidebar} // Auto-close on mobile
+              onClick={toggleSidebar}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2 rounded-md transition ${
                   isActive ? " text-accentColor" : "hover:text-accentColor"
@@ -59,8 +64,11 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               Dashboard
             </NavLink>
             <NavLink
-              to="manage-exams"
-              onClick={toggleSidebar} // Auto-close on mobile
+              to="all-exams"
+              onClick={() => {
+                toggleSidebar();
+                setIsManageExamExpand(!isManageExamExpand);
+              }} // Auto-close on mobile
               className={({ isActive }) =>
                 `flex items-center gap-3 px-3 py-2 rounded-md transition ${
                   isActive ? " text-accentColor" : "hover:text-accentColor"
@@ -71,6 +79,49 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 <IoStatsChartOutline />
               </span>
               Manage Exam
+              <span className="inline-flex">
+                {isManageExamExpand ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              </span>
+            </NavLink>
+            {isManageExamExpand && (
+              <>
+                <NavLink
+                  to="all-exams"
+                  onClick={toggleSidebar} // Auto-close on mobile
+                  className={({ isActive }) =>
+                    `px-3 py-2 rounded-md transition ms-8 ${
+                      isActive ? " text-accentColor" : "hover:text-accentColor"
+                    }`
+                  }
+                >
+                  All Exam
+                </NavLink>
+                <NavLink
+                  to="add-exam"
+                  onClick={toggleSidebar} // Auto-close on mobile
+                  className={({ isActive }) =>
+                    `px-3 py-2 rounded-md transition ms-8 ${
+                      isActive ? " text-accentColor" : "hover:text-accentColor"
+                    }`
+                  }
+                >
+                  Add Exam
+                </NavLink>
+              </>
+            )}
+            <NavLink
+              to="manage-questions"
+              onClick={toggleSidebar} // Auto-close on mobile
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-3 py-2 rounded-md transition ${
+                  isActive ? " text-accentColor" : "hover:text-accentColor"
+                }`
+              }
+            >
+              <span>
+                <IoStatsChartOutline />
+              </span>
+              Manage Question
             </NavLink>
             <NavLink
               to="manage-users"
@@ -85,20 +136,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 <IoStatsChartOutline />
               </span>
               Manage User
-            </NavLink>
-            <NavLink
-              to="manage-questions"
-              onClick={toggleSidebar} // Auto-close on mobile
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-md transition ${
-                  isActive ? " text-accentColor" : "hover:text-accentColor"
-                }`
-              }
-            >
-              <span>
-                <IoStatsChartOutline />
-              </span>
-              Manage Question
             </NavLink>
           </>
         )}
