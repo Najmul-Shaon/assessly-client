@@ -18,6 +18,8 @@ const SocialLogin = () => {
           userName: res.user.displayName,
           userImg: res.user.photoURL,
           userRole: "user",
+          createdAt: new Date(),
+          modifiedAt: new Date(),
         };
         axiosPublic
           .post("/create-user", userInfo)

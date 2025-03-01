@@ -129,9 +129,12 @@ const NavBar = () => {
             {user && isDashboardView && (
               <>
                 {/* <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 w-52 z-50"> */}
-                <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 z-50">
+                <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 z-100">
                   <ul>
-                    <li>Dashboard</li>
+                    <Link to="/dashboard">
+                      <li>Dashboard</li>
+                    </Link>
+
                     <li>Home</li>
                     <li>About</li>
                     <li>Contact</li>

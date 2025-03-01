@@ -9,6 +9,7 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import ExamDetails from "../pages/exams/ExamDetails";
 import BlogDetails from "../pages/blogs/BlogDetails";
+import Dashboard from "../layouts/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -49,5 +50,12 @@ export const router = createBrowserRouter([
         element: <About />,
       },
     ],
+  },
+
+  //dashboard area
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    errorElement: <ErrorPage />,
   },
 ]);

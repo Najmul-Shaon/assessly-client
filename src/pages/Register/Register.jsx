@@ -44,6 +44,8 @@ export default function Register() {
                 userImg: res?.data?.data?.display_url,
                 userEmail: data?.email,
                 userRole: "user",
+                createdAt: new Date(),
+                modifiedAt: new Date(),
               };
               axiosSecure
                 .post("/create-user", userInfo)

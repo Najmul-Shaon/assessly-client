@@ -27,6 +27,7 @@
     "react-router-dom": "^7.1.5",
     "react-tooltip": "^5.28.0",
     "react-ts-typewriter": "^0.1.8-b",
+    "recharts": "^2.15.1",
     "sort-by": "^1.2.0",
     "sweetalert2": "^11.17.2",
     "swiper": "^11.2.2",
