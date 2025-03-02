@@ -7,11 +7,13 @@ import useAxiosSecure from "../../../Hooks/axiosSecure";
 import useAxiosPublic from "../../../Hooks/axiosPublic";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../../Hooks/useAuth";
 
 const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddExam = () => {
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const navigation = useNavigate();
@@ -39,6 +41,7 @@ const AddExam = () => {
     });
     if (res.data.success) {
       const examInfo = {
+        createdBy: user?.email,
         description: data.description,
         duration: data.duration,
         endDate: data.endDate,

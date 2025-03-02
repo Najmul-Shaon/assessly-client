@@ -11,6 +11,9 @@ const AllExams = () => {
       return res.data;
     },
   });
+
+  console.log(allExams);
+
   return (
     <div>
       <SectionTitle header={"All Exams"} />
@@ -21,10 +24,12 @@ const AllExams = () => {
           <thead>
             <tr>
               <th>Sl</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Joined</th>
+              <th>Exam Id</th>
+              <th>Title</th>
+              <th>Duration</th>
+              <th>Type</th>
+              <th>Total Marks</th>
+              <th>Create by</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -32,10 +37,12 @@ const AllExams = () => {
             {allExams.map((singleExam, i) => (
               <tr key={singleExam?._id}>
                 <th>{i + 1}</th>
-                <td>{singleExam?.userName}</td>
-                <td>{singleExam?.userEmail}</td>
-                <td>{singleExam?.userRole}</td>
-                <td>{new Date(singleExam?.createdAt).toLocaleDateString()}</td>
+                <td>{singleExam?.examId}</td>
+                <td>{singleExam?.examTitle}</td>
+                <td>{singleExam?.duration} min</td>
+                <td>{singleExam?.examType}</td>
+                <td>{singleExam?.totalMarks}</td>
+                <td>{singleExam?.createdBy}</td>
                 <td>
                   <span className="text-accentColor me-1">Delete</span>||
                   <span className="text-primaryColor ms-1">edit</span>

@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import ExamCard from "../../../components/examCard/ExamCard";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import { FaArrowRight } from "react-icons/fa";
+import useAxiosPublic from "../../../Hooks/axiosPublic";
 
 const PopulerExams = () => {
+  const axiosPublic = useAxiosPublic();
   return (
     <div className="max-w-screen-2xl mx-auto mt-24 px-4">
       <SectionTitle
