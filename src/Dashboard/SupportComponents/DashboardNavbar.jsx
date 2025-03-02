@@ -2,10 +2,13 @@ import { FaAngleDown, FaBars, FaUserPlus } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { GoSignOut } from "react-icons/go";
+import { GoChecklist, GoSignOut } from "react-icons/go";
+import { RiArticleLine } from "react-icons/ri";
+import { GrContactInfo } from "react-icons/gr";
 import { AiOutlineLogin } from "react-icons/ai";
 import useLogout from "../../Hooks/useLogout";
 import useAdmin from "../../Hooks/useAdmin";
+import { IoHomeOutline } from "react-icons/io5";
 
 const DashboardNavbar = ({ toggleSidebar }) => {
   const { user } = useAuth();
@@ -20,7 +23,8 @@ const DashboardNavbar = ({ toggleSidebar }) => {
       </button>
 
       <h1 className="text-md font-bold">
-        Assessly {isAdmin ? "Admin" : "User"} || <span className="text-primaryColor">{user?.displayName}</span>
+        Assessly {isAdmin ? "Admin" : "User"} ||{" "}
+        <span className="text-primaryColor">{user?.displayName}</span>
       </h1>
 
       <div className="flex items-center gap-4">
@@ -41,25 +45,36 @@ const DashboardNavbar = ({ toggleSidebar }) => {
         )}
         {user && isExpand && (
           <>
-           
             <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-6 z-100 min-w-[100px]">
               <ul>
                 <Link to="/">
-                  <li>Home</li>
+                  <li className="flex gap-2 items-center">
+                    <IoHomeOutline /> Home
+                  </li>
                 </Link>
                 <Link to="/exams">
-                  <li>Exams</li>
+                  <li className="flex gap-2 items-center">
+                    <GoChecklist /> Exams
+                  </li>
                 </Link>
                 <Link to="/about">
-                  <li>About</li>
+                  <li className="flex gap-2 items-center">
+                    <GrContactInfo /> About
+                  </li>
                 </Link>
                 <Link to="/blog">
-                  <li>Blog</li>
+                  <li className="flex gap-2 items-center">
+                    <RiArticleLine />
+                    Blog
+                  </li>
                 </Link>
 
                 {user && (
-                  <li>
-                    <GoSignOut onClick={handleLogout}></GoSignOut>
+                  <li
+                    className="flex gap-2 items-center"
+                    onClick={handleLogout}
+                  >
+                    <GoSignOut /> Log out
                   </li>
                 )}
               </ul>

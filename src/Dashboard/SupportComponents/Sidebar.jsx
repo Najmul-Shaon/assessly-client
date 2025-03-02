@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaUsersCog } from "react-icons/fa";
 import { IoStatsChartOutline } from "react-icons/io5";
+import { LiaClipboardSolid } from "react-icons/lia";
+import { TbCalendarQuestion } from "react-icons/tb";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
@@ -9,7 +11,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const { isAdmin } = useAdmin();
 
   const [isManageExamExpand, setIsManageExamExpand] = useState(false);
-  console.log(isManageExamExpand);
 
   return (
     <div
@@ -63,26 +64,21 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               </span>
               Dashboard
             </NavLink>
-            <NavLink
-              to="all-exams"
+            <p
+              //   to="all-exams"
               onClick={() => {
-                toggleSidebar();
                 setIsManageExamExpand(!isManageExamExpand);
               }} // Auto-close on mobile
-              className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2 rounded-md transition ${
-                  isActive ? " text-accentColor" : "hover:text-accentColor"
-                }`
-              }
+              className="flex items-center gap-3 px-3 py-2 rounded-md transition cursor-pointer"
             >
               <span>
-                <IoStatsChartOutline />
+                <LiaClipboardSolid />
               </span>
               Manage Exam
               <span className="inline-flex">
                 {isManageExamExpand ? <IoIosArrowUp /> : <IoIosArrowDown />}
               </span>
-            </NavLink>
+            </p>
             {isManageExamExpand && (
               <>
                 <NavLink
@@ -119,7 +115,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               }
             >
               <span>
-                <IoStatsChartOutline />
+                <TbCalendarQuestion />
               </span>
               Manage Question
             </NavLink>
@@ -133,7 +129,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               }
             >
               <span>
-                <IoStatsChartOutline />
+                <FaUsersCog />
               </span>
               Manage User
             </NavLink>

@@ -11,10 +11,12 @@ import ExamDetails from "../pages/exams/ExamDetails";
 import BlogDetails from "../pages/blogs/BlogDetails";
 import Dashboard from "../layouts/Dashboard";
 import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
-import CommingSoon from "../components/commingSoon/CommingSoon";
 import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
 import AllExams from "../Dashboard/Admin/ManageExams/AllExams";
 import AddExam from "../Dashboard/Admin/ManageExams/AddExam";
+import ManageQuestions from "../Dashboard/Admin/ManageQuestions/ManageQuestions";
+import IndividualQuestionDetails from "../Dashboard/Admin/ManageQuestions/IndividualQuestionDetails";
+import IndividualQuestionEdit from "../Dashboard/Admin/ManageQuestions/IndividualQuestionEdit";
 
 export const router = createBrowserRouter([
   {
@@ -77,7 +79,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "manage-questions",
-        element: <CommingSoon />,
+        element: <ManageQuestions />,
+      },
+      {
+        path: "manage-questions/details/:id",
+        element: <IndividualQuestionDetails />,
+      },
+      {
+        path: "manage-questions/edit/:id",
+        element: <IndividualQuestionEdit />,
       },
       {
         path: "manage-users",
