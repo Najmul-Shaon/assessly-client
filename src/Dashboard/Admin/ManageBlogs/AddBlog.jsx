@@ -48,6 +48,7 @@ const AddBlog = () => {
         quote: data?.quote,
         quoteAuthor: data?.quoteAuthor,
         tags: data?.tags,
+        topic: data?.topic,
       };
       axiosSecure.post("/create/blog", blogInfo).then((res) => {
         if (res.data.insertedId) {
@@ -103,15 +104,25 @@ const AddBlog = () => {
         </div>
 
         {/* Date, Author Name & Reading Time */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div>
-            <label className="block font-medium">Reading Time (min)</label>
+            <label className="block font-medium">Time (min)</label>
             <input
               type="number"
               {...register("readingTime", { required: true })}
               className="w-full border p-2 rounded"
               min="1"
               placeholder="e.g. 10"
+            />
+          </div>
+          <div>
+            <label className="block font-medium">Topic</label>
+            <input
+              type="text"
+              {...register("topic", { required: true })}
+              className="w-full border p-2 rounded"
+              min="1"
+              placeholder="e.g. Physics"
             />
           </div>
           <div>
@@ -124,7 +135,7 @@ const AddBlog = () => {
             />
           </div>
           <div>
-            <label className="block font-medium">Author Name</label>
+            <label className="block font-medium">Author</label>
             <input
               defaultValue={user?.displayName}
               type="text"

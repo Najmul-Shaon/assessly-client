@@ -4,9 +4,21 @@ import SectionTitle from "../../components/sectionTiltle/SectionTitle";
 import FilterArea from "../exams/FilterArea/FilterArea";
 import { FaRegRectangleXmark } from "react-icons/fa6";
 import { FaFilter } from "react-icons/fa";
+import useAxiosPublic from "../../Hooks/axiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const Blogs = () => {
   const [isFilterView, setIsFilterView] = useState(false);
+  const axiosPublic = useAxiosPublic();
+
+  const { data: allBlogs = [] } = useQuery({
+    queryKey: ["allBlogs"],
+    queryFn: async () => {
+      const res = await axiosPublic("/get/blogs");
+      return res.data;
+    },
+  });
+
   return (
     <div className="mt-20 scroll-smooth">
       {/* section title / cover  */}
@@ -61,13 +73,10 @@ const Blogs = () => {
             <FilterArea></FilterArea>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 col-span-12 lg:col-span-9">
-            <BlogCard></BlogCard>
-            <BlogCard></BlogCard>
-            <BlogCard></BlogCard>
-            <BlogCard></BlogCard>
-            <BlogCard></BlogCard>
-            <BlogCard></BlogCard>
-            <BlogCard></BlogCard>
+          
+            {allBlogs.map((blog) => (
+              <BlogCard key={blog?.blogId} blog={blog}></BlogCard>
+            ))}
           </div>
         </div>
         {/* pagination  */}
