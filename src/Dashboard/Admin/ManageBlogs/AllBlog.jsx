@@ -7,15 +7,15 @@ import { FaRegEdit } from "react-icons/fa";
 
 const AllBlog = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: allExams = [] } = useQuery({
-    queryKey: ["allExams"],
+  const { data: allBlogs = [] } = useQuery({
+    queryKey: ["allBlogs"],
     queryFn: async () => {
       const res = await axiosSecure.get("/get/blogs");
       return res.data;
     },
   });
 
-  console.log(allExams);
+  console.log(allBlogs);
 
   return (
     <div>
@@ -27,25 +27,23 @@ const AllBlog = () => {
           <thead>
             <tr>
               <th>Sl</th>
-              <th>Exam Id</th>
+              <th>Blog Id</th>
               <th>Title</th>
-              <th>Duration</th>
-              <th>Type</th>
-              <th>Total Marks</th>
-              <th>Create by</th>
+              <th>Read Time</th>
+              <th>Author Name</th>
+              <th>Author Email</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {allExams.map((singleExam, i) => (
-              <tr key={singleExam?._id}>
+            {allBlogs.map((singleBlog, i) => (
+              <tr key={singleBlog?._id}>
                 <th>{i + 1}</th>
-                <td>{singleExam?.examId}</td>
-                <td>{singleExam?.examTitle}</td>
-                <td>{singleExam?.duration} min</td>
-                <td>{singleExam?.examType}</td>
-                <td>{singleExam?.totalMarks}</td>
-                <td>{singleExam?.createdBy}</td>
+                <td>{singleBlog?.blogId}</td>
+                <td>{singleBlog?.title}</td>
+                <td>{singleBlog?.readingTime} min</td>
+                <td>{singleBlog?.createdAuthor}</td>
+                <td>{singleBlog?.createdBy}</td>
                 <td className="flex items-center gap-1 text-xl">
                   <span className="text-accentColor">
                     <IoTrashBinOutline />
