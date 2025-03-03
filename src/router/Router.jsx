@@ -17,6 +17,8 @@ import AddExam from "../Dashboard/Admin/ManageExams/AddExam";
 import ManageQuestions from "../Dashboard/Admin/ManageQuestions/ManageQuestions";
 import IndividualQuestionDetails from "../Dashboard/Admin/ManageQuestions/IndividualQuestionDetails";
 import IndividualQuestionEdit from "../Dashboard/Admin/ManageQuestions/IndividualQuestionEdit";
+import AllBlog from "../Dashboard/Admin/ManageBlogs/AllBlog";
+import AddBlog from "../Dashboard/Admin/ManageBlogs/AddBlog";
 
 export const router = createBrowserRouter([
   {
@@ -92,6 +94,14 @@ export const router = createBrowserRouter([
       {
         path: "manage-users",
         element: <ManageUsers />,
+      },
+      {
+        path: "all-blog",
+        element: <AllBlog />,
+      },
+      {
+        path: "add-blog",
+        element: <AddBlog />,
       },
     ],
   },

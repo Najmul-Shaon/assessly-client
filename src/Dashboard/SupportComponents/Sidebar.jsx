@@ -153,7 +153,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
             {isManageBlogExpand && (
               <>
                 <NavLink
-                  to="all-exams"
+                  to="all-blog"
                   onClick={toggleSidebar} // Auto-close on mobile
                   className={({ isActive }) =>
                     `px-3 py-2 rounded-md transition ms-8 ${
@@ -164,7 +164,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
                   All Blog
                 </NavLink>
                 <NavLink
-                  to="add-exam"
+                  to="add-blog"
                   onClick={toggleSidebar} // Auto-close on mobile
                   className={({ isActive }) =>
                     `px-3 py-2 rounded-md transition ms-8 ${
