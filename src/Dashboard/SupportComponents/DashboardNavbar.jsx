@@ -48,22 +48,34 @@ const DashboardNavbar = ({ toggleSidebar }) => {
             <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-6 z-100 min-w-[100px]">
               <ul>
                 <Link to="/">
-                  <li className="flex gap-2 items-center">
+                  <li
+                    className="flex gap-2 items-center"
+                    onClick={() => setIsExpand(false)}
+                  >
                     <IoHomeOutline /> Home
                   </li>
                 </Link>
                 <Link to="/exams">
-                  <li className="flex gap-2 items-center">
+                  <li
+                    className="flex gap-2 items-center"
+                    onClick={() => setIsExpand(false)}
+                  >
                     <GoChecklist /> Exams
                   </li>
                 </Link>
                 <Link to="/about">
-                  <li className="flex gap-2 items-center">
+                  <li
+                    className="flex gap-2 items-center"
+                    onClick={() => setIsExpand(false)}
+                  >
                     <GrContactInfo /> About
                   </li>
                 </Link>
-                <Link to="/blog">
-                  <li className="flex gap-2 items-center">
+                <Link to="/blogs">
+                  <li
+                    className="flex gap-2 items-center"
+                    onClick={() => setIsExpand(false)}
+                  >
                     <RiArticleLine />
                     Blog
                   </li>
@@ -71,8 +83,12 @@ const DashboardNavbar = ({ toggleSidebar }) => {
 
                 {user && (
                   <li
-                    className="flex gap-2 items-center"
-                    onClick={handleLogout}
+                    className="flex gap-2 items-center cursor-pointer"
+                    // onClick={handleLogout}
+                    onClick={() => {
+                      setIsExpand(false);
+                      handleLogout();
+                    }}
                   >
                     <GoSignOut /> Log out
                   </li>

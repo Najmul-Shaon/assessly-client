@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/axiosSecure";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
+import { FaRegEdit } from "react-icons/fa";
+import { IoTrashBinOutline, IoEyeOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const ManageQuestions = () => {
@@ -41,18 +43,25 @@ const ManageQuestions = () => {
                 <td>{singleExam?.examType}</td>
                 <td>{singleExam?.totalMarks}</td>
                 <td>{singleExam?.createdBy}</td>
-                <td>
-                  <span className="text-accentColor me-1">Delete</span>||
+                <td className="flex items-center gap-1 text-xl">
+                  <span className="text-accentColor">
+                    <IoTrashBinOutline />
+                  </span>
+                  ||
                   <Link
                     to={`/dashboard/manage-questions/edit/${singleExam?.examId}`}
                   >
-                    <span className="text-primaryColor ms-1">edit</span>
+                    <span className="text-primaryColor">
+                      <FaRegEdit />{" "}
+                    </span>
                   </Link>{" "}
                   ||
                   <Link
                     to={`/dashboard/manage-questions/details/${singleExam?.examId}`}
                   >
-                    <span className="text-primaryColor ms-1">View</span>
+                    <span className="text-primaryColor">
+                      <IoEyeOutline />
+                    </span>
                   </Link>
                 </td>
               </tr>

@@ -6,11 +6,13 @@ import { TbCalendarQuestion } from "react-icons/tb";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
+import { RiArticleLine } from "react-icons/ri";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const { isAdmin } = useAdmin();
 
   const [isManageExamExpand, setIsManageExamExpand] = useState(false);
+  const [isManageBlogExpand, setIsManageBlogExpand] = useState(false);
 
   return (
     <div
@@ -133,6 +135,47 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               </span>
               Manage User
             </NavLink>
+            <p
+              //   to="all-exams"
+              onClick={() => {
+                setIsManageBlogExpand(!isManageBlogExpand);
+              }} // Auto-close on mobile
+              className="flex items-center gap-3 px-3 py-2 rounded-md transition cursor-pointer"
+            >
+              <span>
+                <RiArticleLine />
+              </span>
+              Manage Blogs
+              <span className="inline-flex">
+                {isManageBlogExpand ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              </span>
+            </p>
+            {isManageBlogExpand && (
+              <>
+                <NavLink
+                  to="all-exams"
+                  onClick={toggleSidebar} // Auto-close on mobile
+                  className={({ isActive }) =>
+                    `px-3 py-2 rounded-md transition ms-8 ${
+                      isActive ? " text-accentColor" : "hover:text-accentColor"
+                    }`
+                  }
+                >
+                  All Blog
+                </NavLink>
+                <NavLink
+                  to="add-exam"
+                  onClick={toggleSidebar} // Auto-close on mobile
+                  className={({ isActive }) =>
+                    `px-3 py-2 rounded-md transition ms-8 ${
+                      isActive ? " text-accentColor" : "hover:text-accentColor"
+                    }`
+                  }
+                >
+                  Add Blog
+                </NavLink>
+              </>
+            )}
           </>
         )}
       </nav>

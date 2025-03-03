@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import useAxiosSecure from "../../../Hooks/axiosSecure";
+import { Link } from "react-router-dom";
+import { IoEyeOutline, IoTrashBinOutline } from "react-icons/io5";
+import { FaRegEdit } from "react-icons/fa";
 
 const AllExams = () => {
   const axiosSecure = useAxiosSecure();
@@ -43,9 +46,22 @@ const AllExams = () => {
                 <td>{singleExam?.examType}</td>
                 <td>{singleExam?.totalMarks}</td>
                 <td>{singleExam?.createdBy}</td>
-                <td>
-                  <span className="text-accentColor me-1">Delete</span>||
-                  <span className="text-primaryColor ms-1">edit</span>
+                <td className="flex items-center gap-1 text-xl">
+                  <span className="text-accentColor">
+                    <IoTrashBinOutline />
+                  </span>
+                  ||
+                  <Link>
+                    <span className="text-primaryColor">
+                      <FaRegEdit />{" "}
+                    </span>
+                  </Link>{" "}
+                  ||
+                  <Link>
+                    <span className="text-primaryColor">
+                      <IoEyeOutline />
+                    </span>
+                  </Link>
                 </td>
               </tr>
             ))}

@@ -29,7 +29,7 @@ const IndividualQuestionDetails = () => {
 
   return (
     <div>
-      <SectionTitle header={"Edit Exam"} />
+      <SectionTitle header={"Edit Questions"} />
       <div className="flex justify-evenly my-2">
         <p>
           <span className="font-bold">Exam Id:</span>

@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/axiosSecure";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
+import { Link } from "react-router-dom";
+import { IoTrashBinOutline } from "react-icons/io5";
+import { FaRegEdit } from "react-icons/fa";
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -35,8 +38,16 @@ const ManageUsers = () => {
                 <td>{singleUser?.userEmail}</td>
                 <td>{singleUser?.userRole}</td>
                 <td>{new Date(singleUser?.createdAt).toLocaleDateString()}</td>
-                <td>
-                  <span className="text-accentColor me-1">Delete</span>||<span className="text-primaryColor ms-1">edit</span>
+                <td className="flex items-center gap-1 text-xl">
+                  <span className="text-accentColor">
+                    <IoTrashBinOutline />
+                  </span>
+                  ||
+                  <Link>
+                    <span className="text-primaryColor">
+                      <FaRegEdit />{" "}
+                    </span>
+                  </Link>{" "}
                 </td>
               </tr>
             ))}
