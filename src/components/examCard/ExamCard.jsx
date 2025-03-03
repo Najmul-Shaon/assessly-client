@@ -1,60 +1,44 @@
-import { FaArrowRight, FaUsers } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-const ExamCard = () => {
+const ExamCard = ({ exam }) => {
+  console.log(exam);
   return (
     <div className="bg-primaryColor/10 rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primaryColor/40">
       <Link to={`/exam/details/1`}>
         <img
           className="w-full h-48 object-cover"
-          src="https://images.pexels.com/photos/4492137/pexels-photo-4492137.jpeg"
+          src={exam?.thumbnails}
           alt="Course"
         />
       </Link>
       <div className="p-4">
         <div className="flex gap-2 mb-2">
-          <span className="bg-green-100 text-green-700 text-xs font-medium px-3 py-1 rounded-md">
-            Language
-          </span>
           <span className="bg-red-100 text-red-700 text-xs font-medium px-3 py-1 rounded-md">
-            English
+            {exam?.examTopic}
           </span>
         </div>
         <h3 className="text-lg font-semibold text-gray-800">
-          Beginner Diploma In Basic English Grammar - Better Search Rang!
+          {exam?.examTitle}
         </h3>
-        <div className="mt-3 flex items-center justify-between">
-          <div
-            className="flex items-center gap-1"
-            data-tooltip-id="takeChallange"
-            data-tooltip-place="top-end"
-            data-tooltip-content="Challengers"
-          >
-            <FaUsers />
-            <span>139</span>
+
+        <div className="flex justify-between items-center">
+          <div>
+            {/* todo: make exam id dynamic  */}
+            <Link to={`/exam/details/${exam?.examId}`}>
+              <button className="btn primary-btn my-4">
+                <span>Enroll Now</span>
+                <FaArrowRight />
+              </button>
+            </Link>
           </div>
-          <div
-            className="text-xl font-bold text-accentColor flex items-center"
-            data-tooltip-id="price"
-            data-tooltip-place="top-end"
-            data-tooltip-content="price"
-          >
+          <div className="text-xl font-bold text-accentColor flex items-center">
             <span>
               <FaBangladeshiTakaSign></FaBangladeshiTakaSign>
             </span>
-            19.99
+            {exam?.fee}
           </div>
-        </div>
-
-        <div>
-          {/* todo: make exam id dynamic  */}
-          <Link to={`/exam/details/1`}>
-            <button className="btn primary-btn my-4">
-              <span>Enroll Now</span>
-              <FaArrowRight />
-            </button>
-          </Link>
         </div>
       </div>
     </div>

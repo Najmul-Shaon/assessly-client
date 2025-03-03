@@ -4,11 +4,25 @@ import FilterArea from "./FilterArea/FilterArea";
 import { FaFilter } from "react-icons/fa";
 import { useState } from "react";
 import { FaRegRectangleXmark } from "react-icons/fa6";
+import useAxiosPublic from "../../Hooks/axiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const Exams = () => {
+  const axiosPublic = useAxiosPublic();
   const [isFilterView, setIsFilterView] = useState(false);
+
+  const { data: allExams = [] } = useQuery({
+    queryKey: ["allExams"],
+    queryFn: async () => {
+      const res = await axiosPublic("/get/all-exams");
+      return res.data;
+    },
+  });
+
+  // console.log(allExams);
+
   return (
-    <div className="">
+    <div>
       <div className="mt-18 bg-primaryColor/10 py-8">
         <SectionTitle header={"All Exams"}></SectionTitle>{" "}
       </div>
@@ -88,10 +102,9 @@ const Exams = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
-            <ExamCard></ExamCard>
+            {allExams.map((exam) => (
+              <ExamCard key={exam?.examId} exam={exam}></ExamCard>
+            ))}
           </div>
           {/* </div> */}
         </div>
