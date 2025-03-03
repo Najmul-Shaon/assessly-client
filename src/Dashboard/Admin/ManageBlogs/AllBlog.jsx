@@ -10,7 +10,7 @@ const AllBlog = () => {
   const { data: allExams = [] } = useQuery({
     queryKey: ["allExams"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/get/all-exams");
+      const res = await axiosSecure.get("/get/blogs");
       return res.data;
     },
   });

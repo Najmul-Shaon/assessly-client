@@ -1,134 +1,213 @@
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
+import useAuth from "../../../Hooks/useAuth";
+import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
+import useAxiosPublic from "../../../Hooks/axiosPublic";
+import useAxiosSecure from "../../../Hooks/axiosSecure";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
+const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddBlog = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { user } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
+  const navigation = useNavigate();
+  const { register, handleSubmit, reset, control } = useForm({
+    defaultValues: {
+      content: [{ title: "", text: "" }], // Default one content section
+    },
+  });
 
-  const onSubmit = (data) => {
+  // Register dynamic fields using useFieldArray
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "content", // This should be the key in your form data
+  });
+
+  const onSubmit = async (data) => {
+    const thumbnails = { image: data.thumbnails[0] };
+    // Image upload to imgbb and then get an url
+    const res = await axiosPublic.post(imgHostingApi, thumbnails, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    if (res.data.success) {
+      const blogInfo = {
+        createdBy: user?.email,
+        createdAuthor: user?.displayName,
+        createdDate: new Date(),
+        modifiedDate: new Date(),
+        thumbnail: res?.data?.data?.display_url,
+        title: data?.title,
+        summary: data?.summary,
+        readingTime: data?.readingTime,
+        content: data?.content,
+        quote: data?.quote,
+        quoteAuthor: data?.quoteAuthor,
+        tags: data?.tags,
+      };
+      axiosSecure.post("/create/blog", blogInfo).then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Blog has been created.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          reset();
+          navigation("/dashboard/all-blog");
+        }
+      });
+    }
     console.log(data);
   };
 
   return (
-    <div className="mt-10 max-w-3xl mx-auto p-8 bg-white shadow-lg rounded-lg">
-      <h2 className="text-3xl font-semibold text-gray-800 mb-6">
-        Create a New Blog
-      </h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <SectionTitle header={"Create a blog"} />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* Thumbnail Upload */}
+        <div>
+          <label className="block font-medium">Thumbnail</label>
+          <input
+            type="file"
+            {...register("thumbnails")}
+            className="w-full border border-black rounded file-input"
+            accept="image/*"
+          />
+        </div>
+
         {/* Title */}
         <div>
-          <label className="block text-gray-700 font-medium">Blog Title</label>
+          <label className="block font-medium">Title</label>
           <input
-            {...register("title", { required: "Title is required" })}
             type="text"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            {...register("title", { required: true })}
+            className="w-full border p-2 rounded"
             placeholder="Enter blog title"
           />
-          {errors.title && (
-            <p className="text-red-500 text-sm">{errors.title.message}</p>
-          )}
         </div>
 
-        {/* Author Name */}
+        {/* Summary */}
         <div>
-          <label className="block text-gray-700 font-medium">Author Name</label>
-          <input
-            {...register("author", { required: "Author name is required" })}
-            type="text"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter author name"
-          />
-          {errors.author && (
-            <p className="text-red-500 text-sm">{errors.author.message}</p>
-          )}
-        </div>
-
-        {/* Thumbnail URL */}
-        <div>
-          <label className="block text-gray-700 font-medium">
-            Thumbnail URL
-          </label>
-          <input
-            {...register("thumbnail", {
-              required: "Thumbnail URL is required",
-            })}
-            type="url"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter thumbnail image URL"
-          />
-          {errors.thumbnail && (
-            <p className="text-red-500 text-sm">{errors.thumbnail.message}</p>
-          )}
-        </div>
-
-        {/* Publish Date */}
-        <div>
-          <label className="block text-gray-700 font-medium">
-            Publish Date
-          </label>
-          <input
-            {...register("date", { required: "Date is required" })}
-            type="date"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
-          {errors.date && (
-            <p className="text-red-500 text-sm">{errors.date.message}</p>
-          )}
-        </div>
-
-        {/* Estimated Read Time */}
-        <div>
-          <label className="block text-gray-700 font-medium">
-            Estimated Read Time (minutes)
-          </label>
-          <input
-            {...register("readTime", {
-              required: "Read time is required",
-              min: 1,
-            })}
-            type="number"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter estimated read time"
-          />
-          {errors.readTime && (
-            <p className="text-red-500 text-sm">{errors.readTime.message}</p>
-          )}
-        </div>
-
-        {/* Blog Content */}
-        <div>
-          <label className="block text-gray-700 font-medium">
-            Blog Content
-          </label>
+          <label className="block font-medium">Summary</label>
           <textarea
-            {...register("content", { required: "Content is required" })}
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            rows="6"
-            placeholder="Write your blog content here..."
+            {...register("summary", { required: true })}
+            className="w-full border p-2 rounded"
+            placeholder="Enter a short summary"
           ></textarea>
-          {errors.content && (
-            <p className="text-red-500 text-sm">{errors.content.message}</p>
-          )}
+        </div>
+
+        {/* Date, Author Name & Reading Time */}
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <label className="block font-medium">Reading Time (min)</label>
+            <input
+              type="number"
+              {...register("readingTime", { required: true })}
+              className="w-full border p-2 rounded"
+              min="1"
+              placeholder="e.g. 10"
+            />
+          </div>
+          <div>
+            <label className="block font-medium">Date</label>
+            <input
+              defaultValue={new Date().toISOString().split("T")[0]}
+              disabled
+              type="date"
+              className="w-full border p-2 rounded cursor-not-allowed"
+            />
+          </div>
+          <div>
+            <label className="block font-medium">Author Name</label>
+            <input
+              defaultValue={user?.displayName}
+              type="text"
+              disabled
+              className="w-full border p-2 rounded cursor-not-allowed"
+            />
+          </div>
+        </div>
+
+        {/* Content Sections */}
+        <div>
+          <label className="block font-medium">Content Sections</label>
+          {fields.map((item, index) => (
+            <div key={item.id} className="mb-4 p-3 border rounded">
+              <input
+                type="text"
+                {...register(`content[${index}].title`)}
+                defaultValue={item.title}
+                placeholder="Section title"
+                className="w-full border p-2 rounded mb-2"
+              />
+              <textarea
+                {...register(`content[${index}].text`)}
+                defaultValue={item.text}
+                placeholder="Section content"
+                className="w-full border p-2 rounded mb-2"
+              ></textarea>
+              {index > 0 && (
+                <button
+                  type="button"
+                  onClick={() => remove(index)}
+                  className="bg-accentColor text-white px-3 rounded"
+                >
+                  ✕ Remove
+                </button>
+              )}
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() => append({ title: "", text: "" })}
+            className="mt-2 text-blue-500"
+          >
+            + Add Section
+          </button>
+        </div>
+
+        {/* Quote Section */}
+        <div>
+          <label className="block font-medium">Quote</label>
+          <textarea
+            {...register("quote")}
+            className="w-full border p-2 rounded"
+            placeholder="Enter a quote"
+          ></textarea>
+        </div>
+
+        {/* Quote Author */}
+        <div>
+          <label className="block font-medium">Quote Author</label>
+          <input
+            type="text"
+            {...register("quoteAuthor")}
+            className="w-full border p-2 rounded"
+            placeholder="Enter quote author"
+          />
         </div>
 
         {/* Tags */}
         <div>
-          <label className="block text-gray-700 font-medium">
-            Tags (comma-separated)
-          </label>
+          <label className="block font-medium">Tags (comma-separated)</label>
           <input
-            {...register("tags")}
             type="text"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. Education, Lifelong Learning, Growth"
+            {...register("tags")}
+            className="w-full border p-2 rounded"
+            placeholder="e.g. Education, LifelongLearning"
           />
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition"
+          className="w-full py-2 bg-primaryColor text-white font-semibold rounded cursor-pointer"
         >
           Publish Blog
         </button>

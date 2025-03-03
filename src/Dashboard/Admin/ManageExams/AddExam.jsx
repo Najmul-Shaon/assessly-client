@@ -32,58 +32,43 @@ const AddExam = () => {
   const watchExamType = watch("examType", "single"); // default to "single"
 
   const onSubmit = async (data) => {
-    let thumbnailUrl = ""; // Default empty string if no image is provided
-
-    // Check if the user uploaded an image
-    if (data.thumbnails?.length > 0) {
-      const thumbnails = { image: data.thumbnails[0] };
-
-      try {
-        // Upload the image to ImgBB
-        const res = await axiosPublic.post(imgHostingApi, thumbnails, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-
-        if (res.data.success) {
-          thumbnailUrl = res?.data?.data?.display_url; // Set the uploaded image URL
-        }
-      } catch (error) {
-        console.error("Image upload failed:", error);
-      }
-    }
-
-    // Construct the exam object
-    const examInfo = {
-      createdBy: user?.email,
-      description: data.description,
-      duration: data.duration,
-      endDate: data.endDate,
-      examTitle: data.examTitle,
-      examTopic: data.examTopic,
-      examType: data.examType,
-      fee: data.fee,
-      startDate: data.startDate,
-      thumbnails: thumbnailUrl, // Will be empty if no image was uploaded
-      totalMarks: data.totalMarks,
-      uniqueQuestions: data.uniqueQuestions,
-      questions,
-    };
-
-    // Store the exam data
-    axiosSecure.post("/create/exam", examInfo).then((res) => {
-      if (res.data.insertedId) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Exam has been created.",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        reset();
-        navigation("/dashboard/all-exams");
-      }
+    const thumbnails = { image: data.thumbnails[0] };
+    // image upload to imgbb and then get an url
+    const res = await axiosPublic.post(imgHostingApi, thumbnails, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
-
+    if (res.data.success) {
+      const examInfo = {
+        createdBy: user?.email,
+        description: data.description,
+        duration: data.duration,
+        endDate: data.endDate,
+        examTitle: data.examTitle,
+        examTopic: data.examTopic,
+        examType: data.examType,
+        fee: data.fee,
+        startDate: data.startDate,
+        thumbnails: res?.data?.data?.display_url,
+        totalMarks: data.totalMarks,
+        uniqueQuestions: data.uniqueQuestions,
+        questions,
+      };
+      axiosSecure.post("/create/exam", examInfo).then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Exam has been created.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          reset();
+          navigation("/dashboard/all-exams");
+        }
+      });
+    }
     console.log({ data, questions });
   };
 
@@ -149,12 +134,9 @@ const AddExam = () => {
   //   };
 
   return (
-    <div className="space-y-4">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
       <SectionTitle header={"Create Exam"} />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="p-5 space-y-4 border rounded-lg max-w-lg mx-auto"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Exam Title */}
         <div>
           <label className="block font-semibold">Exam Title:</label>
@@ -265,7 +247,7 @@ const AddExam = () => {
                 type="file"
                 accept="image/*"
                 // onChange={handleImageChange}
-                className="w-full border rounded file-input"
+                className="w-full border rounded file-input border-black"
                 {...register("thumbnails", {
                   required: "Thumbnails img is required",
                 })}
@@ -331,7 +313,7 @@ const AddExam = () => {
             type="file"
             accept=".xlsx, .xls"
             onChange={handleFileUpload}
-            className="w-full border rounded file-input"
+            className="w-full border rounded file-input border-black"
           />
         </div>
 
