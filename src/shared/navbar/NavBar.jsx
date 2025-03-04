@@ -11,11 +11,9 @@ import useAdmin from "../../Hooks/useAdmin";
 
 const NavBar = () => {
   const { user } = useAuth();
-  console.log("user from nav", user);
   const [isDashboardView, setIsDashboardView] = useState(false);
   const handleLogout = useLogout();
   const { isAdmin } = useAdmin();
-  console.log(isAdmin);
   const navLinks = (
     <>
       <li>

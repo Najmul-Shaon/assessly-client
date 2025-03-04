@@ -7,7 +7,7 @@ const ExamDetails = () => {
   const { id } = useParams();
   const axiosPublic = useAxiosPublic();
 
-  const { data: singleExam = [] } = useQuery({
+  const { data: singleExam = {} } = useQuery({
     queryKey: ["singleExam"],
     queryFn: async () => {
       const res = await axiosPublic.get(`/get/exam/${id}`);
@@ -15,7 +15,7 @@ const ExamDetails = () => {
     },
   });
 
-  console.log(singleExam);
+
   return (
     <div className="mt-20 bg-secondaryColor py-8">
       <div className="min-h-screen flex flex-col items-center justify-start">
@@ -44,7 +44,7 @@ const ExamDetails = () => {
                 </p>
                 <p>
                   <strong>Total Question:</strong>{" "}
-                  {singleExam?.questions.length}
+                  {singleExam?.questions?.length}
                 </p>
               </div>
               <Link to={`/exam/details/1`}>
