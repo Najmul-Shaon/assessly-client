@@ -14,7 +14,7 @@ const Blogs = () => {
   const { data: allBlogs = [] } = useQuery({
     queryKey: ["allBlogs"],
     queryFn: async () => {
-      const res = await axiosPublic("/get/blogs");
+      const res = await axiosPublic("/get/blogs?limit=all");
       return res.data;
     },
   });
@@ -73,7 +73,6 @@ const Blogs = () => {
             <FilterArea></FilterArea>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 col-span-12 lg:col-span-9">
-          
             {allBlogs.map((blog) => (
               <BlogCard key={blog?.blogId} blog={blog}></BlogCard>
             ))}
