@@ -15,7 +15,7 @@ const Exams = () => {
     queryKey: ["allExams"],
     queryFn: async () => {
       // const res = await axiosPublic("/get/all-exams?type=single");
-      const res = await axiosPublic("/get/all-exams?type=single");
+      const res = await axiosPublic.get("/get/all-exams?type=single");
       return res.data;
     },
   });

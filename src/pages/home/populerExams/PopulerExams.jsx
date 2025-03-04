@@ -10,7 +10,7 @@ const PopulerExams = () => {
   const { data: populerExams = [] } = useQuery({
     queryKey: ["populerExams"],
     queryFn: async () => {
-      const res = await axiosPublic("/get/all-exams?type=limit");
+      const res = await axiosPublic.get("/get/all-exams?type=limit");
       return res.data;
     },
   });

@@ -11,7 +11,7 @@ const PopulerBlogs = () => {
   const { data: populerBlogs = [] } = useQuery({
     queryKey: ["populerBlogs"],
     queryFn: async () => {
-      const res = await axiosPublic("/get/blogs?limit=8");
+      const res = await axiosPublic.get("/get/blogs?limit=8");
       return res.data;
     },
   });

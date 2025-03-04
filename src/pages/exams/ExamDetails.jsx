@@ -1,33 +1,50 @@
 import { FaArrowRight } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import useAxiosPublic from "../../Hooks/axiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
 const ExamDetails = () => {
+  const { id } = useParams();
+  const axiosPublic = useAxiosPublic();
+
+  const { data: singleExam = [] } = useQuery({
+    queryKey: ["singleExam"],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/get/exam/${id}`);
+      return res.data;
+    },
+  });
+
+  console.log(singleExam);
   return (
     <div className="mt-20 bg-secondaryColor py-8">
       <div className="min-h-screen flex flex-col items-center justify-start">
         <div className="max-w-5xl w-full bg-white rounded-lg shadow-xl p-8 mb-10">
           {/* Top section with thumbnail, key info, and enroll button */}
-          <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 items-center md:items-start md:justify-between mb-8">
             <img
-              src="https://images.pexels.com/photos/4492137/pexels-photo-4492137.jpeg"
+              src={singleExam?.thumbnails}
               alt="exam.title"
               className="w-full h-32 md:w-96 md:h-48 object-cover rounded-lg shadow-lg mb-4 md:mb-0"
             />
 
             <div className="md:ml-6 text-center md:text-left">
               <h1 className="text-3xl font-bold text-primaryColor mb-2">
-                list of essential information you might need
+                {singleExam?.examTitle}
               </h1>
               <div className="text-footerTextColor mb-4">
                 <p>
-                  <strong>Category:</strong>list of essential information you
-                  might need
+                  <strong>Topic:</strong> {singleExam?.examTopic} minutes
                 </p>
                 <p>
-                  <strong>Duration:</strong> 120 minutes
+                  <strong>Duration:</strong> {singleExam?.duration} minutes
                 </p>
                 <p>
-                  <strong>Total Marks:</strong> 100
+                  <strong>Total Marks:</strong> {singleExam?.totalMarks}
+                </p>
+                <p>
+                  <strong>Total Question:</strong>{" "}
+                  {singleExam?.questions.length}
                 </p>
               </div>
               <Link to={`/exam/details/1`}>
@@ -44,39 +61,36 @@ const ExamDetails = () => {
             <h3 className="text-2xl font-semibold text-primaryColor mb-4">
               Description
             </h3>
-            <p className="text-gray-600">
-              list of essential information you might need list of essential
-              information you might need list of essential information you might
-              need list of essential information you might need list of
-              essential information you might need list of essential information
-              you might need list of essential information you might need list
-              of essential information you might need list of essential
-              information you might need list of essential information you might
-              need
-            </p>
+            <p className="text-gray-600">{singleExam?.description}</p>
           </div>
 
           {/* Additional Details */}
           <div className="mb-8">
             <h3 className="text-2xl font-semibold text-primaryColor mb-4">
-              Exam Details
+              Instructions
             </h3>
-            <ul className="space-y-2 text-gray-600 flex justify-evenly">
+            <ul className="space-y-2 text-accentColor list-disc ms-8 ">
               <li>
-                <strong>Start Date:</strong> {new Date().toLocaleDateString()}
+                Once the exam starts, closing or refreshing the browser will
+                result in automatic submission.
               </li>
               <li>
-                <strong>End Date:</strong> {new Date().toLocaleDateString()}
+                Switching tabs or opening a new window will trigger a warning.
               </li>
+              <li>Multiple warnings may lead to automatic submission.</li>
+              <li>The timer will continue running even if you disconnect.</li>
+              <li>Ensure a stable internet connection before starting.</li>
+              <li>The Back button and browser navigation will be disabled.</li>
               <li>
-                <strong>Eligibility:</strong>
+                Once you move to the next question, you may not be able to
+                return
               </li>
+              <li>You can only attempt the exam once.</li>
               <li>
-                <strong>Format:</strong>
+                When the timer reaches zero, your answers will be submitted
+                automatically.
               </li>
-              <li>
-                <strong>Instructions:</strong>
-              </li>
+              <li>The exam may require full-screen mode.</li>
             </ul>
           </div>
         </div>

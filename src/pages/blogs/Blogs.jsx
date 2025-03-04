@@ -14,7 +14,7 @@ const Blogs = () => {
   const { data: allBlogs = [] } = useQuery({
     queryKey: ["allBlogs"],
     queryFn: async () => {
-      const res = await axiosPublic("/get/blogs?limit=all");
+      const res = await axiosPublic.get("/get/blogs?limit=all");
       return res.data;
     },
   });
