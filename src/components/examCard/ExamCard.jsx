@@ -3,7 +3,7 @@ import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 const ExamCard = ({ exam }) => {
-  console.log(exam);
+  // console.log(exam);
   return (
     <div className="bg-primaryColor/10 rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primaryColor/40 flex flex-col">
       <Link to={`/exam/details/1`}>

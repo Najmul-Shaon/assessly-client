@@ -14,7 +14,8 @@ const Exams = () => {
   const { data: allExams = [] } = useQuery({
     queryKey: ["allExams"],
     queryFn: async () => {
-      const res = await axiosPublic("/get/all-exams");
+      // const res = await axiosPublic("/get/all-exams?type=single");
+      const res = await axiosPublic("/get/all-exams?type=single");
       return res.data;
     },
   });
@@ -110,14 +111,14 @@ const Exams = () => {
         </div>
       </div>
       {/* pagination  */}
-      <div className="flex items-center justify-center mt-12">
+      {/* <div className="flex items-center justify-center mt-12">
         <div className="join">
           <button className="join-item btn btn-sm btn-active">1</button>
           <button className="join-item btn btn-sm">2</button>
           <button className="join-item btn btn-sm">3</button>
           <button className="join-item btn btn-sm">4</button>
         </div>
-      </div>
+      </div> */}
       {/* suggestion section  */}
       {/* <div className="mt-12 max-w-screen-2xl mx-auto px-4">
         <div className="divider font-bold text-primaryColor text-2xl mb-8">
