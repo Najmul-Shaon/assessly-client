@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const BlogDetails = () => {
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   const axiosPublic = useAxiosPublic();
 
   const { data: singleBlog = {} } = useQuery({
@@ -16,7 +16,7 @@ const BlogDetails = () => {
   });
 
   const contents = singleBlog?.content || [];
-  const tags = singleBlog?.tags.split(",");
+  const tags = singleBlog?.tags?.split(",") || [];
   console.log(tags);
   return (
     <div className="mt-20 bg-secondaryColor min-h-screen flex justify-center py-8">
