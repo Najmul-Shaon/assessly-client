@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/logo v2.png";
+// import logo from "../../assets/logo v2.png";
+import logo from "../../assets/logo v6.png";
 import { AiOutlineLogin } from "react-icons/ai";
 import { FaUserPlus } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
@@ -8,6 +9,7 @@ import useLogout from "../../Hooks/useLogout";
 import { FaAngleDown } from "react-icons/fa6";
 import { useState } from "react";
 import useAdmin from "../../Hooks/useAdmin";
+import { IoStatsChartOutline } from "react-icons/io5";
 
 const NavBar = () => {
   const { user } = useAuth();
@@ -103,7 +105,7 @@ const NavBar = () => {
               <figure className="w-8 md:w-10 lg:w-12">
                 <img className="w-full" src={logo} alt="site logo" />
               </figure>
-              <h1>Assessly</h1>
+              <h1 className="font-bold">Assessly</h1>
             </div>
           </Link>
         </div>
@@ -140,17 +142,12 @@ const NavBar = () => {
                             ? "/dashboard/admin-home"
                             : "/dashboard/user-home"
                         }
-                        className="hover:text-primaryColor"
+                        className="hover:text-primaryColor flex gap-2 items-center"
                       >
-                        Dashboard
+                        <IoStatsChartOutline />
+                        <span>Dashboard</span>
                       </Link>
                     </li>
-
-                    <li>
-                      <Link>Dashboard2</Link>
-                    </li>
-                    <li>About</li>
-                    <li>Contact</li>
                   </ul>
                 </div>
               </>

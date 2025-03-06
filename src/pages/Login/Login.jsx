@@ -41,6 +41,13 @@ export default function Login() {
       })
       .catch((error) => {
         console.log(error);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Error occured! Try again.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       });
     console.log(data?.email);
   };

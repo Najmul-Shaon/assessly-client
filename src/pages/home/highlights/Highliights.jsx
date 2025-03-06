@@ -27,7 +27,7 @@ const Highliights = () => {
             <CountUp end={10} duration={2} />+
           </h3>
 
-          <p className="text-textColor text-lg">Total Class</p>
+          <p className="text-textColor text-lg">Total Blogs</p>
         </div>
         <div className="flex flex-col items-center bg-primaryColor/20 p-8 rounded-l-4xl rounded-br-4xl border-t-4 border-e-4 border-primaryColor">
           <h3 className="text-3xl font-bold">
