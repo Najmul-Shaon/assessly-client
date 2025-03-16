@@ -7,9 +7,12 @@ import useAdmin from "../../Hooks/useAdmin";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useState } from "react";
 import { RiArticleLine } from "react-icons/ri";
+import useRegularUser from "../../Hooks/useRegularUser";
 
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const { isAdmin } = useAdmin();
+  const { isRegular } = useRegularUser();
+  console.log(isRegular);
 
   const [isManageExamExpand, setIsManageExamExpand] = useState(false);
   const [isManageBlogExpand, setIsManageBlogExpand] = useState(false);

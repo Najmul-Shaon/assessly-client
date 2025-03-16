@@ -16,7 +16,7 @@ const PopulerBlogs = () => {
     },
   });
 
-  console.log(populerBlogs);
+  // console.log(populerBlogs);
   return (
     <div className="max-w-screen-2xl mx-auto mt-24 px-4">
       <div>

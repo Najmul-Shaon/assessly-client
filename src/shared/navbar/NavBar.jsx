@@ -10,12 +10,15 @@ import { FaAngleDown } from "react-icons/fa6";
 import { useState } from "react";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoStatsChartOutline } from "react-icons/io5";
+import useRegularUser from "../../Hooks/useRegularUser";
 
 const NavBar = () => {
   const { user } = useAuth();
   const [isDashboardView, setIsDashboardView] = useState(false);
   const handleLogout = useLogout();
   const { isAdmin } = useAdmin();
+  const { isRegularUser } = useRegularUser();
+  console.log(isRegularUser, isAdmin);
   const navLinks = (
     <>
       <li>

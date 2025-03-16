@@ -15,7 +15,7 @@ const PopulerExams = () => {
     },
   });
 
-  console.log(populerExams);
+  // console.log(populerExams);
   return (
     <div className="max-w-screen-2xl mx-auto mt-24 px-4">
       <SectionTitle

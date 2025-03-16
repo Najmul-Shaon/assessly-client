@@ -3,7 +3,7 @@ import { FaArrowRight, FaPen } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const BlogCard = ({ blog }) => {
-  console.log(blog);
+  // console.log(blog);
   return (
     <div className="bg-primaryColor/10 shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:scale-101 hover:shadow-2xl flex flex-col">
       <img
