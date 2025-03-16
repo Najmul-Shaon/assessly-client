@@ -22,8 +22,8 @@ const NavBar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `hover:bg-hoverColor hover:text-white text-textColor btn-sm md:btn-md lg:btn-lg ${
-              isActive ? "bg-primaryColor text-white" : ""
+            ` hover:text-primaryColor text-xl font-semibold ${
+              isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
         >
@@ -35,8 +35,8 @@ const NavBar = () => {
         <NavLink
           to="/exams"
           className={({ isActive }) =>
-            `hover:bg-hoverColor hover:text-white text-textColor btn-sm md:btn-md lg:btn-lg ${
-              isActive ? "bg-primaryColor text-white" : ""
+            ` hover:text-primaryColor text-xl font-semibold ${
+              isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
         >
@@ -48,8 +48,8 @@ const NavBar = () => {
         <NavLink
           to="/blogs"
           className={({ isActive }) =>
-            `hover:bg-hoverColor hover:text-white text-textColor btn-sm md:btn-md lg:btn-lg ${
-              isActive ? "bg-primaryColor text-white" : ""
+            ` hover:text-primaryColor text-xl font-semibold ${
+              isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
         >
@@ -58,10 +58,22 @@ const NavBar = () => {
       </li>
       <li>
         <NavLink
+          to="/features"
+          className={({ isActive }) =>
+            ` hover:text-primaryColor text-xl font-semibold ${
+              isActive ? "text-primaryColor" : "text-textColor"
+            }`
+          }
+        >
+          Feature
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
           to="/about"
           className={({ isActive }) =>
-            `hover:bg-hoverColor hover:text-white text-textColor btn-sm md:btn-md lg:btn-lg ${
-              isActive ? "bg-primaryColor text-white" : ""
+            ` hover:text-primaryColor text-xl font-semibold ${
+              isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
         >
@@ -102,7 +114,7 @@ const NavBar = () => {
           </div>
           <Link to="/">
             <div className="flex items-center flex-col">
-              <figure className="w-8 md:w-10 lg:w-12">
+              <figure className="w-6 md:w-8 lg:w-10">
                 <img className="w-full" src={logo} alt="site logo" />
               </figure>
               <h1 className="font-bold">Assessly</h1>
@@ -111,7 +123,8 @@ const NavBar = () => {
         </div>
         <div className="navbar-center hidden lg:flex">
           {/* dynamic nav list  */}
-          <ul className="menu menu-horizontal px-1 space-x-2">{navLinks}</ul>
+          {/* <ul className="menu menu-horizontal px-1 space-x-2">{navLinks}</ul> */}
+          <ul className="flex px-1 space-x-6">{navLinks}</ul>
         </div>
         <div className="navbar-end">
           <div className="flex gap-2 items-center relative">
