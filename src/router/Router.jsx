@@ -19,6 +19,7 @@ import IndividualQuestionDetails from "../Dashboard/Admin/ManageQuestions/Indivi
 import IndividualQuestionEdit from "../Dashboard/Admin/ManageQuestions/IndividualQuestionEdit";
 import AllBlog from "../Dashboard/Admin/ManageBlogs/AllBlog";
 import AddBlog from "../Dashboard/Admin/ManageBlogs/AddBlog";
+import RegularUserHome from "../Dashboard/RegularUser/RegularUserHome/RegularUserHome";
 
 export const router = createBrowserRouter([
   {
@@ -67,6 +68,15 @@ export const router = createBrowserRouter([
     element: <Dashboard />,
     errorElement: <ErrorPage />,
     children: [
+      // regular user area start
+      {
+        path: "user-home",
+        element: <RegularUserHome />,
+      },
+
+      // regular user area end
+
+      // admin area start
       {
         path: "admin-home",
         element: <AdminHome />,
@@ -103,6 +113,7 @@ export const router = createBrowserRouter([
         path: "add-blog",
         element: <AddBlog />,
       },
+      // admin area end
     ],
   },
 ]);

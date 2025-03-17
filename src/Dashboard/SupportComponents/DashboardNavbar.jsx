@@ -9,12 +9,14 @@ import { AiOutlineLogin } from "react-icons/ai";
 import useLogout from "../../Hooks/useLogout";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoHomeOutline } from "react-icons/io5";
+import useRegularUser from "../../Hooks/useRegularUser";
 
 const DashboardNavbar = ({ toggleSidebar }) => {
   const { user } = useAuth();
   const [isExpand, setIsExpand] = useState(false);
   const handleLogout = useLogout();
   const { isAdmin } = useAdmin();
+  const { isRegularUser } = useRegularUser();
   return (
     <div className="bg-white shadow-md p-4 flex justify-between items-center">
       {/* Sidebar Toggle for Mobile */}
@@ -23,7 +25,8 @@ const DashboardNavbar = ({ toggleSidebar }) => {
       </button>
 
       <h1 className="text-md font-bold">
-        Assessly {isAdmin ? "Admin" : "User"} ||{" "}
+        Assessly {isAdmin && "Admin"}
+        {isRegularUser && "User"} ||{" "}
         <span className="text-primaryColor">{user?.displayName}</span>
       </h1>
 
