@@ -19,7 +19,7 @@ const AllCourses = () => {
 
   return (
     <div>
-      <SectionTitle header={"All Exams"} />
+      <SectionTitle header={"All Courses"} />
 
       <div className="overflow-x-auto">
         <table className="table table-zebra">
