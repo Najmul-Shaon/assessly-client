@@ -2,10 +2,22 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../../Hooks/axiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
+import useAxiosPublic from "../../../Hooks/axiosPublic";
+import useAuth from "../../../Hooks/useAuth";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
+const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
+const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddCourse = () => {
-  // get all exam info
+  const { user } = useAuth();
+  const navigation = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
+  // get all exam info
+
   const { data: allExams = [] } = useQuery({
     queryKey: ["allExams"],
     queryFn: async () => {
@@ -14,21 +26,9 @@ const AddCourse = () => {
     },
   });
 
-  // const { examTitle, examId } = allExams;
-  // console.log(allExams);
-
-  // const examInfo = [];
-
-  // {
-  //   allExams.map((exam) => {
-  //     console.log(exam);
-  //     examInfo.push([exam?.examTitle, exam?.examId]);
-  //   });
-  // }
-  // console.log(examInfo);
-
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -48,7 +48,6 @@ const AddCourse = () => {
     "Accounting",
     "Economics",
   ];
-  const examNames = ["Beginner", "Intermediate", "Advanced"];
 
   // Handle thumbnail preview
   const handleThumbnailPreview = (event) => {
@@ -61,22 +60,66 @@ const AddCourse = () => {
   };
 
   // Handle form submission
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data) => {
+    // console.log(data);
+
+    // host img to imgbb
+    const thumbnails = { image: data.thumbnails[0] };
+
+    const res = await axiosPublic.post(imgHostingApi, thumbnails, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log(data);
+    console.log(res.data);
+
+    if (res.data.success) {
+      const courseInfo = {
+        createdBy: user?.email,
+        createdDate: new Date(),
+        modifiedDate: new Date(),
+        class: data?.classTypes,
+        description: data?.description,
+        examId: data?.examId || null,
+        fee: data?.fee,
+        subjects: data?.subjects,
+        includeExam: isIncludeExam,
+        thumbnail: res?.data?.data?.display_url,
+        title: data?.title,
+        video: data?.video,
+      };
+
+      axiosSecure.post("/create-course", courseInfo).then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Course has been created.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          reset();
+          navigation("/dashboard/all-courses");
+        }
+      });
+    }
 
     // Prepare form data for backend
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("price", data.price);
-    formData.append("category", data.category);
-    formData.append("thumbnail", data.thumbnail[0]); // First file
-    formData.append("video", data.video[0]); // First file
+    // const formData = new FormData();
+    // formData.append("title", data.title);
+    // formData.append("description", data.description);
+    // formData.append("price", data.price);
+    // formData.append("category", data.category);
+    // formData.append("thumbnail", data.thumbnail[0]);
+    // formData.append("video", data.video[0]);
   };
 
   return (
     <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Add New Course</h2>
+      <SectionTitle header={"Add Course"}></SectionTitle>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Course Title */}
         <div>
@@ -109,17 +152,17 @@ const AddCourse = () => {
 
         {/* Course Class and subject Dropdown */}
         <div className="grid grid-cols-3 gap-6">
-          {/* Course Price */}
+          {/* Course Fee */}
           <div>
-            <label className="block font-medium">Price</label>
+            <label className="block font-medium">Fee</label>
             <input
               placeholder="100"
               type="number"
-              {...register("price", { required: "Price is required", min: 1 })}
+              {...register("fee", { required: "Fee is required", min: 1 })}
               className="w-full border p-2 rounded"
             />
-            {errors.price && (
-              <p className="text-red-500 text-sm">{errors.price.message}</p>
+            {errors.fee && (
+              <p className="text-red-500 text-sm">{errors.fee.message}</p>
             )}
           </div>
           <div>
@@ -208,12 +251,12 @@ const AddCourse = () => {
           <input
             type="file"
             accept="image/*"
-            {...register("thumbnail", { required: "Thumbnail is required" })}
+            {...register("thumbnails", { required: "Thumbnail is required" })}
             onChange={handleThumbnailPreview}
             className="w-full border rounded file-input border-black"
           />
-          {errors.thumbnail && (
-            <p className="text-red-500 text-sm">{errors.thumbnail.message}</p>
+          {errors.thumbnails && (
+            <p className="text-red-500 text-sm">{errors.thumbnails.message}</p>
           )}
 
           {/* Preview Thumbnail */}
@@ -243,7 +286,7 @@ const AddCourse = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          className="w-full bg-primaryColor text-white py-2 rounded"
         >
           Add Course
         </button>

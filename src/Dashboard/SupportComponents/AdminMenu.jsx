@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoStatsChartOutline } from "react-icons/io5";
 import { LiaClipboardSolid } from "react-icons/lia";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp, IoMdBookmarks, IoMdCard } from "react-icons/io";
 import { TbCalendarQuestion } from "react-icons/tb";
 import { FaUsersCog } from "react-icons/fa";
 import { RiArticleLine } from "react-icons/ri";
@@ -105,7 +105,7 @@ const AdminMenu = ({
             className="flex items-center gap-3 px-3 py-2 rounded-md transition cursor-pointer"
           >
             <span>
-              <RiArticleLine />
+              <IoMdBookmarks />
             </span>
             Manage Courses
             <span className="inline-flex">
@@ -200,7 +200,7 @@ const AdminMenu = ({
 
           {/* manage payments  */}
           <NavLink
-            to={pathname ? "dashboard/manage-users" : "manage-users"}
+            to={pathname ? "dashboard/manage-payments" : "manage-payments"}
             onClick={toggleSidebar} // Auto-close on mobile
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -209,7 +209,7 @@ const AdminMenu = ({
             }
           >
             <span>
-              <FaUsersCog />
+              <IoMdCard />
             </span>
             Manage Payments
           </NavLink>

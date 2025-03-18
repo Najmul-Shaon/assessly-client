@@ -158,6 +158,10 @@ export const router = createBrowserRouter([
         path: "manage-users",
         element: <ManageUsers />,
       },
+      {
+        path: "manage-payments",
+        element: <CommingSoon />,
+      },
       // admin area end
     ],
   },

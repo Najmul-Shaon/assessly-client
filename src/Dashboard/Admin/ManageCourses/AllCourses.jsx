@@ -7,15 +7,15 @@ import { FaRegEdit } from "react-icons/fa";
 
 const AllCourses = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: allExams = [] } = useQuery({
-    queryKey: ["allExams"],
+  const { data: allCourses = [] } = useQuery({
+    queryKey: ["allCourses"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/get/all-exams?type=all");
+      const res = await axiosSecure.get("/get-all-courses");
       return res.data;
     },
   });
 
-  console.log(allExams);
+  console.log(allCourses);
 
   return (
     <div>
@@ -27,25 +27,29 @@ const AllCourses = () => {
           <thead>
             <tr>
               <th>Sl</th>
+              <th>Course Id</th>
               <th>Exam Id</th>
               <th>Title</th>
-              <th>Duration</th>
-              <th>Type</th>
-              <th>Total Marks</th>
+              <th>Include Exam</th>
+              <th>Class</th>
+              <th>Subject</th>
+              <th>Fee</th>
               <th>Create by</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {allExams.map((singleExam, i) => (
-              <tr key={singleExam?._id}>
+            {allCourses.map((singleCourse, i) => (
+              <tr key={singleCourse?._id}>
                 <th>{i + 1}</th>
-                <td>{singleExam?.examId}</td>
-                <td>{singleExam?.examTitle}</td>
-                <td>{singleExam?.duration} min</td>
-                <td>{singleExam?.examType}</td>
-                <td>{singleExam?.totalMarks}</td>
-                <td>{singleExam?.createdBy}</td>
+                <td>{singleCourse?.courseId}</td>
+                <td>{singleCourse?.examId || "N/A"}</td>
+                <td>{singleCourse?.title}</td>
+                <td>{singleCourse?.includeExam ? "Yes" : "No"}</td>
+                <td>{singleCourse?.class}</td>
+                <td>{singleCourse?.subjects}</td>
+                <td>{singleCourse?.fee}</td>
+                <td>{singleCourse?.createdBy}</td>
                 <td className="flex items-center gap-1 text-xl">
                   <span className="text-accentColor">
                     <IoTrashBinOutline />

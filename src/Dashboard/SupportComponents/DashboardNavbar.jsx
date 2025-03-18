@@ -10,6 +10,7 @@ import useLogout from "../../Hooks/useLogout";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoHomeOutline } from "react-icons/io5";
 import useRegularUser from "../../Hooks/useRegularUser";
+import { IoMdBookmarks } from "react-icons/io";
 
 const DashboardNavbar = ({ toggleSidebar }) => {
   const { user } = useAuth();
@@ -71,7 +72,7 @@ const DashboardNavbar = ({ toggleSidebar }) => {
                     className="flex gap-2 items-center"
                     onClick={() => setIsExpand(false)}
                   >
-                    <GoChecklist /> Courses
+                    <IoMdBookmarks /> Courses
                   </li>
                 </Link>
 

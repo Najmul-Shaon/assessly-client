@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const axiosPublic = axios.create({
-  // local api 
+  // local api
   baseURL: "http://localhost:5000",
-  // live api 
+  // live api
   // baseURL: "https://assessly-server.vercel.app",
 });
 
