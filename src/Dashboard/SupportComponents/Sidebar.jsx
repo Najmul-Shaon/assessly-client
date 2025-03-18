@@ -6,6 +6,7 @@ import RegularUserMenu from "./RegularUserMenu";
 const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const [isManageExamExpand, setIsManageExamExpand] = useState(false);
   const [isManageBlogExpand, setIsManageBlogExpand] = useState(false);
+  const [isManageCourseExpand, setIsManageCourseExpand] = useState(false);
 
   return (
     <div
@@ -26,6 +27,8 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
           isManageExamExpand={isManageExamExpand}
           setIsManageBlogExpand={setIsManageBlogExpand}
           isManageBlogExpand={isManageBlogExpand}
+          isManageCourseExpand={isManageCourseExpand}
+          setIsManageCourseExpand={setIsManageCourseExpand}
         />
 
         {/* regular user menu's  */}

@@ -6,14 +6,14 @@ import { GoChecklist } from "react-icons/go";
 import { RiArticleLine } from "react-icons/ri";
 import { PiCertificate } from "react-icons/pi";
 
-const RegularUserMenu = ({ toggleSidebar }) => {
+const RegularUserMenu = ({ toggleSidebar, pathname }) => {
   const { isRegularUser } = useRegularUser();
   return (
     <>
       {isRegularUser && (
         <>
           <NavLink
-            to="user-home"
+            to={pathname ? "dashboard/user-home" : "user-home"}
             onClick={toggleSidebar}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -27,7 +27,7 @@ const RegularUserMenu = ({ toggleSidebar }) => {
             Dashboard
           </NavLink>
           <NavLink
-            to="my-courses"
+            to={pathname ? "dashboard/my-courses" : "my-courses"}
             onClick={toggleSidebar}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -42,7 +42,7 @@ const RegularUserMenu = ({ toggleSidebar }) => {
           </NavLink>
 
           <NavLink
-            to="my-exam"
+            to={pathname ? "dashboard/my-exam" : "my-exam"}
             onClick={toggleSidebar}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -56,7 +56,7 @@ const RegularUserMenu = ({ toggleSidebar }) => {
             My Exams
           </NavLink>
           <NavLink
-            to="my-blogs"
+            to={pathname ? "dashboard/my-blogs" : "my-blogs"}
             onClick={toggleSidebar}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -70,7 +70,7 @@ const RegularUserMenu = ({ toggleSidebar }) => {
             My Blogs
           </NavLink>
           <NavLink
-            to="my-payments"
+            to={pathname ? "dashboard/my-payments" : "my-payments"}
             onClick={toggleSidebar}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -84,7 +84,7 @@ const RegularUserMenu = ({ toggleSidebar }) => {
             Payment History
           </NavLink>
           <NavLink
-            to="my-profile"
+            to={pathname ? "dashboard/my-profile" : "my-profile"}
             onClick={toggleSidebar}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -98,7 +98,7 @@ const RegularUserMenu = ({ toggleSidebar }) => {
             My Profile
           </NavLink>
           <NavLink
-            to="my-certificates"
+            to={pathname ? "dashboard/my-certificates" : "my-certificates"}
             onClick={toggleSidebar}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${

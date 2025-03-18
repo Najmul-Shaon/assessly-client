@@ -23,6 +23,8 @@ import AllBlog from "../Dashboard/Admin/ManageBlogs/AllBlog";
 import AddBlog from "../Dashboard/Admin/ManageBlogs/AddBlog";
 import RegularUserHome from "../Dashboard/RegularUser/RegularUserHome/RegularUserHome";
 import CommingSoon from "../components/commingSoon/CommingSoon";
+import AllCourses from "../Dashboard/Admin/ManageCourses/AllCourses";
+import AddCourse from "../Dashboard/Admin/ManageCourses/AddCourse";
 
 export const router = createBrowserRouter([
   {
@@ -137,8 +139,12 @@ export const router = createBrowserRouter([
         element: <IndividualQuestionEdit />,
       },
       {
-        path: "manage-users",
-        element: <ManageUsers />,
+        path: "all-courses",
+        element: <AllCourses />,
+      },
+      {
+        path: "add-course",
+        element: <AddCourse />,
       },
       {
         path: "all-blog",
@@ -147,6 +153,10 @@ export const router = createBrowserRouter([
       {
         path: "add-blog",
         element: <AddBlog />,
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers />,
       },
       // admin area end
     ],

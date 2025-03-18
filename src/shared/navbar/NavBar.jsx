@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 // import logo from "../../assets/logo v2.png";
 import logo from "../../assets/logo v6.png";
 import { AiOutlineLogin } from "react-icons/ai";
@@ -19,7 +19,8 @@ const NavBar = () => {
   const handleLogout = useLogout();
   const { isAdmin } = useAdmin();
   const { isRegularUser } = useRegularUser();
-  console.log(isRegularUser, isAdmin);
+  const { pathname } = useLocation();
+  console.log(pathname);
   const navLinks = (
     <>
       <li>
@@ -163,8 +164,8 @@ const NavBar = () => {
               <>
                 {/* <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 w-52 z-50"> */}
                 <div className="bg-white text-textColor shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 z-100 min-w-[250px]">
-                  {isRegularUser && <RegularUserMenu />}
-                  {isAdmin && <AdminMenu />}
+                  {isRegularUser && <RegularUserMenu pathname={pathname} />}
+                  {isAdmin && <AdminMenu pathname={pathname} />}
                   {/* <ul>
                     <li>
                       <Link

@@ -13,14 +13,18 @@ const AdminMenu = ({
   isManageExamExpand,
   setIsManageBlogExpand,
   isManageBlogExpand,
+  pathname,
+  setIsManageCourseExpand,
+  isManageCourseExpand,
 }) => {
   const { isAdmin } = useAdmin();
   return (
     <>
       {isAdmin && (
         <>
+          {/* dashboard  */}
           <NavLink
-            to="admin-home"
+            to={pathname ? "dashboard/admin-home" : "admin-home"}
             onClick={toggleSidebar}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -33,6 +37,8 @@ const AdminMenu = ({
             </span>
             Dashboard
           </NavLink>
+
+          {/* manage exams  */}
           <p
             //   to="all-exams"
             onClick={() => {
@@ -43,7 +49,7 @@ const AdminMenu = ({
             <span>
               <LiaClipboardSolid />
             </span>
-            Manage Exam
+            Manage Exams
             <span className="inline-flex">
               {isManageExamExpand ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
@@ -51,7 +57,7 @@ const AdminMenu = ({
           {isManageExamExpand && (
             <>
               <NavLink
-                to="all-exams"
+                to={pathname ? "dashboard/all-exams" : "all-exams"}
                 onClick={toggleSidebar} // Auto-close on mobile
                 className={({ isActive }) =>
                   `px-3 py-2 rounded-md transition ms-8 ${
@@ -59,10 +65,10 @@ const AdminMenu = ({
                   }`
                 }
               >
-                All Exam
+                All Exams
               </NavLink>
               <NavLink
-                to="add-exam"
+                to={pathname ? "dashboard/add-exam" : "add-exam"}
                 onClick={toggleSidebar} // Auto-close on mobile
                 className={({ isActive }) =>
                   `px-3 py-2 rounded-md transition ms-8 ${
@@ -74,8 +80,10 @@ const AdminMenu = ({
               </NavLink>
             </>
           )}
+
+          {/* manage questions  */}
           <NavLink
-            to="manage-questions"
+            to={pathname ? "dashboard/manage-questions" : "manage-questions"}
             onClick={toggleSidebar} // Auto-close on mobile
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2 rounded-md transition ${
@@ -86,22 +94,52 @@ const AdminMenu = ({
             <span>
               <TbCalendarQuestion />
             </span>
-            Manage Question
+            Manage Questions
           </NavLink>
-          <NavLink
-            to="manage-users"
-            onClick={toggleSidebar} // Auto-close on mobile
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2 rounded-md transition ${
-                isActive ? " text-accentColor" : "hover:text-accentColor"
-              }`
-            }
+
+          {/* manage courses  */}
+          <p
+            onClick={() => {
+              setIsManageCourseExpand(!isManageCourseExpand);
+            }} // Auto-close on mobile
+            className="flex items-center gap-3 px-3 py-2 rounded-md transition cursor-pointer"
           >
             <span>
-              <FaUsersCog />
+              <RiArticleLine />
             </span>
-            Manage User
-          </NavLink>
+            Manage Courses
+            <span className="inline-flex">
+              {isManageCourseExpand ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            </span>
+          </p>
+          {isManageCourseExpand && (
+            <>
+              <NavLink
+                to={pathname ? "dashboard/all-courses" : "all-courses"}
+                onClick={toggleSidebar} // Auto-close on mobile
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md transition ms-8 ${
+                    isActive ? " text-accentColor" : "hover:text-accentColor"
+                  }`
+                }
+              >
+                All Courses
+              </NavLink>
+              <NavLink
+                to={pathname ? "dashboard/add-course" : "add-course"}
+                onClick={toggleSidebar} // Auto-close on mobile
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-md transition ms-8 ${
+                    isActive ? " text-accentColor" : "hover:text-accentColor"
+                  }`
+                }
+              >
+                Add Course
+              </NavLink>
+            </>
+          )}
+
+          {/* manage blogs  */}
           <p
             //   to="all-exams"
             onClick={() => {
@@ -120,7 +158,7 @@ const AdminMenu = ({
           {isManageBlogExpand && (
             <>
               <NavLink
-                to="all-blog"
+                to={pathname ? "dashboard/all-blog" : "all-blog"}
                 onClick={toggleSidebar} // Auto-close on mobile
                 className={({ isActive }) =>
                   `px-3 py-2 rounded-md transition ms-8 ${
@@ -131,7 +169,7 @@ const AdminMenu = ({
                 All Blog
               </NavLink>
               <NavLink
-                to="add-blog"
+                to={pathname ? "dashboard/add-blog" : "add-blog"}
                 onClick={toggleSidebar} // Auto-close on mobile
                 className={({ isActive }) =>
                   `px-3 py-2 rounded-md transition ms-8 ${
@@ -143,6 +181,38 @@ const AdminMenu = ({
               </NavLink>
             </>
           )}
+
+          {/* manage users  */}
+          <NavLink
+            to={pathname ? "dashboard/manage-users" : "manage-users"}
+            onClick={toggleSidebar} // Auto-close on mobile
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2 rounded-md transition ${
+                isActive ? " text-accentColor" : "hover:text-accentColor"
+              }`
+            }
+          >
+            <span>
+              <FaUsersCog />
+            </span>
+            Manage Users
+          </NavLink>
+
+          {/* manage payments  */}
+          <NavLink
+            to={pathname ? "dashboard/manage-users" : "manage-users"}
+            onClick={toggleSidebar} // Auto-close on mobile
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2 rounded-md transition ${
+                isActive ? " text-accentColor" : "hover:text-accentColor"
+              }`
+            }
+          >
+            <span>
+              <FaUsersCog />
+            </span>
+            Manage Payments
+          </NavLink>
         </>
       )}
     </>
