@@ -9,8 +9,9 @@ import useLogout from "../../Hooks/useLogout";
 import { FaAngleDown } from "react-icons/fa6";
 import { useState } from "react";
 import useAdmin from "../../Hooks/useAdmin";
-import { IoStatsChartOutline } from "react-icons/io5";
 import useRegularUser from "../../Hooks/useRegularUser";
+import RegularUserMenu from "../../Dashboard/SupportComponents/RegularUserMenu";
+import AdminMenu from "../../Dashboard/SupportComponents/AdminMenu";
 
 const NavBar = () => {
   const { user } = useAuth();
@@ -149,8 +150,10 @@ const NavBar = () => {
             {user && isDashboardView && (
               <>
                 {/* <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 w-52 z-50"> */}
-                <div className="bg-white text-textColor shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 z-100 min-w-[130px]">
-                  <ul>
+                <div className="bg-white text-textColor shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-0 z-100 min-w-[250px]">
+                  {isRegularUser && <RegularUserMenu />}
+                  {isAdmin && <AdminMenu />}
+                  {/* <ul>
                     <li>
                       <Link
                         to={
@@ -164,7 +167,7 @@ const NavBar = () => {
                         <span>Dashboard</span>
                       </Link>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
               </>
             )}

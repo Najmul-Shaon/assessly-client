@@ -20,6 +20,7 @@ import IndividualQuestionEdit from "../Dashboard/Admin/ManageQuestions/Individua
 import AllBlog from "../Dashboard/Admin/ManageBlogs/AllBlog";
 import AddBlog from "../Dashboard/Admin/ManageBlogs/AddBlog";
 import RegularUserHome from "../Dashboard/RegularUser/RegularUserHome/RegularUserHome";
+import CommingSoon from "../components/commingSoon/CommingSoon";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +73,30 @@ export const router = createBrowserRouter([
       {
         path: "user-home",
         element: <RegularUserHome />,
+      },
+      {
+        path: "my-courses",
+        element: <CommingSoon />,
+      },
+      {
+        path: "my-exam",
+        element: <CommingSoon />,
+      },
+      {
+        path: "my-blogs",
+        element: <CommingSoon />,
+      },
+      {
+        path: "my-payments",
+        element: <CommingSoon />,
+      },
+      {
+        path: "my-profile",
+        element: <CommingSoon />,
+      },
+      {
+        path: "my-certificates",
+        element: <CommingSoon />,
       },
 
       // regular user area end
