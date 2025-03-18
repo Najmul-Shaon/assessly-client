@@ -48,7 +48,7 @@ const DashboardNavbar = ({ toggleSidebar }) => {
         )}
         {user && isExpand && (
           <>
-            <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-6 z-100 min-w-[100px]">
+            <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-6 z-100 min-w-[150px]">
               <ul>
                 <Link to="/">
                   <li
@@ -66,14 +66,15 @@ const DashboardNavbar = ({ toggleSidebar }) => {
                     <GoChecklist /> Exams
                   </li>
                 </Link>
-                <Link to="/about">
+                <Link to="/courses">
                   <li
                     className="flex gap-2 items-center"
                     onClick={() => setIsExpand(false)}
                   >
-                    <GrContactInfo /> About
+                    <GoChecklist /> Courses
                   </li>
                 </Link>
+
                 <Link to="/blogs">
                   <li
                     className="flex gap-2 items-center"
@@ -81,6 +82,14 @@ const DashboardNavbar = ({ toggleSidebar }) => {
                   >
                     <RiArticleLine />
                     Blog
+                  </li>
+                </Link>
+                <Link to="/about">
+                  <li
+                    className="flex gap-2 items-center"
+                    onClick={() => setIsExpand(false)}
+                  >
+                    <GrContactInfo /> About
                   </li>
                 </Link>
 
