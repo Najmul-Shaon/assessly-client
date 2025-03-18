@@ -47,6 +47,18 @@ const NavBar = () => {
           Exams
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to="/courses"
+          className={({ isActive }) =>
+            ` hover:text-primaryColor text-xl font-semibold ${
+              isActive ? "text-primaryColor" : "text-textColor"
+            }`
+          }
+        >
+          Courses
+        </NavLink>
+      </li>
 
       <li>
         <NavLink
@@ -57,7 +69,7 @@ const NavBar = () => {
             }`
           }
         >
-          Blog
+          Blogs
         </NavLink>
       </li>
       <li>
@@ -69,7 +81,7 @@ const NavBar = () => {
             }`
           }
         >
-          Feature
+          Features
         </NavLink>
       </li>
       <li>

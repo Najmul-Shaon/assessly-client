@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BlogCard from "../../components/blogCard/BlogCard";
 import SectionTitle from "../../components/sectionTiltle/SectionTitle";
-import FilterArea from "../exams/FilterArea/FilterArea";
+import FilterArea from "../../components/FilterArea/FilterArea";
 import { FaRegRectangleXmark } from "react-icons/fa6";
 import { FaFilter } from "react-icons/fa";
 import useAxiosPublic from "../../Hooks/axiosPublic";
