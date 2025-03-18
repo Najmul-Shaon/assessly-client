@@ -33,7 +33,7 @@ const PopulerExams = () => {
       <div className="flex items-center justify-center my-10">
         <Link to="/exams">
           <button className="btn primary-btn shadow-lg border-none shadow-primaryColor/60">
-            <span>View All</span> <FaArrowRight></FaArrowRight>
+            <span>View All Exam</span> <FaArrowRight></FaArrowRight>
           </button>
         </Link>
       </div>

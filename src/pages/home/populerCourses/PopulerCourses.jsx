@@ -3,17 +3,19 @@ import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import { FaArrowRight } from "react-icons/fa";
 import useAxiosPublic from "../../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
-import ExamCard from "../../../components/examCard/ExamCard";
+import CourseCard from "../../../components/courseCard/CourseCard";
 
 const PopulerCourses = () => {
   const axiosPublic = useAxiosPublic();
-  const { data: populerExams = [] } = useQuery({
-    queryKey: ["populerExams"],
+  const { data: populerCourses = [] } = useQuery({
+    queryKey: ["populerCourses"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/get/all-exams?type=limit");
+      const res = await axiosPublic.get("get-all-courses?type=limit");
       return res.data;
     },
   });
+
+  console.log(populerCourses);
   return (
     <div className="max-w-screen-2xl mx-auto mt-24 px-4">
       <SectionTitle
@@ -24,14 +26,15 @@ const PopulerCourses = () => {
         // data-aos="zoom-out-up"
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12"
       >
-        {populerExams.map((exam) => (
-          <ExamCard key={exam?.examId} exam={exam}></ExamCard>
+        {populerCourses.map((course) => (
+          // console.log(course)
+          <CourseCard key={course?.examId} course={course}></CourseCard>
         ))}
       </div>
       <div className="flex items-center justify-center my-10">
-        <Link to="/exams">
+        <Link to="/courses">
           <button className="btn primary-btn shadow-lg border-none shadow-primaryColor/60">
-            <span>View All</span> <FaArrowRight></FaArrowRight>
+            <span>View All Course</span> <FaArrowRight></FaArrowRight>
           </button>
         </Link>
       </div>

@@ -20,7 +20,6 @@ const NavBar = () => {
   const { isAdmin } = useAdmin();
   const { isRegularUser } = useRegularUser();
   const { pathname } = useLocation();
-  console.log(pathname);
   const navLinks = (
     <>
       <li>

@@ -25,7 +25,7 @@ const Exams = () => {
   return (
     <div>
       <div className="mt-18 bg-primaryColor/10 py-8">
-        <SectionTitle header={"All Exams"}></SectionTitle>{" "}
+        <SectionTitle header={"All Courses"}></SectionTitle>{" "}
       </div>
 
       {isFilterView && (

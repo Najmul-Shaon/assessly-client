@@ -4,17 +4,21 @@ import useAxiosSecure from "../../../Hooks/axiosSecure";
 import { Link } from "react-router-dom";
 import { IoEyeOutline, IoTrashBinOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
+import { useEffect } from "react";
 
 const AllCourses = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: allCourses = [] } = useQuery({
+  const { data: allCourses = [], refetch } = useQuery({
     queryKey: ["allCourses"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/get-all-courses");
+      const res = await axiosSecure.get("/get-all-courses?type=all");
       return res.data;
     },
   });
 
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
   console.log(allCourses);
 
   return (
