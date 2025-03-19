@@ -25,6 +25,7 @@ import RegularUserHome from "../Dashboard/RegularUser/RegularUserHome/RegularUse
 import CommingSoon from "../components/commingSoon/CommingSoon";
 import AllCourses from "../Dashboard/Admin/ManageCourses/AllCourses";
 import AddCourse from "../Dashboard/Admin/ManageCourses/AddCourse";
+import PaymentSuccess from "../components/PaymentSuccess/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "payment/success/:examId",
+        element: <PaymentSuccess />,
       },
     ],
   },

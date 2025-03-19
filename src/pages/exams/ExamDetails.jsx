@@ -1,11 +1,15 @@
 import { FaArrowRight } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/axiosSecure";
 
 const ExamDetails = () => {
   const { id } = useParams();
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
   const { data: singleExam = {} } = useQuery({
     queryKey: ["singleExam"],
@@ -15,6 +19,20 @@ const ExamDetails = () => {
     },
   });
 
+  const handlePayment = (examId) => {
+    const purchaseInfo = {
+      paymentAt: new Date(),
+      examId: examId,
+      userName: user?.displayName,
+      userEmail: user?.email,
+      type: "exam",
+    };
+    console.log(purchaseInfo);
+    axiosSecure.post("/payment", purchaseInfo).then((res) => {
+      console.log(res?.data?.url);
+      window.location.replace(res?.data?.url);
+    });
+  };
 
   return (
     <div className="mt-20 bg-secondaryColor py-8">
@@ -47,12 +65,15 @@ const ExamDetails = () => {
                   {singleExam?.questions?.length}
                 </p>
               </div>
-              <Link to={`/exam/details/1`}>
-                <button className="btn primary-btn my-4">
-                  <span>Enroll Now</span>
-                  <FaArrowRight />
-                </button>
-              </Link>
+              {/* <Link to={`/exam/details/1`}> */}
+              <button
+                onClick={() => handlePayment(id)}
+                className="btn primary-btn my-4"
+              >
+                <span>Enroll Now</span>
+                <FaArrowRight />
+              </button>
+              {/* </Link> */}
             </div>
           </div>
 
