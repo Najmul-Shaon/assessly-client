@@ -15,7 +15,7 @@ const PopulerCourses = () => {
     },
   });
 
-  console.log(populerCourses);
+  // console.log(populerCourses);
   return (
     <div className="max-w-screen-2xl mx-auto mt-24 px-4">
       <SectionTitle
@@ -28,7 +28,7 @@ const PopulerCourses = () => {
       >
         {populerCourses.map((course) => (
           // console.log(course)
-          <CourseCard key={course?.examId} course={course}></CourseCard>
+          <CourseCard key={course?.courseId} course={course}></CourseCard>
         ))}
       </div>
       <div className="flex items-center justify-center my-10">

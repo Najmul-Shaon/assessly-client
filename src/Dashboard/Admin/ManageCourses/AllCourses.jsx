@@ -19,7 +19,15 @@ const AllCourses = () => {
   useEffect(() => {
     refetch();
   }, [refetch]);
-  console.log(allCourses);
+  // console.log(allCourses);
+
+  const formatDate = (seconds) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+
+    return `${h}h:${m}m:${parseInt(s)}s`;
+  };
 
   return (
     <div>
@@ -35,6 +43,7 @@ const AllCourses = () => {
               <th>Exam Id</th>
               <th>Title</th>
               <th>Include Exam</th>
+              <th>Duration</th>
               <th>Class</th>
               <th>Subject</th>
               <th>Fee</th>
@@ -50,6 +59,7 @@ const AllCourses = () => {
                 <td>{singleCourse?.examId || "N/A"}</td>
                 <td>{singleCourse?.title}</td>
                 <td>{singleCourse?.includeExam ? "Yes" : "No"}</td>
+                <td>{formatDate(singleCourse?.duration)}</td>
                 <td>{singleCourse?.class}</td>
                 <td>{singleCourse?.subjects}</td>
                 <td>{singleCourse?.fee}</td>

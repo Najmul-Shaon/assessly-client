@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
+const CLOUDINARY_NAME = import.meta.env.VITE_CLOUDINARY_NAME;
 
 const AddCourse = () => {
   const { user } = useAuth();
@@ -63,8 +64,9 @@ const AddCourse = () => {
   const onSubmit = async (data) => {
     // console.log(data);
 
-    // host img to imgbb
     const thumbnails = { image: data.thumbnails[0] };
+
+    // host img to imgbb
 
     const res = await axiosPublic.post(imgHostingApi, thumbnails, {
       headers: {
@@ -72,10 +74,30 @@ const AddCourse = () => {
       },
     });
 
-    console.log(data);
-    console.log(res.data);
+    // host video to cloudinary
+    const video = new FormData();
+    video.append("file", data.video[0]);
+    video.append("upload_preset", "unsigned_upload");
+    // const video = { video: data.video[0] };
+    const videoRes = await axiosPublic.post(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/video/upload`,
+      video,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-    if (res.data.success) {
+    // console.log(thumbnails);
+    // console.log(data.thumbnails[0]);
+    console.log(videoRes);
+    console.log(videoRes.data?.secure_url);
+    console.log(videoRes.data?.asset_id);
+
+    // console.log(res.data);
+
+    if (res.data.success && videoRes.data?.asset_id) {
       const courseInfo = {
         createdBy: user?.email,
         createdDate: new Date(),
@@ -88,11 +110,12 @@ const AddCourse = () => {
         includeExam: isIncludeExam,
         thumbnail: res?.data?.data?.display_url,
         title: data?.title,
-        video: data?.video,
+        video: videoRes.data?.secure_url,
+        duration: videoRes.data?.duration,
       };
 
       axiosSecure.post("/create-course", courseInfo).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.insertedId) {
           Swal.fire({
             position: "center",
