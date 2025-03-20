@@ -25,7 +25,8 @@ import RegularUserHome from "../Dashboard/RegularUser/RegularUserHome/RegularUse
 import CommingSoon from "../components/commingSoon/CommingSoon";
 import AllCourses from "../Dashboard/Admin/ManageCourses/AllCourses";
 import AddCourse from "../Dashboard/Admin/ManageCourses/AddCourse";
-import PaymentSuccess from "../components/PaymentSuccess/PaymentSuccess";
+import PaymentSuccess from "../components/Payment/PaymentSuccess";
+import PaymentFailed from "../components/Payment/PaymentFailed";
 
 export const router = createBrowserRouter([
   {
@@ -58,7 +59,7 @@ export const router = createBrowserRouter([
         element: <Courses />,
       },
       {
-        path: "/courses/details/:id",
+        path: "/course/details/:id",
         element: <CourseDetails />,
       },
       {
@@ -74,8 +75,12 @@ export const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "payment/success/:examId",
+        path: "payment/success/:trxId",
         element: <PaymentSuccess />,
+      },
+      {
+        path: "payment/failed/:trxId",
+        element: <PaymentFailed />,
       },
     ],
   },

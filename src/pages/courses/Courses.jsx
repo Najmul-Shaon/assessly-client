@@ -1,21 +1,21 @@
 import SectionTitle from "../../components/sectionTiltle/SectionTitle";
-import ExamCard from "../../components/examCard/ExamCard";
 import FilterArea from "../../components/FilterArea/FilterArea";
 import { FaFilter } from "react-icons/fa";
 import { useState } from "react";
 import { FaRegRectangleXmark } from "react-icons/fa6";
 import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import CourseCard from "../../components/courseCard/CourseCard";
 
 const Exams = () => {
   const axiosPublic = useAxiosPublic();
   const [isFilterView, setIsFilterView] = useState(false);
 
-  const { data: allExams = [] } = useQuery({
-    queryKey: ["allExams"],
+  const { data: allCourses = [] } = useQuery({
+    queryKey: ["allCourses"],
     queryFn: async () => {
       // const res = await axiosPublic("/get/all-exams?type=single");
-      const res = await axiosPublic.get("/get/all-exams?type=single");
+      const res = await axiosPublic.get("/get-all-courses?type=all");
       return res.data;
     },
   });
@@ -103,8 +103,8 @@ const Exams = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {allExams.map((exam) => (
-              <ExamCard key={exam?.examId} exam={exam}></ExamCard>
+            {allCourses.map((course) => (
+              <CourseCard key={course?.courseId} course={course}></CourseCard>
             ))}
           </div>
           {/* </div> */}

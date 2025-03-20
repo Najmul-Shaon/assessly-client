@@ -1,20 +1,39 @@
 import { FaArrowRight } from "react-icons/fa";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hooks/axiosSecure";
+import useAuth from "../../Hooks/useAuth";
 
-const ExamDetails = () => {
+const CourseDetails = () => {
   const { id } = useParams();
+  const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const axiosSecure = useAxiosSecure();
 
-  const { data: singleExam = {} } = useQuery({
-    queryKey: ["singleExam"],
+  const { data: singleCourse = {} } = useQuery({
+    queryKey: ["singleCourse"],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/get/exam/${id}`);
+      const res = await axiosPublic.get(`/get/course/${id}`);
       return res.data;
     },
   });
+  console.log(singleCourse);
 
+  const handlePayment = (id) => {
+    const purchaseInfo = {
+      paymentAt: new Date(),
+      id: id,
+      userName: user?.displayName,
+      userEmail: user?.email,
+      type: "course",
+    };
+    console.log(purchaseInfo);
+    axiosSecure.post("/payment", purchaseInfo).then((res) => {
+      console.log(res?.data?.url);
+      window.location.replace(res?.data?.url);
+    });
+  };
 
   return (
     <div className="mt-20 bg-secondaryColor py-8">
@@ -23,36 +42,31 @@ const ExamDetails = () => {
           {/* Top section with thumbnail, key info, and enroll button */}
           <div className="grid grid-cols-1 md:grid-cols-2 items-center md:items-start md:justify-between mb-8">
             <img
-              src={singleExam?.thumbnails}
+              src={singleCourse?.thumbnail}
               alt="exam.title"
               className="w-full h-32 md:w-96 md:h-48 object-cover rounded-lg shadow-lg mb-4 md:mb-0"
             />
 
             <div className="md:ml-6 text-center md:text-left">
               <h1 className="text-3xl font-bold text-primaryColor mb-2">
-                {singleExam?.examTitle}
+                {singleCourse?.title}
               </h1>
               <div className="text-footerTextColor mb-4">
                 <p>
-                  <strong>Topic:</strong> {singleExam?.examTopic} minutes
+                  <strong>Topic:</strong> {singleCourse?.subjects}
                 </p>
                 <p>
-                  <strong>Duration:</strong> {singleExam?.duration} minutes
-                </p>
-                <p>
-                  <strong>Total Marks:</strong> {singleExam?.totalMarks}
-                </p>
-                <p>
-                  <strong>Total Question:</strong>{" "}
-                  {singleExam?.questions?.length}
+                  <strong>Duration:</strong> {singleCourse?.duration} minutes
                 </p>
               </div>
-              <Link to={`/exam/details/1`}>
-                <button className="btn primary-btn my-4">
-                  <span>Enroll Now</span>
-                  <FaArrowRight />
-                </button>
-              </Link>
+
+              <button
+                onClick={() => handlePayment(id)}
+                className="btn primary-btn my-4"
+              >
+                <span>Enroll Now</span>
+                <FaArrowRight />
+              </button>
             </div>
           </div>
 
@@ -61,7 +75,7 @@ const ExamDetails = () => {
             <h3 className="text-2xl font-semibold text-primaryColor mb-4">
               Description
             </h3>
-            <p className="text-gray-600">{singleExam?.description}</p>
+            <p className="text-gray-600">{singleCourse?.description}</p>
           </div>
 
           {/* Additional Details */}
@@ -99,4 +113,4 @@ const ExamDetails = () => {
   );
 };
 
-export default ExamDetails;
+export default CourseDetails;

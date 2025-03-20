@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaCircleCheck } from "react-icons/fa6";
 import useAdmin from "../../Hooks/useAdmin";
 import useRegularUser from "../../Hooks/useRegularUser";
 
 const PaymentSuccess = () => {
-  const navigate = useNavigate();
-
   const { isAdmin } = useAdmin();
   const { isRegularUser } = useRegularUser();
 
@@ -18,17 +16,21 @@ const PaymentSuccess = () => {
           Your transaction was completed successfully.
         </p>
 
-        <button
-          onClick={() =>
-            navigate(
+        <div className="mt-6 flex items-center justify-center gap-6">
+          <Link
+            to={
               (isAdmin && "/dashboard/admin-home") ||
-                (isRegularUser && "/dashboard/user-home")
-            )
-          }
-          className="mt-6 px-6 py-2 bg-primaryColor text-white font-semibold rounded-lg shadow-md transition cursor-pointer"
-        >
-          Go to Dashboard
-        </button>
+              (isRegularUser && "/dashboard/user-home")
+            }
+          >
+            <button className="px-6 py-2 bg-primaryColor text-white font-semibold rounded-lg shadow-md transition cursor-pointer">
+              Go to Dashboard
+            </button>
+          </Link>
+          <Link to={"/"}>
+            <button className="btn btn-outline">Back to Home</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

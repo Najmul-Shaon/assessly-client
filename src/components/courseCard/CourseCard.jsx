@@ -27,7 +27,7 @@ const CourseCard = ({ course }) => {
         <div className="flex justify-between items-center">
           <div>
             {/* done: make exam id dynamic  */}
-            <Link to={`/exam/details/${course?.courseId}`}>
+            <Link to={`/course/details/${course?.courseId}`}>
               <button className="btn primary-btn my-4">
                 <span>View Details</span>
                 <FaArrowRight />
