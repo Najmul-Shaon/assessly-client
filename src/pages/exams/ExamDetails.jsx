@@ -19,16 +19,16 @@ const ExamDetails = () => {
     },
   });
 
-  const handlePayment = (examId) => {
+  const handlePayment = (id) => {
     const purchaseInfo = {
       paymentAt: new Date(),
       modifiedAt: new Date(),
-      examId: examId,
+      id: id,
       userName: user?.displayName,
       userEmail: user?.email,
       type: "exam",
     };
-    console.log(purchaseInfo);
+    console.log("purchase info", purchaseInfo);
     axiosSecure.post("/payment", purchaseInfo).then((res) => {
       console.log(res?.data?.url);
       window.location.replace(res?.data?.url);

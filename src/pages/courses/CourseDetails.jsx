@@ -23,6 +23,7 @@ const CourseDetails = () => {
   const handlePayment = (id) => {
     const purchaseInfo = {
       paymentAt: new Date(),
+      modifiedAt: new Date(),
       id: id,
       userName: user?.displayName,
       userEmail: user?.email,
@@ -59,13 +60,13 @@ const CourseDetails = () => {
                 </p>
               </div>
 
-              {/* <button
+              <button
                 onClick={() => handlePayment(id)}
                 className="btn primary-btn my-4"
               >
                 <span>Enroll Now</span>
                 <FaArrowRight />
-              </button> */}
+              </button>
             </div>
           </div>
 
