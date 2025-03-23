@@ -29,6 +29,8 @@ import PaymentSuccess from "../components/Payment/PaymentSuccess";
 import PaymentFailed from "../components/Payment/PaymentFailed";
 import PaymentCancel from "../components/Payment/PaymentCancel";
 import MyExams from "../Dashboard/RegularUser/MyExam/MyExams";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "../layouts/AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -54,7 +56,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/exam/details/:id",
-        element: <ExamDetails />,
+        element: (
+          <PrivateRoute>
+            <ExamDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/courses",
@@ -62,7 +68,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/course/details/:id",
-        element: <CourseDetails />,
+        element: (
+          <PrivateRoute>
+            <CourseDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blogs",
@@ -70,7 +80,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/blog/details/:id",
-        element: <BlogDetails />,
+        element: (
+          <PrivateRoute>
+            <BlogDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/about",
@@ -100,31 +114,59 @@ export const router = createBrowserRouter([
       // regular user area start
       {
         path: "user-home",
-        element: <RegularUserHome />,
+        element: (
+          <PrivateRoute>
+            <RegularUserHome />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-courses",
-        element: <CommingSoon />,
+        element: (
+          <PrivateRoute>
+            <CommingSoon />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-exam",
-        element: <MyExams />,
+        element: (
+          <PrivateRoute>
+            <MyExams />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-blogs",
-        element: <CommingSoon />,
+        element: (
+          <PrivateRoute>
+            <CommingSoon />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-payments",
-        element: <CommingSoon />,
+        element: (
+          <PrivateRoute>
+            <CommingSoon />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-profile",
-        element: <CommingSoon />,
+        element: (
+          <PrivateRoute>
+            <CommingSoon />
+          </PrivateRoute>
+        ),
       },
       {
         path: "my-certificates",
-        element: <CommingSoon />,
+        element: (
+          <PrivateRoute>
+            <CommingSoon />
+          </PrivateRoute>
+        ),
       },
 
       // regular user area end
@@ -132,51 +174,99 @@ export const router = createBrowserRouter([
       // admin area start
       {
         path: "admin-home",
-        element: <AdminHome />,
+        element: (
+          // <AdminRoute>
+            <AdminHome />
+          // </AdminRoute>
+        ),
       },
       {
         path: "all-exams",
-        element: <AllExams />,
+        element: (
+          <AdminRoute>
+            <AllExams />
+          </AdminRoute>
+        ),
       },
       {
         path: "add-exam",
-        element: <AddExam />,
+        element: (
+          <AdminRoute>
+            <AddExam />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-questions",
-        element: <ManageQuestions />,
+        element: (
+          <AdminRoute>
+            <ManageQuestions />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-questions/details/:id",
-        element: <IndividualQuestionDetails />,
+        element: (
+          <AdminRoute>
+            <IndividualQuestionDetails />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-questions/edit/:id",
-        element: <IndividualQuestionEdit />,
+        element: (
+          <AdminRoute>
+            <IndividualQuestionEdit />
+          </AdminRoute>
+        ),
       },
       {
         path: "all-courses",
-        element: <AllCourses />,
+        element: (
+          <AdminRoute>
+            <AllCourses />
+          </AdminRoute>
+        ),
       },
       {
         path: "add-course",
-        element: <AddCourse />,
+        element: (
+          <AdminRoute>
+            <AddCourse />
+          </AdminRoute>
+        ),
       },
       {
         path: "all-blog",
-        element: <AllBlog />,
+        element: (
+          <AdminRoute>
+            <AllBlog />
+          </AdminRoute>
+        ),
       },
       {
         path: "add-blog",
-        element: <AddBlog />,
+        element: (
+          <AdminRoute>
+            <AddBlog />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-payments",
-        element: <CommingSoon />,
+        element: (
+          <AdminRoute>
+            <CommingSoon />
+          </AdminRoute>
+        ),
       },
       // admin area end
     ],

@@ -18,7 +18,7 @@ const CourseDetails = () => {
       return res.data;
     },
   });
-  console.log(singleCourse);
+  // console.log(singleCourse);
 
   const handlePayment = (id) => {
     const purchaseInfo = {
