@@ -13,7 +13,11 @@ const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddExam = () => {
-  const { user } = useAuth();
+  {
+    /* <span className="loading loading-spinner text-success"></span>; */
+  }
+
+  const { user, setLoading } = useAuth();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const navigation = useNavigate();
@@ -26,12 +30,15 @@ const AddExam = () => {
   } = useForm();
 
   const [questions, setQuestions] = useState([]);
+  const [isNegativeMark, setIsNegativeMark] = useState(false);
+
   //   const [image, setImage] = useState(null);
 
   // Watch exam type to dynamically change the form fields
   const watchExamType = watch("examType", "single"); // default to "single"
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const thumbnails = { image: data.thumbnails[0] };
     // image upload to imgbb and then get an url
     const res = await axiosPublic.post(imgHostingApi, thumbnails, {
@@ -41,18 +48,23 @@ const AddExam = () => {
     });
     if (res.data.success) {
       const examInfo = {
+        createdAt: new Date(),
         createdBy: user?.email,
         description: data.description,
         duration: data.duration,
+        startDate: data.startDate,
         endDate: data.endDate,
         examTitle: data.examTitle,
-        examTopic: data.examTopic,
+        examTopic: data.subjects,
+        examClass: data.classTypes,
         examType: data.examType,
+        faceCam: data.faceCam,
         fee: data.fee,
-        startDate: data.startDate,
         thumbnails: res?.data?.data?.display_url,
         totalMarks: data.totalMarks,
         uniqueQuestions: data.uniqueQuestions,
+        isNegativeMarks: data.isNegativeMarks,
+        negativeMark: data.negativeMark || null,
         questions,
       };
       axiosSecure.post("/create/exam", examInfo).then((res) => {
@@ -64,6 +76,7 @@ const AddExam = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          setLoading(false);
           reset();
           navigation("/dashboard/all-exams");
         }
@@ -127,11 +140,19 @@ const AddExam = () => {
     XLSX.writeFile(wb, "Sample_Questions.xlsx");
   };
 
-  // Handle image file change
-  //   const handleImageChange = (e) => {
-  //     const file = e.target.files[0];
-  //     setImage(URL.createObjectURL(file)); // Display the image in the UI
-  //   };
+  const classTypes = [6, 7, 8, 9, 10, 11, 12];
+
+  const subjects = [
+    "ICT",
+    "Bangla",
+    "English",
+    "Math",
+    "Biology",
+    "Physics",
+    "Chemistry",
+    "Accounting",
+    "Economics",
+  ];
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -216,7 +237,7 @@ const AddExam = () => {
         {/* Price and Topic - only for Single Exam */}
         {watchExamType === "single" && (
           <>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div>
                 <label className="block font-semibold">Fee:</label>
                 <input
@@ -229,36 +250,47 @@ const AddExam = () => {
               </div>
 
               <div>
-                <label className="block font-semibold">Exam Topic:</label>
-                <input
-                  placeholder="e.g. chemistry"
-                  {...register("examTopic", {
-                    required: "Exam topic is required",
+                <label className="block font-medium">Class</label>
+                <select
+                  {...register("classTypes", {
+                    required: "Please select a Class",
                   })}
-                  className="w-full p-2 border rounded"
-                />
-                <p className="text-red-500">{errors.examTopic?.message}</p>
+                  className="w-full border p-2 rounded"
+                >
+                  <option value="">Class</option>
+                  {classTypes.map((classType, index) => (
+                    <option key={index} value={classType}>
+                      {classType}
+                    </option>
+                  ))}
+                </select>
+                {errors.classTypes && (
+                  <p className="text-red-500 text-sm">
+                    {errors.classTypes.message}
+                  </p>
+                )}
               </div>
-            </div>
-            {/* Image Upload */}
-            <div>
-              <label className="block font-semibold">Upload Exam Image:</label>
-              <input
-                type="file"
-                accept="image/*"
-                // onChange={handleImageChange}
-                className="w-full border rounded file-input border-black"
-                {...register("thumbnails", {
-                  required: "Thumbnails img is required",
-                })}
-              />
-              {/* {image && (
-                <img
-                  src={image}
-                  alt="Exam"
-                  className="mt-2 w-32 h-32 object-cover"
-                />
-              )} */}
+              <div>
+                <label className="block font-medium">Subject:</label>
+                <select
+                  {...register("subjects", {
+                    required: "Please select a subject",
+                  })}
+                  className="w-full border p-2 rounded"
+                >
+                  <option value="">Subject</option>
+                  {subjects.map((subject, index) => (
+                    <option key={index} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
+                {errors.subjects && (
+                  <p className="text-red-500 text-sm">
+                    {errors.subjects.message}
+                  </p>
+                )}
+              </div>
             </div>
           </>
         )}
@@ -266,6 +298,7 @@ const AddExam = () => {
         {/* Start and End Date - only for Group Exam */}
         {watchExamType === "group" && (
           <>
+            {/* start daate  */}
             <div>
               <label className="block font-semibold">
                 Start Date and Time:
@@ -279,7 +312,7 @@ const AddExam = () => {
               />
               <p className="text-red-500">{errors.startDate?.message}</p>
             </div>
-
+            {/* end date */}
             <div>
               <label className="block font-semibold">End Date and Time:</label>
               <input
@@ -289,19 +322,117 @@ const AddExam = () => {
               />
               <p className="text-red-500">{errors.endDate?.message}</p>
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block font-medium">Class:</label>
+                <select
+                  {...register("classTypes", {
+                    required: "Please select a Class",
+                  })}
+                  className="w-full border p-2 rounded"
+                >
+                  <option value="">Class</option>
+                  {classTypes.map((classType, index) => (
+                    <option key={index} value={classType}>
+                      {classType}
+                    </option>
+                  ))}
+                </select>
+                {errors.classTypes && (
+                  <p className="text-red-500 text-sm">
+                    {errors.classTypes.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className="block font-medium">Subject:</label>
+                <select
+                  {...register("subjects", {
+                    required: "Please select a subject",
+                  })}
+                  className="w-full border p-2 rounded"
+                >
+                  <option value="">Subject</option>
+                  {subjects.map((subject, index) => (
+                    <option key={index} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
+                {errors.subjects && (
+                  <p className="text-red-500 text-sm">
+                    {errors.subjects.message}
+                  </p>
+                )}
+              </div>
+            </div>
           </>
         )}
 
-        {/* Unique Question Checkbox */}
-        <div>
-          <label className="flex items-center space-x-2">
+        {/* Checkbox */}
+        <div className="grid grid-cols-2 justify-between items-center">
+          <div>
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                {...register("uniqueQuestions")}
+                className="h-5 w-5"
+              />
+              <span className="font-semibold">Unique Question</span>
+            </label>
+          </div>
+          <div>
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                {...register("faceCam")}
+                className="h-5 w-5"
+              />
+              <span className="font-semibold">Camera</span>
+            </label>
+          </div>
+          <div>
+            <label className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                {...register("isNegativeMarks")}
+                className="h-5 w-5"
+                checked={isNegativeMark}
+                onChange={() => setIsNegativeMark(!isNegativeMark)}
+              />
+              <span className="font-semibold">Negative Marking</span>
+            </label>
+          </div>
+          <div>
+            <label className="block font-semibold">Negative Mark (%)</label>
             <input
-              type="checkbox"
-              {...register("uniqueQuestions")}
-              className="h-5 w-5"
+              placeholder="25"
+              type="number"
+              {...register(
+                "negativeMark",
+                isNegativeMark && { required: "Negative Mark is required" }
+              )}
+              className={`w-full p-2 border rounded ${
+                isNegativeMark ? "cursor-pointer" : "cursor-not-allowed"
+              } `}
+              disabled={!isNegativeMark}
             />
-            <span className="font-semibold">Unique Question</span>
-          </label>
+            <p className="text-red-500">{errors.negativeMark?.message}</p>
+          </div>
+        </div>
+
+        {/* Image Upload */}
+        <div>
+          <label className="block font-semibold">Upload Exam Image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            // onChange={handleImageChange}
+            className="w-full border rounded file-input border-black"
+            {...register("thumbnails", {
+              required: "Thumbnails img is required",
+            })}
+          />
         </div>
 
         {/* File Upload */}

@@ -13,7 +13,7 @@ const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const CLOUDINARY_NAME = import.meta.env.VITE_CLOUDINARY_NAME;
 
 const AddCourse = () => {
-  const { user } = useAuth();
+  const { user, setLoading } = useAuth();
   const navigation = useNavigate();
   const axiosSecure = useAxiosSecure();
   const axiosPublic = useAxiosPublic();
@@ -63,6 +63,7 @@ const AddCourse = () => {
   // Handle form submission
   const onSubmit = async (data) => {
     // console.log(data);
+    setLoading(true);
 
     const thumbnails = { image: data.thumbnails[0] };
 
@@ -88,14 +89,6 @@ const AddCourse = () => {
         },
       }
     );
-
-    // console.log(thumbnails);
-    // console.log(data.thumbnails[0]);
-    console.log(videoRes);
-    console.log(videoRes.data?.secure_url);
-    console.log(videoRes.data?.asset_id);
-
-    // console.log(res.data);
 
     if (res.data.success && videoRes.data?.asset_id) {
       const courseInfo = {
@@ -125,19 +118,11 @@ const AddCourse = () => {
             timer: 1500,
           });
           reset();
+          setLoading(false);
           navigation("/dashboard/all-courses");
         }
       });
     }
-
-    // Prepare form data for backend
-    // const formData = new FormData();
-    // formData.append("title", data.title);
-    // formData.append("description", data.description);
-    // formData.append("price", data.price);
-    // formData.append("category", data.category);
-    // formData.append("thumbnail", data.thumbnail[0]);
-    // formData.append("video", data.video[0]);
   };
 
   return (
