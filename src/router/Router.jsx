@@ -28,6 +28,7 @@ import AddCourse from "../Dashboard/Admin/ManageCourses/AddCourse";
 import PaymentSuccess from "../components/Payment/PaymentSuccess";
 import PaymentFailed from "../components/Payment/PaymentFailed";
 import PaymentCancel from "../components/Payment/PaymentCancel";
+import MyExams from "../Dashboard/RegularUser/MyExam/MyExams";
 
 export const router = createBrowserRouter([
   {
@@ -107,7 +108,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-exam",
-        element: <CommingSoon />,
+        element: <MyExams />,
       },
       {
         path: "my-blogs",
