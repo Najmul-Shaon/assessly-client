@@ -22,6 +22,7 @@ const ExamDetails = () => {
   const handlePayment = (examId) => {
     const purchaseInfo = {
       paymentAt: new Date(),
+      modifiedAt: new Date(),
       examId: examId,
       userName: user?.displayName,
       userEmail: user?.email,

@@ -27,6 +27,7 @@ import AllCourses from "../Dashboard/Admin/ManageCourses/AllCourses";
 import AddCourse from "../Dashboard/Admin/ManageCourses/AddCourse";
 import PaymentSuccess from "../components/Payment/PaymentSuccess";
 import PaymentFailed from "../components/Payment/PaymentFailed";
+import PaymentCancel from "../components/Payment/PaymentCancel";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
       {
         path: "payment/failed/:trxId",
         element: <PaymentFailed />,
+      },
+      {
+        path: "payment/cancel/:trxId",
+        element: <PaymentCancel />,
       },
     ],
   },

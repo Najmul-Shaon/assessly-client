@@ -59,13 +59,13 @@ const CourseDetails = () => {
                 </p>
               </div>
 
-              <button
+              {/* <button
                 onClick={() => handlePayment(id)}
                 className="btn primary-btn my-4"
               >
                 <span>Enroll Now</span>
                 <FaArrowRight />
-              </button>
+              </button> */}
             </div>
           </div>
 
