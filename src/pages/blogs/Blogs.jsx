@@ -6,12 +6,13 @@ import { FaRegRectangleXmark } from "react-icons/fa6";
 import { FaFilter } from "react-icons/fa";
 import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
+import Spinner from "../../shared/spinner/Spinner";
 
 const Blogs = () => {
   const [isFilterView, setIsFilterView] = useState(false);
   const axiosPublic = useAxiosPublic();
 
-  const { data: allBlogs = [] } = useQuery({
+  const { data: allBlogs = [], isLoading: allBlogsLoading } = useQuery({
     queryKey: ["allBlogs"],
     queryFn: async () => {
       const res = await axiosPublic.get("/get/blogs?limit=all");
@@ -67,11 +68,18 @@ const Blogs = () => {
             </button>
           </div>
         </div>
+
         {/* blogs card area  */}
         <div className="grid grid-cols-12 gap-6 mt-8">
           <div className="lg:col-span-3 hidden lg:inline">
             <FilterArea></FilterArea>
           </div>
+          {allBlogsLoading && (
+            <div className="col-span-9">
+              <Spinner />
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 col-span-12 lg:col-span-9">
             {allBlogs.map((blog) => (
               <BlogCard key={blog?.blogId} blog={blog}></BlogCard>

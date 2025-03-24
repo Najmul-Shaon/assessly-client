@@ -6,12 +6,13 @@ import { FaRegRectangleXmark } from "react-icons/fa6";
 import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import CourseCard from "../../components/courseCard/CourseCard";
+import Spinner from "../../shared/spinner/Spinner";
 
 const Exams = () => {
   const axiosPublic = useAxiosPublic();
   const [isFilterView, setIsFilterView] = useState(false);
 
-  const { data: allCourses = [] } = useQuery({
+  const { data: allCourses = [], isLoading: allCourseLoading } = useQuery({
     queryKey: ["allCourses"],
     queryFn: async () => {
       // const res = await axiosPublic("/get/all-exams?type=single");
@@ -20,7 +21,7 @@ const Exams = () => {
     },
   });
 
-  // console.log(allExams);
+  console.log(allCourseLoading);
 
   return (
     <div>
@@ -102,6 +103,7 @@ const Exams = () => {
               </select>
             </div>
           </div>
+          {allCourseLoading && <Spinner />}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
             {allCourses.map((course) => (
               <CourseCard key={course?.courseId} course={course}></CourseCard>

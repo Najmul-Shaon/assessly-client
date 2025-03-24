@@ -31,6 +31,7 @@ import PaymentCancel from "../components/Payment/PaymentCancel";
 import MyExams from "../Dashboard/RegularUser/MyExam/MyExams";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "../layouts/AdminRoute";
+import Features from "../pages/Features/Features";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
             <BlogDetails />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/features",
+        element: <Features />,
       },
       {
         path: "/about",
@@ -176,7 +181,7 @@ export const router = createBrowserRouter([
         path: "admin-home",
         element: (
           // <AdminRoute>
-            <AdminHome />
+          <AdminHome />
           // </AdminRoute>
         ),
       },
