@@ -6,7 +6,7 @@ const About = () => {
       <Helmet>
         <title>Assessley | About</title>
       </Helmet>
-      <div className="bg-secondaryColor py-10 px-6">
+      <div className=" py-10 px-6">
         <div className="max-w-6xl mx-auto text-center">
           {/* Header Section */}
           <h1 className="text-4xl font-bold text-textColor mb-4">
@@ -18,7 +18,7 @@ const About = () => {
         {/* Content Section */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Mission */}
-          <div className="bg-white shadow-lg rounded-lg p-6">
+          <div className="bg-secondaryColor shadow-lg rounded-lg p-6">
             <h2 className="text-2xl font-semibold text-gray-800 mb-3">
               Our Mission
             </h2>
@@ -31,7 +31,7 @@ const About = () => {
           </div>
 
           {/* Vision */}
-          <div className="bg-white shadow-lg rounded-lg p-6">
+          <div className="bg-secondaryColor shadow-lg rounded-lg p-6">
             <h2 className="text-2xl font-semibold text-gray-800 mb-3">
               Our Vision
             </h2>
@@ -45,7 +45,7 @@ const About = () => {
           </div>
         </div>
         {/* CTA */}
-        <div className="bg-white shadow-lg rounded-lg p-6 flex items-center justify-center mt-10 max-w-6xl mx-auto">
+        <div className="bg-secondaryColor shadow-lg rounded-lg p-6 flex items-center justify-center mt-10 max-w-6xl mx-auto">
           <p className="text-xl font-medium text-gray-800">
             Ready to take challenge?
             <br />
