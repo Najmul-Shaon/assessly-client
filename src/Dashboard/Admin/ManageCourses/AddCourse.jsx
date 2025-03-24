@@ -7,6 +7,7 @@ import useAxiosPublic from "../../../Hooks/axiosPublic";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -127,6 +128,9 @@ const AddCourse = () => {
 
   return (
     <div className="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+      <Helmet>
+        <title>Assessley | Add Course</title>
+      </Helmet>
       <SectionTitle header={"Add Course"}></SectionTitle>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Course Title */}

@@ -2,7 +2,12 @@ import { NavLink } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoStatsChartOutline } from "react-icons/io5";
 import { LiaClipboardSolid } from "react-icons/lia";
-import { IoIosArrowDown, IoIosArrowUp, IoMdBookmarks, IoMdCard } from "react-icons/io";
+import {
+  IoIosArrowDown,
+  IoIosArrowUp,
+  IoMdBookmarks,
+  IoMdCard,
+} from "react-icons/io";
 import { TbCalendarQuestion } from "react-icons/tb";
 import { FaUsersCog } from "react-icons/fa";
 import { RiArticleLine } from "react-icons/ri";
@@ -166,7 +171,7 @@ const AdminMenu = ({
                   }`
                 }
               >
-                All Blog
+                All Blogs
               </NavLink>
               <NavLink
                 to={pathname ? "dashboard/add-blog" : "add-blog"}

@@ -4,6 +4,7 @@ import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import { FaRegEdit } from "react-icons/fa";
 import { IoTrashBinOutline, IoEyeOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const ManageQuestions = () => {
   const axiosSecure = useAxiosSecure();
@@ -16,6 +17,9 @@ const ManageQuestions = () => {
   });
   return (
     <div>
+      <Helmet>
+        <title>Assessley | Questions</title>
+      </Helmet>
       <SectionTitle header={"Manage Question"} />
 
       <div className="overflow-x-auto">

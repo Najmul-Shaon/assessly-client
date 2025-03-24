@@ -8,6 +8,7 @@ import useAxiosPublic from "../../../Hooks/axiosPublic";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
+import { Helmet } from "react-helmet-async";
 
 const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -156,6 +157,9 @@ const AddExam = () => {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <Helmet>
+        <title>Assessley | Add Exam</title>
+      </Helmet>
       <SectionTitle header={"Create Exam"} />
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Exam Title */}

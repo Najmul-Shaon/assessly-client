@@ -7,6 +7,7 @@ import { FaFilter } from "react-icons/fa";
 import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../shared/spinner/Spinner";
+import { Helmet } from "react-helmet-async";
 
 const Blogs = () => {
   const [isFilterView, setIsFilterView] = useState(false);
@@ -22,6 +23,9 @@ const Blogs = () => {
 
   return (
     <div className="mt-20 scroll-smooth">
+      <Helmet>
+        <title>Assessley | Blogs</title>
+      </Helmet>
       {/* section title / cover  */}
       <div className="mt-18 bg-primaryColor/10 py-8">
         <SectionTitle header={"All Blogs"}></SectionTitle>{" "}

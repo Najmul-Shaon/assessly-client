@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../Hooks/axiosSecure";
 import { Link } from "react-router-dom";
 import { IoEyeOutline, IoTrashBinOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 const AllExams = () => {
   const axiosSecure = useAxiosSecure();
@@ -19,6 +20,9 @@ const AllExams = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Assessley | All Exams</title>
+      </Helmet>
       <SectionTitle header={"All Exams"} />
 
       <div className="overflow-x-auto">

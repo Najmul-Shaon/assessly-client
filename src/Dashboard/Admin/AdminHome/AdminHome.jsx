@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import StatChart from "../../SupportComponents/StatChart";
 import StatusCard from "../../SupportComponents/StatusCard";
 import Table from "../../SupportComponents/Table";
@@ -6,6 +7,9 @@ const AdminHome = () => {
   return (
     <>
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      <Helmet>
+        <title>Assessley | Dahboard-home</title>
+      </Helmet>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

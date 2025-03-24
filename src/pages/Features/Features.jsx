@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../components/sectionTiltle/SectionTitle";
 
 const Features = () => {
@@ -51,8 +52,10 @@ const Features = () => {
     },
   ];
   return (
-    // <div className="py-10 px-5 md:px-20">
     <div className="mt-20">
+      <Helmet>
+        <title>Assessley | Features</title>
+      </Helmet>
       <div className="mt-18 bg-primaryColor/10 py-8">
         <SectionTitle header={"Features"}></SectionTitle>{" "}
       </div>

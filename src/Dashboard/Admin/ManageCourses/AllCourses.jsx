@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { IoEyeOutline, IoTrashBinOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 
 const AllCourses = () => {
   const axiosSecure = useAxiosSecure();
@@ -31,6 +32,9 @@ const AllCourses = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Assessley | All Courses</title>
+      </Helmet>
       <SectionTitle header={"All Courses"} />
 
       <div className="overflow-x-auto">

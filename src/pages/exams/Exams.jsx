@@ -7,6 +7,7 @@ import { FaRegRectangleXmark } from "react-icons/fa6";
 import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../shared/spinner/Spinner";
+import { Helmet } from "react-helmet-async";
 
 const Exams = () => {
   const axiosPublic = useAxiosPublic();
@@ -24,6 +25,9 @@ const Exams = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Assessley | Exams</title>
+      </Helmet>
       <div className="mt-18 bg-primaryColor/10 py-8">
         <SectionTitle header={"All Exams"}></SectionTitle>{" "}
       </div>
