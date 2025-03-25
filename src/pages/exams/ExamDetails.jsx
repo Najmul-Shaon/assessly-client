@@ -1,15 +1,18 @@
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaCheckCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/axiosSecure";
+import usePaid from "../../Hooks/usePaid";
 
 const ExamDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
+  const { isPaid } = usePaid(id, "exam");
+
 
   const { data: singleExam = {} } = useQuery({
     queryKey: ["singleExam"],
@@ -67,13 +70,26 @@ const ExamDetails = () => {
                 </p>
               </div>
               {/* <Link to={`/exam/details/1`}> */}
-              <button
-                onClick={() => handlePayment(id)}
-                className="btn primary-btn my-4"
-              >
-                <span>Enroll Now</span>
-                <FaArrowRight />
-              </button>
+              {!isPaid && (
+                <button
+                  onClick={() => handlePayment(id)}
+                  className="btn primary-btn my-4"
+                >
+                  <span>Enroll Now</span>
+                  <FaArrowRight />
+                </button>
+              )}
+              {isPaid && (
+                <div className="flex items-center gap-6">
+                  <button className="btn btn-outline my-4">
+                    Paid{" "}
+                    <span className="text-primaryColor text-xl">
+                      <FaCheckCircle />
+                    </span>
+                  </button>
+                  <button className="btn primary-btn my-4">Start Exam</button>
+                </div>
+              )}
               {/* </Link> */}
             </div>
           </div>
