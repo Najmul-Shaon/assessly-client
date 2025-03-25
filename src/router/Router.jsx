@@ -32,6 +32,7 @@ import MyExams from "../Dashboard/RegularUser/MyExam/MyExams";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "../layouts/AdminRoute";
 import Features from "../pages/Features/Features";
+import MyCourses from "../Dashboard/RegularUser/MyCourses/MyCourses";
 
 export const router = createBrowserRouter([
   {
@@ -96,6 +97,10 @@ export const router = createBrowserRouter([
         element: <About />,
       },
       {
+        path: "/group-exam",
+        element: <CommingSoon />,
+      },
+      {
         path: "payment/success/:trxId",
         element: <PaymentSuccess />,
       },
@@ -129,7 +134,7 @@ export const router = createBrowserRouter([
         path: "my-courses",
         element: (
           <PrivateRoute>
-            <CommingSoon />
+            <MyCourses />
           </PrivateRoute>
         ),
       },

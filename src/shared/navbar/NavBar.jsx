@@ -96,6 +96,20 @@ const NavBar = () => {
           About
         </NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink
+            to="/group-exam"
+            className={({ isActive }) =>
+              ` hover:text-primaryColor text-xl font-semibold ${
+                isActive ? "text-primaryColor" : "text-textColor"
+              }`
+            }
+          >
+            Group Exam
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
