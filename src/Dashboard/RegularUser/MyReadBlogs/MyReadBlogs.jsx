@@ -5,7 +5,7 @@ import useAuth from "../../../Hooks/useAuth";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import { Link } from "react-router-dom";
 
-const MyBlogs = () => {
+const MyReadBlogs = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: myReadBlogs = [], refetch } = useQuery({
@@ -79,4 +79,4 @@ const MyBlogs = () => {
   );
 };
 
-export default MyBlogs;
+export default MyReadBlogs;

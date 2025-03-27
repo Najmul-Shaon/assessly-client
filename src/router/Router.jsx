@@ -33,7 +33,8 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "../layouts/AdminRoute";
 import Features from "../pages/Features/Features";
 import MyCourses from "../Dashboard/RegularUser/MyCourses/MyCourses";
-import MyBlogs from "../Dashboard/RegularUser/MyBlogs/MyBlogs";
+import MyReadBlogs from "../Dashboard/RegularUser/MyReadBlogs/MyReadBlogs";
+import PaymentHistory from "../Dashboard/RegularUser/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -155,7 +156,7 @@ export const router = createBrowserRouter([
         path: "my-blogs",
         element: (
           <PrivateRoute>
-            <MyBlogs />
+            <MyReadBlogs />
           </PrivateRoute>
         ),
       },
@@ -163,7 +164,7 @@ export const router = createBrowserRouter([
         path: "my-payments",
         element: (
           <PrivateRoute>
-            <CommingSoon />
+            <PaymentHistory />
           </PrivateRoute>
         ),
       },
