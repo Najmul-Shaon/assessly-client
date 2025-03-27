@@ -35,6 +35,7 @@ import Features from "../pages/Features/Features";
 import MyCourses from "../Dashboard/RegularUser/MyCourses/MyCourses";
 import MyReadBlogs from "../Dashboard/RegularUser/MyReadBlogs/MyReadBlogs";
 import PaymentHistory from "../Dashboard/RegularUser/PaymentHistory/PaymentHistory";
+import MyProfile from "../Dashboard/RegularUser/MyProfile/MyProfile";
 
 export const router = createBrowserRouter([
   {
@@ -172,7 +173,7 @@ export const router = createBrowserRouter([
         path: "my-profile",
         element: (
           <PrivateRoute>
-            <CommingSoon />
+            <MyProfile />
           </PrivateRoute>
         ),
       },

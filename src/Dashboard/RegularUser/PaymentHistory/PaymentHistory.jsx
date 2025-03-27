@@ -36,7 +36,6 @@ const PaymentHistory = () => {
               <th>Amount</th>
               <th>Status</th>
               <th>Pay at</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -50,13 +49,6 @@ const PaymentHistory = () => {
 
                 <td>
                   {new Date(singlePayment?.paymentAt).toLocaleDateString()}
-                </td>
-                <td className="flex items-center gap-1 text-xl">
-                  <Link to={`/blog/details/${singlePayment?.blogId}`}>
-                    <button className="btn-md btn-link text-accentColor cursor-pointer">
-                      Read
-                    </button>
-                  </Link>
                 </td>
               </tr>
             ))}

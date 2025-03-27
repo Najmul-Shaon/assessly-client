@@ -67,7 +67,7 @@ const RegularUserMenu = ({ toggleSidebar, pathname }) => {
             <span>
               <RiArticleLine />
             </span>
-            My Blogs
+            My Read Blogs
           </NavLink>
           <NavLink
             to={pathname ? "dashboard/my-payments" : "my-payments"}

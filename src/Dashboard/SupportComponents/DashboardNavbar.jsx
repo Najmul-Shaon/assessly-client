@@ -82,7 +82,7 @@ const DashboardNavbar = ({ toggleSidebar }) => {
                     onClick={() => setIsExpand(false)}
                   >
                     <RiArticleLine />
-                    Blog
+                    Blogs
                   </li>
                 </Link>
                 <Link to="/about">
