@@ -33,6 +33,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "../layouts/AdminRoute";
 import Features from "../pages/Features/Features";
 import MyCourses from "../Dashboard/RegularUser/MyCourses/MyCourses";
+import MyBlogs from "../Dashboard/RegularUser/MyBlogs/MyBlogs";
 
 export const router = createBrowserRouter([
   {
@@ -154,7 +155,7 @@ export const router = createBrowserRouter([
         path: "my-blogs",
         element: (
           <PrivateRoute>
-            <CommingSoon />
+            <MyBlogs />
           </PrivateRoute>
         ),
       },
