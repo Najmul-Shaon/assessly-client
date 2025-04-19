@@ -65,7 +65,6 @@ const AddBlog = () => {
         }
       });
     }
-    console.log(data);
   };
 
   return (

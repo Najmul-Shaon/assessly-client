@@ -1,7 +1,7 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 // import logo from "../../assets/logo v2.png";
 import logo from "../../assets/logo v6.png";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineLogin, AiOutlinePlus } from "react-icons/ai";
 import { FaUserPlus } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
 import { GoSignOut } from "react-icons/go";
@@ -12,6 +12,7 @@ import useAdmin from "../../Hooks/useAdmin";
 import useRegularUser from "../../Hooks/useRegularUser";
 import RegularUserMenu from "../../Dashboard/SupportComponents/RegularUserMenu";
 import AdminMenu from "../../Dashboard/SupportComponents/AdminMenu";
+import useHandleEnrollGroup from "../../Hooks/useHandleEnrollGroup";
 
 const NavBar = () => {
   const { user } = useAuth();
@@ -20,6 +21,7 @@ const NavBar = () => {
   const { isAdmin } = useAdmin();
   const { isRegularUser } = useRegularUser();
   const { pathname } = useLocation();
+  const { hanldeGroupExamEnroll } = useHandleEnrollGroup();
   const navLinks = (
     <>
       <li>
@@ -96,7 +98,7 @@ const NavBar = () => {
           About
         </NavLink>
       </li>
-      {user && (
+      {/* {user && (
         <li>
           <NavLink
             to="/group-exam"
@@ -109,7 +111,7 @@ const NavBar = () => {
             Group Exam
           </NavLink>
         </li>
-      )}
+      )} */}
     </>
   );
 
@@ -156,7 +158,15 @@ const NavBar = () => {
           {/* <ul className="menu menu-horizontal px-1 space-x-2">{navLinks}</ul> */}
           <ul className="flex px-1 space-x-6">{navLinks}</ul>
         </div>
-        <div className="navbar-end">
+        <div className="navbar-end ">
+          {user && (
+            <div
+              onClick={hanldeGroupExamEnroll}
+              className="hover:bg-gray-200 rounded-full p-1.5 me-3"
+            >
+              <AiOutlinePlus className="text-2xl" />
+            </div>
+          )}
           <div className="flex gap-2 items-center relative">
             {user && (
               <div

@@ -24,7 +24,6 @@ const SocialLogin = () => {
         axiosPublic
           .post("/create-user", userInfo)
           .then((res) => {
-            console.log();
             if (
               res.data.insertedId ||
               res.data.message === "User already exists"

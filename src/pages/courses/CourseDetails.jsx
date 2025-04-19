@@ -20,7 +20,7 @@ const CourseDetails = () => {
       return res.data;
     },
   });
-  // console.log(singleCourse);
+
 
   const handlePayment = (id) => {
     const purchaseInfo = {
@@ -32,7 +32,7 @@ const CourseDetails = () => {
       type: "course",
     };
     axiosSecure.post("/payment", purchaseInfo).then((res) => {
-      console.log(res?.data?.url);
+
       window.location.replace(res?.data?.url);
     });
   };

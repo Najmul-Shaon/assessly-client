@@ -22,7 +22,6 @@ const Exams = () => {
     },
   });
 
-  console.log(allCourseLoading);
 
   return (
     <div>

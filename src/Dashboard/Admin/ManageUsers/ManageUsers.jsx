@@ -42,11 +42,11 @@ const ManageUsers = () => {
                 <td>{singleUser?.userEmail}</td>
                 <td>{singleUser?.userRole}</td>
                 <td>{new Date(singleUser?.createdAt).toLocaleDateString()}</td>
-                <td className="flex items-center gap-1 text-xl">
+                <td className="flex items-center gap-2 text-xl">
                   <span className="text-accentColor">
                     <IoTrashBinOutline />
                   </span>
-                  ||
+         
                   <Link>
                     <span className="text-primaryColor">
                       <FaRegEdit />{" "}

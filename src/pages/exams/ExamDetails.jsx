@@ -31,9 +31,8 @@ const ExamDetails = () => {
       userEmail: user?.email,
       type: "exam",
     };
-    console.log("purchase info", purchaseInfo);
     axiosSecure.post("/payment", purchaseInfo).then((res) => {
-      console.log(res?.data?.url);
+
       window.location.replace(res?.data?.url);
     });
   };

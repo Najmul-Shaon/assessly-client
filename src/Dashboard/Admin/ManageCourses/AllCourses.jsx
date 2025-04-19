@@ -20,7 +20,6 @@ const AllCourses = () => {
   useEffect(() => {
     refetch();
   }, [refetch]);
-  // console.log(allCourses);
 
   const formatDate = (seconds) => {
     const h = Math.floor(seconds / 3600);
@@ -68,17 +67,17 @@ const AllCourses = () => {
                 <td>{singleCourse?.subjects}</td>
                 <td>{singleCourse?.fee}</td>
                 <td>{singleCourse?.createdBy}</td>
-                <td className="flex items-center gap-1 text-xl">
+                <td className="flex items-center gap-2 text-xl">
                   <span className="text-accentColor">
                     <IoTrashBinOutline />
                   </span>
-                  ||
+              
                   <Link>
                     <span className="text-primaryColor">
                       <FaRegEdit />{" "}
                     </span>
                   </Link>{" "}
-                  ||
+                 
                   <Link>
                     <span className="text-primaryColor">
                       <IoEyeOutline />

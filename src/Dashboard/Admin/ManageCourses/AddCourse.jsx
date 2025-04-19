@@ -63,7 +63,6 @@ const AddCourse = () => {
 
   // Handle form submission
   const onSubmit = async (data) => {
-    // console.log(data);
     setLoading(true);
 
     const thumbnails = { image: data.thumbnails[0] };
@@ -109,7 +108,7 @@ const AddCourse = () => {
       };
 
       axiosSecure.post("/create-course", courseInfo).then((res) => {
-        // console.log(res.data);
+
         if (res.data.insertedId) {
           Swal.fire({
             position: "center",

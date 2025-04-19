@@ -50,7 +50,6 @@ export default function Register() {
               axiosSecure
                 .post("/create-user", userInfo)
                 .then((res) => {
-                  console.log("post res from db", res.data);
                   if (res.data.insertedId) {
                     reset();
                     Swal.fire({
@@ -74,11 +73,9 @@ export default function Register() {
                 });
             })
             .catch((error) => {
-              console.log(error);
             });
         })
         .catch((error) => {
-          console.log(error.code);
           if (error.code === "auth/email-already-in-use") {
             Swal.fire({
               title: "Opps!",

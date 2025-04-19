@@ -16,7 +16,6 @@ const AllExams = () => {
     },
   });
 
-  console.log(allExams);
 
   return (
     <div>
@@ -32,6 +31,7 @@ const AllExams = () => {
             <tr>
               <th>Sl</th>
               <th>Exam Id</th>
+              <th>Exam Code</th>
               <th>Title</th>
               <th>Duration</th>
               <th>Type</th>
@@ -45,22 +45,21 @@ const AllExams = () => {
               <tr key={singleExam?._id}>
                 <th>{i + 1}</th>
                 <td>{singleExam?.examId}</td>
+                <td>{singleExam?.examCode ? singleExam?.examCode : "N/A"}</td>
                 <td>{singleExam?.examTitle}</td>
                 <td>{singleExam?.duration} min</td>
                 <td>{singleExam?.examType}</td>
                 <td>{singleExam?.totalMarks}</td>
                 <td>{singleExam?.createdBy}</td>
-                <td className="flex items-center gap-1 text-xl">
+                <td className="flex items-center gap-2 text-xl">
                   <span className="text-accentColor">
                     <IoTrashBinOutline />
                   </span>
-                  ||
                   <Link>
                     <span className="text-primaryColor">
                       <FaRegEdit />{" "}
                     </span>
                   </Link>{" "}
-                  ||
                   <Link>
                     <span className="text-primaryColor">
                       <IoEyeOutline />

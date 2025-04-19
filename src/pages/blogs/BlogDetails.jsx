@@ -10,7 +10,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 const BlogDetails = () => {
   const { id } = useParams();
   const { user } = useAuth();
-  // console.log(id);
+
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
@@ -30,7 +30,7 @@ const BlogDetails = () => {
       const res = await axiosSecure.get(
         `/is-read?id=${id}&user=${user?.email}`
       );
-      console.log(res.data.isRead);
+
       return res?.data.isRead;
     },
   });
@@ -44,7 +44,7 @@ const BlogDetails = () => {
       userEmail: user?.email,
     };
     axiosSecure.post("/blog/add/read", { readBlog }).then((res) => {
-      console.log(res.data);
+
       if (res.data.insertedId) {
         Swal.fire({
           position: "top-center",
@@ -61,7 +61,7 @@ const BlogDetails = () => {
   // delete from isRead
 
   const handleDeleteFromRead = (id) => {
-    // console.log(readBlog);
+
     axiosSecure
       .delete(`/blog/delete/read?id=${id}&user=${user?.email}`)
       .then((res) => {
@@ -78,9 +78,6 @@ const BlogDetails = () => {
       });
   };
 
-  // const { isRead } = isRead;
-
-  console.log(isRead);
 
   const contents = singleBlog?.content || [];
   const tags = singleBlog?.tags?.split(",") || [];

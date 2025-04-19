@@ -47,11 +47,11 @@ const ManageQuestions = () => {
                 <td>{singleExam?.examType}</td>
                 <td>{singleExam?.totalMarks}</td>
                 <td>{singleExam?.createdBy}</td>
-                <td className="flex items-center gap-1 text-xl">
+                <td className="flex items-center gap-2 text-xl">
                   <span className="text-accentColor">
                     <IoTrashBinOutline />
                   </span>
-                  ||
+              
                   <Link
                     to={`/dashboard/manage-questions/edit/${singleExam?.examId}`}
                   >
@@ -59,7 +59,7 @@ const ManageQuestions = () => {
                       <FaRegEdit />{" "}
                     </span>
                   </Link>{" "}
-                  ||
+              
                   <Link
                     to={`/dashboard/manage-questions/details/${singleExam?.examId}`}
                   >

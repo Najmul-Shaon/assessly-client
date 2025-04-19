@@ -105,10 +105,6 @@ export const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "/group-exam",
-        element: <CommingSoon />,
-      },
-      {
         path: "payment/success/:trxId",
         element: <PaymentSuccess />,
       },

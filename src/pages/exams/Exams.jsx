@@ -21,7 +21,6 @@ const Exams = () => {
     },
   });
 
-  console.log(allExamsLoading);
 
   return (
     <div>

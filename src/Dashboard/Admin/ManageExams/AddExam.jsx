@@ -83,7 +83,6 @@ const AddExam = () => {
         }
       });
     }
-    console.log({ data, questions });
   };
 
   const handleFileUpload = (event) => {
@@ -95,7 +94,7 @@ const AddExam = () => {
         const workbook = XLSX.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
         const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-        console.log(sheet); // Log to inspect the data structure
+
         setQuestions(sheet);
       };
       reader.readAsArrayBuffer(file);

@@ -3,9 +3,7 @@ import useRegularUser from "../../../Hooks/useRegularUser";
 
 const MyProfile = () => {
   const { user } = useAuth();
-  //   const { isAdmin } = useAdmin();
   const { isRegularUser } = useRegularUser();
-  console.log(isRegularUser);
 
   return (
     <div className="max-w-xs mx-auto p-6 bg-white shadow-lg rounded-lg">

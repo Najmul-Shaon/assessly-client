@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import { GoChecklist, GoSignOut } from "react-icons/go";
 import { RiArticleLine } from "react-icons/ri";
 import { GrContactInfo } from "react-icons/gr";
-import { AiOutlineLogin } from "react-icons/ai";
+import { AiOutlineLogin, AiOutlinePlus } from "react-icons/ai";
 import useLogout from "../../Hooks/useLogout";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoHomeOutline } from "react-icons/io5";
 import useRegularUser from "../../Hooks/useRegularUser";
 import { IoMdBookmarks } from "react-icons/io";
+import useHandleEnrollGroup from "../../Hooks/useHandleEnrollGroup";
 
 const DashboardNavbar = ({ toggleSidebar }) => {
   const { user } = useAuth();
@@ -18,6 +19,10 @@ const DashboardNavbar = ({ toggleSidebar }) => {
   const handleLogout = useLogout();
   const { isAdmin } = useAdmin();
   const { isRegularUser } = useRegularUser();
+
+  const { hanldeGroupExamEnroll } = useHandleEnrollGroup();
+
+
   return (
     <div className="bg-white shadow-md p-4 flex justify-between items-center">
       {/* Sidebar Toggle for Mobile */}
@@ -31,104 +36,112 @@ const DashboardNavbar = ({ toggleSidebar }) => {
         <span className="text-primaryColor">{user?.displayName}</span>
       </h1>
 
-      <div className="flex items-center gap-4">
-        {user && (
-          <div
-            onClick={() => setIsExpand(!isExpand)}
-            className="flex items-center gap-4"
-          >
-            <div className="avatar">
-              <div className="ring-primary ring-offset-base-100 w-6 rounded-full ring ring-offset-2">
-                <img src={user?.photoURL} />
-              </div>
-            </div>
-            <span>
-              <FaAngleDown />
-            </span>
-          </div>
-        )}
-        {user && isExpand && (
-          <>
-            <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-6 z-100 min-w-[150px]">
-              <ul>
-                <Link to="/">
-                  <li
-                    className="flex gap-2 items-center"
-                    onClick={() => setIsExpand(false)}
-                  >
-                    <IoHomeOutline /> Home
-                  </li>
-                </Link>
-                <Link to="/exams">
-                  <li
-                    className="flex gap-2 items-center"
-                    onClick={() => setIsExpand(false)}
-                  >
-                    <GoChecklist /> Exams
-                  </li>
-                </Link>
-                <Link to="/courses">
-                  <li
-                    className="flex gap-2 items-center"
-                    onClick={() => setIsExpand(false)}
-                  >
-                    <IoMdBookmarks /> Courses
-                  </li>
-                </Link>
-
-                <Link to="/blogs">
-                  <li
-                    className="flex gap-2 items-center"
-                    onClick={() => setIsExpand(false)}
-                  >
-                    <RiArticleLine />
-                    Blogs
-                  </li>
-                </Link>
-                <Link to="/about">
-                  <li
-                    className="flex gap-2 items-center"
-                    onClick={() => setIsExpand(false)}
-                  >
-                    <GrContactInfo /> About
-                  </li>
-                </Link>
-
-                {user && (
-                  <li
-                    className="flex gap-2 items-center cursor-pointer"
-                    // onClick={handleLogout}
-                    onClick={() => {
-                      setIsExpand(false);
-                      handleLogout();
-                    }}
-                  >
-                    <GoSignOut /> Log out
-                  </li>
-                )}
-              </ul>
-            </div>
-          </>
-        )}
-        {isExpand && (
-          <>
+      <div className="flex items-center justify-center">
+        <div
+          onClick={hanldeGroupExamEnroll}
+          className="hover:bg-gray-200 rounded-full p-1.5 me-3"
+        >
+          <AiOutlinePlus className="text-2xl" />
+        </div>
+        <div className="flex items-center gap-4">
+          {user && (
             <div
-              onClick={() => setIsExpand(false)}
-              className="fixed inset-0 z-60"
-            ></div>
-          </>
-        )}
+              onClick={() => setIsExpand(!isExpand)}
+              className="flex items-center gap-4"
+            >
+              <div className="avatar">
+                <div className="ring-primary ring-offset-base-100 w-6 rounded-full ring ring-offset-2">
+                  <img src={user?.photoURL} />
+                </div>
+              </div>
+              <span>
+                <FaAngleDown />
+              </span>
+            </div>
+          )}
+          {user && isExpand && (
+            <>
+              <div className="bg-white shadow-lg px-4 py-6 border border-textColor/40 rounded-xl shadow-primaryColor/50 absolute top-12 right-6 z-100 min-w-[150px]">
+                <ul>
+                  <Link to="/">
+                    <li
+                      className="flex gap-2 items-center"
+                      onClick={() => setIsExpand(false)}
+                    >
+                      <IoHomeOutline /> Home
+                    </li>
+                  </Link>
+                  <Link to="/exams">
+                    <li
+                      className="flex gap-2 items-center"
+                      onClick={() => setIsExpand(false)}
+                    >
+                      <GoChecklist /> Exams
+                    </li>
+                  </Link>
+                  <Link to="/courses">
+                    <li
+                      className="flex gap-2 items-center"
+                      onClick={() => setIsExpand(false)}
+                    >
+                      <IoMdBookmarks /> Courses
+                    </li>
+                  </Link>
 
-        {!user && (
-          <Link to="/login" className="btn btn-sm md:btn-md primary-btn">
-            <AiOutlineLogin className="text-xl"></AiOutlineLogin> Login
-          </Link>
-        )}
-        {!user && (
-          <Link to="/register" className="btn btn-sm md:btn-md secondary-btn">
-            <FaUserPlus className="text-xl"></FaUserPlus> Register
-          </Link>
-        )}
+                  <Link to="/blogs">
+                    <li
+                      className="flex gap-2 items-center"
+                      onClick={() => setIsExpand(false)}
+                    >
+                      <RiArticleLine />
+                      Blogs
+                    </li>
+                  </Link>
+                  <Link to="/about">
+                    <li
+                      className="flex gap-2 items-center"
+                      onClick={() => setIsExpand(false)}
+                    >
+                      <GrContactInfo /> About
+                    </li>
+                  </Link>
+
+                  {user && (
+                    <li
+                      className="flex gap-2 items-center cursor-pointer"
+                      // onClick={handleLogout}
+                      onClick={() => {
+                        setIsExpand(false);
+                        handleLogout();
+                      }}
+                    >
+                      <GoSignOut /> Log out
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </>
+          )}
+          {isExpand && (
+            <>
+              <div
+                onClick={() => setIsExpand(false)}
+                className="fixed inset-0 z-60"
+              ></div>
+            </>
+          )}
+
+          {!user && (
+            <Link to="/login" className="btn btn-sm md:btn-md primary-btn">
+              <AiOutlineLogin className="text-xl"></AiOutlineLogin> Login
+            </Link>
+          )}
+          {!user && (
+            <Link to="/register" className="btn btn-sm md:btn-md secondary-btn">
+              <FaUserPlus className="text-xl"></FaUserPlus> Register
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

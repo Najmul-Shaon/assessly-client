@@ -37,10 +37,10 @@ export default function Login() {
         });
         reset();
         navigate(from, { replace: true });
-        console.log(user);
+ 
       })
       .catch((error) => {
-        console.log(error);
+  
         Swal.fire({
           position: "center",
           icon: "error",
@@ -49,7 +49,7 @@ export default function Login() {
           timer: 1000,
         });
       });
-    console.log(data?.email);
+
   };
 
   return (

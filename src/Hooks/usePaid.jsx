@@ -13,7 +13,6 @@ const usePaid = (id, type) => {
       const res = await axiosSecure.get(
         `/check/payment?id=${id}&type=${type}&email=${user?.email}`
       );
-      //   console.log(res.data);
       return res.data?.paid;
     },
   });

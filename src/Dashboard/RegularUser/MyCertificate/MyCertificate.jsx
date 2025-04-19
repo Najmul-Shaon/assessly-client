@@ -20,8 +20,7 @@ const MyCertificate = () => {
   useEffect(() => {
     refetch();
   }, [refetch]);
-  console.log(myExams);
-  //
+
   return (
     <div>
       <SectionTitle header={"My Certificates"} />

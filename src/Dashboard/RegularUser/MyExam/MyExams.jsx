@@ -19,8 +19,7 @@ const MyExams = () => {
   useEffect(() => {
     refetch();
   }, [refetch]);
-  console.log(myExams);
-  //
+ 
   return (
     <div>
       <SectionTitle header={"My Exams"} />
@@ -32,7 +31,7 @@ const MyExams = () => {
             <tr>
               <th>Sl</th>
               <th>Exam Id</th>
-              <th>Trx Id</th>
+              {/* <th>Trx Id</th> */}
               <th>Title</th>
               <th>Class</th>
               <th>Topic</th>
@@ -47,7 +46,7 @@ const MyExams = () => {
               <tr key={singleExam?._id}>
                 <th>{i + 1}</th>
                 <td>{singleExam?.examId}</td>
-                <td>{singleExam?.trxId}</td>
+                {/* <td>{singleExam?.trxId}</td> */}
                 <td>{singleExam?.examTitle}</td>
                 <td>{singleExam?.class || "N/A"}</td>
                 <td>{singleExam?.examTopic}</td>

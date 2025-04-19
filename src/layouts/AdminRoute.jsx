@@ -6,8 +6,7 @@ import Spinner from "../shared/spinner/Spinner";
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const { isAdmin, isAdminLoading } = useAdmin();
-  console.log("user from ", user);
-  console.log("isadmin from", isAdmin);
+
   const location = useLocation();
 
   if (loading || isAdminLoading) {

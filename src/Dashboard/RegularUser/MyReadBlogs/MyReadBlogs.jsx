@@ -16,7 +16,6 @@ const MyReadBlogs = () => {
     },
   });
 
-  console.log(myReadBlogs);
 
   useEffect(() => {
     refetch();

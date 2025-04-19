@@ -16,15 +16,14 @@ const IndividualQuestionDetails = () => {
   });
 
   const allQuestions = examQuestions?.questions || [];
-  //   console.log(examQuestions);
-  console.log(allQuestions);
+
 
   const { control, handleSubmit, register } = useForm({
     defaultValues: { allQuestions },
   });
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
   return (
