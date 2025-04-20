@@ -21,7 +21,6 @@ const CourseDetails = () => {
     },
   });
 
-
   const handlePayment = (id) => {
     const purchaseInfo = {
       paymentAt: new Date(),
@@ -32,7 +31,6 @@ const CourseDetails = () => {
       type: "course",
     };
     axiosSecure.post("/payment", purchaseInfo).then((res) => {
-
       window.location.replace(res?.data?.url);
     });
   };
@@ -42,41 +40,38 @@ const CourseDetails = () => {
       <div className="min-h-screen flex flex-col items-center justify-start">
         <div className="max-w-5xl w-full bg-white rounded-lg shadow-xl p-8 mb-10">
           {/* Top section with thumbnail, key info, and enroll button */}
-          <div className="grid grid-cols-1 md:grid-cols-2 items-center md:items-start md:justify-between mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <img
               src={singleCourse?.thumbnail}
               alt="exam.title"
-              className="w-full h-32 md:w-96 md:h-48 object-cover rounded-lg shadow-lg mb-4 md:mb-0"
+              className="w-full h-full object-cover rounded-lg shadow-lg "
             />
 
-            <div className="md:ml-6 text-center md:text-left">
-              <h1 className="text-3xl font-bold text-primaryColor mb-2">
-                {singleCourse?.title}
-              </h1>
-              <div className="text-footerTextColor mb-4">
-                <p>
-                  <strong>Topic:</strong> {singleCourse?.subjects}
-                </p>
-                <p>
-                  <strong>Duration:</strong> {singleCourse?.duration} minutes
-                </p>
+            <div className=" flex flex-col">
+              <div className="grow">
+                <h1 className="text-3xl font-bold text-primaryColor mb-2">
+                  {singleCourse?.title}
+                </h1>
+                <div className="text-footerTextColor mb-4 flex-none">
+                  <p>
+                    <strong>Topic:</strong> {singleCourse?.subjects}
+                  </p>
+                  <p>
+                    <strong>Duration:</strong> {singleCourse?.duration} minutes
+                  </p>
+                </div>
               </div>
 
-              {/* <button
-                onClick={() => handlePayment(id)}
-                className="btn primary-btn my-4"
-              >
-                <span>Enroll Now</span>
-                <FaArrowRight />
-              </button> */}
               {!isPaid && (
-                <button
-                  onClick={() => handlePayment(id)}
-                  className="btn primary-btn my-4"
-                >
-                  <span>Enroll Now</span>
-                  <FaArrowRight />
-                </button>
+                <div>
+                  <button
+                    onClick={() => handlePayment(id)}
+                    className="btn primary-btn my-4"
+                  >
+                    <span>Enroll Now</span>
+                    <FaArrowRight />
+                  </button>
+                </div>
               )}
               {isPaid && (
                 <div className="flex items-center gap-6">

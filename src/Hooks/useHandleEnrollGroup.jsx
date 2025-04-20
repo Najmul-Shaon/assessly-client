@@ -11,7 +11,7 @@ const useHandleEnrollGroup = () => {
     Swal.fire({
       title: "Join Group Exam",
       input: "text",
-      inputLabel: "Ask your teacher for the exam code then enter it here.",
+      inputLabel: "Ask your teacher for the exam code.",
       inputPlaceholder: "Exam Code here...",
       showCancelButton: true,
       confirmButtonColor: "#008080",
@@ -45,8 +45,8 @@ const useHandleEnrollGroup = () => {
                 title: "Wrong Code.",
                 text: "Please contact with your teacher.",
                 icon: "error",
-                showConfirmButton: false,
-                timer: 1000,
+                confirmButtonColor: "#ff6f61",
+                confirmButtonText: "Close",
               });
             }
           })
@@ -55,6 +55,8 @@ const useHandleEnrollGroup = () => {
               title: "Something went wrong.",
               text: "Please try again.",
               icon: "error",
+              confirmButtonColor: "#ff6f61",
+              confirmButtonText: "Close",
             });
           });
       }
