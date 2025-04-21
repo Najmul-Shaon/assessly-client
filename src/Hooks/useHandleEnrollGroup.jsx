@@ -2,10 +2,12 @@ import Swal from "sweetalert2";
 import useAuth from "./useAuth";
 import useAxiosSecure from "./axiosSecure";
 import { useNavigate } from "react-router-dom";
+import useMyExams from "./useMyExams";
 
 const useHandleEnrollGroup = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const { refetch } = useMyExams();
   const navigate = useNavigate();
   const hanldeGroupExamEnroll = () => {
     Swal.fire({
@@ -39,6 +41,7 @@ const useHandleEnrollGroup = () => {
                 showConfirmButton: false,
                 timer: 1000,
               });
+              refetch();
               navigate("/dashboard/my-exam");
             } else if (res.data.isFound === false) {
               Swal.fire({

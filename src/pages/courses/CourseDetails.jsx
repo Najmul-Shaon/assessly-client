@@ -54,10 +54,21 @@ const CourseDetails = () => {
                 </h1>
                 <div className="text-footerTextColor mb-4 flex-none">
                   <p>
+                    <strong>Class:</strong> {singleCourse?.class}
+                  </p>
+                  <p>
                     <strong>Topic:</strong> {singleCourse?.subjects}
                   </p>
                   <p>
-                    <strong>Duration:</strong> {singleCourse?.duration} minutes
+                    <strong>Video Duration:</strong> {singleCourse?.duration}
+                    minutes
+                  </p>
+                  <p>
+                    <strong>Total Video:</strong> 01
+                  </p>
+                  <p>
+                    <strong>Has Exam:</strong>{" "}
+                    {singleCourse?.includeExam ? "Yes" : "No"}
                   </p>
                 </div>
               </div>

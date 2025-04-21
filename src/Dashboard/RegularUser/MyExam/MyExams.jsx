@@ -1,25 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../Hooks/axiosSecure";
 import { useEffect } from "react";
-import useAuth from "../../../Hooks/useAuth";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import { Link } from "react-router-dom";
+import useMyExams from "../../../Hooks/useMyExams";
 
 const MyExams = () => {
-  const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
-  const { data: myExams = [], refetch } = useQuery({
-    queryKey: ["myExams", user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/get/exams/${user?.email}`);
-      return res.data;
-    },
-  });
+  const { myExams, refetch } = useMyExams();
 
   useEffect(() => {
     refetch();
-  }, [refetch]);
- 
+  }, [refetch, myExams]);
+
   return (
     <div>
       <SectionTitle header={"My Exams"} />

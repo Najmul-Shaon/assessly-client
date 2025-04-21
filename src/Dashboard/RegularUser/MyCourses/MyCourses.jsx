@@ -18,7 +18,7 @@ const MyCourses = () => {
 
   useEffect(() => {
     refetch();
-  }, [refetch]);
+  }, [refetch, myCourse]);
 
   //
   return (
@@ -31,13 +31,12 @@ const MyCourses = () => {
           <thead>
             <tr>
               <th>Sl</th>
-              <th>Trx Id</th>
               <th>Title</th>
               <th>Class</th>
               <th>Topic</th>
               <th>Include Exam</th>
               <th>Fee</th>
-              <th>Pay Time</th>
+              <th>Purchase Date</th>
               <th>Duration</th>
               <th>Actions</th>
             </tr>
@@ -46,7 +45,6 @@ const MyCourses = () => {
             {myCourse.map((singleCourse, i) => (
               <tr key={singleCourse?._id}>
                 <th>{i + 1}</th>
-                <td>{singleCourse?.trxId}</td>
                 <td>{singleCourse?.title}</td>
                 <td>{singleCourse?.class || "N/A"}</td>
                 <td>{singleCourse?.subject}</td>
@@ -56,7 +54,11 @@ const MyCourses = () => {
                 <td>
                   {new Date(singleCourse?.paymentAt).toLocaleDateString()}
                 </td>
-                <td>{singleCourse?.duration || "N/A"}</td>
+                <td>
+                  {singleCourse?.duration
+                    ? Number.parseFloat(singleCourse?.duration).toFixed(2)
+                    : "N/A"}
+                </td>
                 <td className="flex items-center gap-1 text-xl">
                   <Link>
                     <button className="btn-md btn-link text-accentColor cursor-pointer">
@@ -71,9 +73,9 @@ const MyCourses = () => {
         {myCourse.length <= 0 && (
           <>
             <h3 className="text-center my-4">
-              There are no exam. Please enroll first.
+              There are no courses. Please enroll first.
               <Link to={"/courses"} className="text-accentColor underline ms-2">
-                <span>Exams</span>
+                <span>Courses</span>
               </Link>
             </h3>
           </>

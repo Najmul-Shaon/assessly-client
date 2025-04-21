@@ -70,13 +70,15 @@ const ExamDetails = () => {
               </div>
               {/* <Link to={`/exam/details/1`}> */}
               {!isPaid && (
-                <button
-                  onClick={() => handlePayment(id)}
-                  className="btn primary-btn my-4"
-                >
-                  <span>Enroll Now</span>
-                  <FaArrowRight />
-                </button>
+                <div>
+                  <button
+                    onClick={() => handlePayment(id)}
+                    className="btn primary-btn my-4"
+                  >
+                    <span>Enroll Now</span>
+                    <FaArrowRight />
+                  </button>
+                </div>
               )}
               {isPaid && (
                 <div className="flex items-center gap-6">
