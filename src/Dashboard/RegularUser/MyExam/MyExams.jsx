@@ -10,6 +10,14 @@ const MyExams = () => {
     refetch();
   }, [refetch, myExams]);
 
+  // check exam availability
+  const getExamStatus = (startDate, endDate) => {
+    const now = new Date();
+    if (new Date(startDate) > now) return "Upcomming";
+    if (new Date(endDate) < now) return "Expired";
+    return "Ongoing";
+  };
+
   return (
     <div>
       <SectionTitle header={"My Exams"} />
@@ -20,14 +28,14 @@ const MyExams = () => {
           <thead>
             <tr>
               <th>Sl</th>
-              <th>Exam Id</th>
-              {/* <th>Trx Id</th> */}
               <th>Title</th>
               <th>Class</th>
               <th>Topic</th>
+              <th>Total Marks</th>
               <th>Type</th>
-              <th>Fee</th>
-              <th>Pay Time</th>
+              <th>Facecam</th>
+              <th>Enrolled at</th>
+              <th>Availablity</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -35,14 +43,17 @@ const MyExams = () => {
             {myExams.map((singleExam, i) => (
               <tr key={singleExam?._id}>
                 <th>{i + 1}</th>
-                <td>{singleExam?.examId}</td>
-                {/* <td>{singleExam?.trxId}</td> */}
                 <td>{singleExam?.examTitle}</td>
                 <td>{singleExam?.class || "N/A"}</td>
                 <td>{singleExam?.examTopic}</td>
+                <td>{singleExam?.examMarks}</td>
                 <td>{singleExam?.examType}</td>
-                <td>{singleExam?.examFee}</td>
+                <td>{singleExam?.faceCam ? "Yes" : "No"}</td>
                 <td>{new Date(singleExam?.paymentAt).toLocaleDateString()}</td>
+
+                <td>
+                  {getExamStatus(singleExam?.startDate, singleExam?.endDate)}
+                </td>
                 <td className="flex items-center gap-1 text-xl">
                   <Link>
                     <button className="btn-md btn-link text-accentColor cursor-pointer">

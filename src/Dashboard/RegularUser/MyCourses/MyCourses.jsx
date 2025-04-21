@@ -20,7 +20,6 @@ const MyCourses = () => {
     refetch();
   }, [refetch, myCourse]);
 
-  //
   return (
     <div>
       <SectionTitle header={"My Courses"} />
@@ -36,7 +35,7 @@ const MyCourses = () => {
               <th>Topic</th>
               <th>Include Exam</th>
               <th>Fee</th>
-              <th>Purchase Date</th>
+              <th>Enrolled at</th>
               <th>Duration</th>
               <th>Actions</th>
             </tr>
@@ -52,7 +51,7 @@ const MyCourses = () => {
                 <td>{singleCourse?.fee}</td>
 
                 <td>
-                  {new Date(singleCourse?.paymentAt).toLocaleDateString()}
+                  {new Date(singleCourse?.enrolledAt).toLocaleDateString()}
                 </td>
                 <td>
                   {singleCourse?.duration
