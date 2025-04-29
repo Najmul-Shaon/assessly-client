@@ -9,10 +9,10 @@ import { CiSaveDown1 } from "react-icons/ci";
 const MyCertificate = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: myExams = [], refetch } = useQuery({
-    queryKey: ["myExams", user?.email],
+  const { data: MyCertificates = [], refetch } = useQuery({
+    queryKey: ["MyCertificates", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/get/exams/${user?.email}`);
+      const res = await axiosSecure.get(`/get/certificates/${user?.email}`);
       return res.data;
     },
   });
@@ -31,7 +31,8 @@ const MyCertificate = () => {
           <thead>
             <tr>
               <th>Sl</th>
-              <th>Type</th>
+              <th>Name</th>
+              <th>Course Type</th>
               <th>Complete At</th>
               <th>Marks</th>
               <th>Class</th>
@@ -40,14 +41,14 @@ const MyCertificate = () => {
             </tr>
           </thead>
           <tbody>
-            {myExams.map((singleExam, i) => (
-              <tr key={singleExam?._id}>
+            {MyCertificates.map((singleCertificate, i) => (
+              <tr key={singleCertificate?._id}>
                 <th>{i + 1}</th>
-                <td>{singleExam?.examId}</td>
-                <td>{singleExam?.trxId}</td>
-                <td>{singleExam?.examTitle}</td>
-                <td>{singleExam?.examType}</td>
-                <td>{new Date(singleExam?.paymentAt).toLocaleDateString()}</td>
+                <td>{singleCertificate?.examId}</td>
+                <td>{singleCertificate?.trxId}</td>
+                <td>{singleCertificate?.examTitle}</td>
+                <td>{singleCertificate?.examType}</td>
+                <td>{new Date(singleCertificate?.paymentAt).toLocaleDateString()}</td>
                 <td className="flex items-center gap-1 text-xl">
                   <Link>
                     <button className="btn-md btn-link text-accentColor cursor-pointer">
@@ -61,14 +62,9 @@ const MyCertificate = () => {
             ))}
           </tbody>
         </table>
-        {myExams.length <= 0 && (
+        {MyCertificates.length <= 0 && (
           <>
-            <h3 className="text-center my-4">
-              There are no exam. Please enroll first.
-              <Link to={"/exams"} className="text-accentColor underline ms-2">
-                <span>Exams</span>
-              </Link>
-            </h3>
+            <h3 className="text-center my-4">There are no Certificates.</h3>
           </>
         )}
       </div>
