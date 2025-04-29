@@ -82,18 +82,14 @@ export const router = createBrowserRouter([
       },
       {
         path: "/blogs",
-        element: (
-          <PrivateRoute>
-            <Blogs />
-          </PrivateRoute>
-        ),
+        element: <Blogs />,
       },
       {
         path: "/blog/details/:id",
         element: (
-          <PrivateRoute>
-            <BlogDetails />
-          </PrivateRoute>
+          // <PrivateRoute>
+          <BlogDetails />
+          // </PrivateRoute>
         ),
       },
       {
