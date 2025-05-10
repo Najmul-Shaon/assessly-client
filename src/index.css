@@ -1,5 +1,6 @@
 /* nunito font from goolgle  */
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Questrial&display=swap");
 
 /* tailwind css and daisy ui  */
 @import "tailwindcss";
@@ -8,6 +9,10 @@
 @theme {
   /* google font  */
   --font-nunito: "Nunito", "serif";
+  --font-oswald: "Oswald", "serif";
+  --font-public-Sans: "Public Sans", "serif";
+  --font-questrial: "Questrial", "serif";
+  --font-exo: "Exo", "serif";
   /* overll colors  */
   --color-primaryColor: #008080;
   --color-secondaryColor: #f5f5f5;
@@ -15,6 +20,11 @@
   --color-textColor: #1c1c2b;
   --color-footerTextColor: #333333;
   --color-hoverColor: #006666;
+
+  /* **********************  */
+  --color-primaryLighter: #c8facd;
+  --color-primaryDarker: #005249;
+  --color-textLightPrimary: #212B36;
 }
 /* button class  */
 .primary-btn {

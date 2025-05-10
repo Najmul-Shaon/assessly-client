@@ -28,7 +28,7 @@ const NavBar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -41,7 +41,7 @@ const NavBar = () => {
         <NavLink
           to="/exams"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -53,7 +53,7 @@ const NavBar = () => {
         <NavLink
           to="/courses"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -66,7 +66,7 @@ const NavBar = () => {
         <NavLink
           to="/blogs"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -78,7 +78,7 @@ const NavBar = () => {
         <NavLink
           to="/features"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -90,7 +90,7 @@ const NavBar = () => {
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -98,20 +98,6 @@ const NavBar = () => {
           About
         </NavLink>
       </li>
-      {/* {user && (
-        <li>
-          <NavLink
-            to="/group-exam"
-            className={({ isActive }) =>
-              ` hover:text-primaryColor text-xl font-semibold ${
-                isActive ? "text-primaryColor" : "text-textColor"
-              }`
-            }
-          >
-            Group Exam
-          </NavLink>
-        </li>
-      )} */}
     </>
   );
 
@@ -145,24 +131,32 @@ const NavBar = () => {
             </ul>
           </div>
           <Link to="/">
-            <div className="flex items-center flex-col">
-              <figure className="w-6 md:w-8 lg:w-10">
+            <div className="flex items-center justify-center gap-2">
+              <figure className="w-6 lg:w-8">
                 <img className="w-full" src={logo} alt="site logo" />
               </figure>
-              <h1 className="font-bold">Assessly</h1>
+              <h1
+                className="font-semibold text-lg lg:text-2xl text-primaryDarker uppercase"
+                style={{
+                  textShadow: "0 4px 4px rgba(0,0,0,0.25)",
+                }}
+              >
+                Assessly
+              </h1>
             </div>
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          {/* dynamic nav list  */}
-          {/* <ul className="menu menu-horizontal px-1 space-x-2">{navLinks}</ul> */}
+        {/* <div className="navbar-center hidden lg:flex">
           <ul className="flex px-1 space-x-6">{navLinks}</ul>
-        </div>
+        </div> */}
         <div className="navbar-end ">
+          <div className="navbar-center hidden lg:flex">
+            <ul className="flex px-1 space-x-6">{navLinks}</ul>
+          </div>
           {user && (
             <div
               onClick={hanldeGroupExamEnroll}
-              className="hover:bg-gray-200 rounded-full p-1.5 me-3"
+              className="hover:bg-gray-200 rounded-full p-1.5 mx-3 cursor-pointer"
             >
               <AiOutlinePlus className="text-2xl" />
             </div>
@@ -171,7 +165,7 @@ const NavBar = () => {
             {user && (
               <div
                 onClick={() => setIsDashboardView(!isDashboardView)}
-                className="flex items-center gap-4"
+                className="flex items-center gap-4 cursor-pointer"
               >
                 <div className="avatar">
                   <div className="ring-primary ring-offset-base-100 w-6 rounded-full ring ring-offset-2">
@@ -217,7 +211,7 @@ const NavBar = () => {
             )}
             {user && (
               <GoSignOut
-                className="text-2xl"
+                className="text-2xl cursor-pointer"
                 onClick={handleLogout}
               ></GoSignOut>
             )}
