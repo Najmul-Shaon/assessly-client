@@ -28,7 +28,7 @@ const NavBar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -41,7 +41,7 @@ const NavBar = () => {
         <NavLink
           to="/exams"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -53,7 +53,7 @@ const NavBar = () => {
         <NavLink
           to="/courses"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -66,7 +66,7 @@ const NavBar = () => {
         <NavLink
           to="/blogs"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -78,7 +78,7 @@ const NavBar = () => {
         <NavLink
           to="/features"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -90,7 +90,7 @@ const NavBar = () => {
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-xl font-semibold ${
+            ` hover:text-primaryColor text-base font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -98,20 +98,6 @@ const NavBar = () => {
           About
         </NavLink>
       </li>
-      {/* {user && (
-        <li>
-          <NavLink
-            to="/group-exam"
-            className={({ isActive }) =>
-              ` hover:text-primaryColor text-xl font-semibold ${
-                isActive ? "text-primaryColor" : "text-textColor"
-              }`
-            }
-          >
-            Group Exam
-          </NavLink>
-        </li>
-      )} */}
     </>
   );
 
@@ -150,7 +136,7 @@ const NavBar = () => {
                 <img className="w-full" src={logo} alt="site logo" />
               </figure>
               <h1
-                className="font-semibold text-2xl text-primaryDarker uppercase"
+                className="font-semibold text-lg lg:text-2xl text-primaryDarker uppercase"
                 style={{
                   textShadow: "0 4px 4px rgba(0,0,0,0.25)",
                 }}
@@ -160,12 +146,13 @@ const NavBar = () => {
             </div>
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          {/* dynamic nav list  */}
-          {/* <ul className="menu menu-horizontal px-1 space-x-2">{navLinks}</ul> */}
+        {/* <div className="navbar-center hidden lg:flex">
           <ul className="flex px-1 space-x-6">{navLinks}</ul>
-        </div>
+        </div> */}
         <div className="navbar-end ">
+          <div className="navbar-center hidden lg:flex">
+            <ul className="flex px-1 space-x-6">{navLinks}</ul>
+          </div>
           {user && (
             <div
               onClick={hanldeGroupExamEnroll}

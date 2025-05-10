@@ -7,7 +7,8 @@ const useRegularUser = () => {
   const axiosSecure = useAxiosSecure();
   const { data: isRegularUser, isPending: isRegularLoading } = useQuery({
     queryKey: [user?.email, "isRegularUser"],
-    enabled: !!user?.email,
+    // enabled: !!user?.email,
+    enabled: !!user?.email && !!localStorage.getItem("token"),
     queryFn: async () => {
       const res = await axiosSecure.get(`/user/regular/${user?.email}`);
       return res.data?.isUser;

@@ -6,7 +6,8 @@ const useMyExams = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: myExams = [], refetch } = useQuery({
-    enabled: !!user?.email && localStorage.getItem("token"),
+    enabled: !!user?.email && !!localStorage.getItem("token"),
+    // enabled: !!user?.email,
     queryKey: ["myExams", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/get/exams/${user?.email}`);
