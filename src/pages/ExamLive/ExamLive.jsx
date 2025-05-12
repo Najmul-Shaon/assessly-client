@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/axiosSecure";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 
 const ExamLive = () => {
+  const { user } = useAuth();
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
@@ -95,6 +97,14 @@ const ExamLive = () => {
     }
   };
 
+  const submitData = {
+    submitAt: new Date(),
+    answers,
+    email: user?.email,
+    examId: id,
+    questions: singleExam?.questions,
+  };
+
   const handleSubmitExam = () => {
     // Show confirmation before submitting
     Swal.fire({
@@ -108,12 +118,18 @@ const ExamLive = () => {
         setExamSubmitted(true);
         // Send answers to the server (you can call an API for this)
         axiosSecure
-          .post(`/submit/exam/${id}`, { answers })
-          .then(() => {
-            Swal.fire("Submitted!", "Your exam has been submitted.", "success");
-            navigate("/exam-results"); // Navigate to results page (you can change this to your route)
+          .post("/submit/exam", { submitData })
+          .then((res) => {
+            if (res.data.insertedId) {
+              Swal.fire(
+                "Submitted!",
+                "Your exam has been submitted.",
+                "success"
+              );
+              navigate("/exams");
+            }
           })
-          .catch((err) => {
+          .catch(() => {
             Swal.fire(
               "Error!",
               "There was an error submitting your exam.",
@@ -219,14 +235,17 @@ const ExamLive = () => {
               </div>
             )}
 
+            {/* {answers.length > 0 && ( */}
             <div className="mt-4 text-center">
               <button
                 onClick={handleSubmitExam}
+                disabled={!answers.length > 0}
                 className="px-6 py-3 bg-accentColor text-white rounded-lg btn hover:bg-accentColor"
               >
                 Submit
               </button>
             </div>
+            {/* )} */}
           </div>
         ) : null}
       </div>
