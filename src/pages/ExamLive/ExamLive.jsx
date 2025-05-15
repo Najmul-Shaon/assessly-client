@@ -17,8 +17,11 @@ const ExamLive = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [stream, setStream] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState([]); // Store answers
+  const [answers, setAnswers] = useState([]);
   const [examSubmitted, setExamSubmitted] = useState(false);
+  const [savedQuestions, setSavedQuestions] = useState([]);
+
+  // console.log("final question", savedQuestions);
 
   const { data: singleExam = {}, isLoading } = useQuery({
     queryKey: ["singleExam", id],
@@ -28,9 +31,61 @@ const ExamLive = () => {
     },
   });
 
-  // Auto start logic
+  // console.log(singleExam?.uniqueQuestions);
+
+  // Utility: Shuffle array
+  const shuffleArray = (arr) => {
+    const shuffled = [...arr];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // Save shuffled or original questions to DB
+  const prepareExam = async () => {
+    try {
+      const res = await axiosSecure.get(
+        `/get/saved-exam/${id}?email=${user.email}`
+      );
+      if (res.data?.questions?.length > 0) {
+        // console.log("as it it found:", res.data);
+        setSavedQuestions(res.data.questions);
+        return;
+      }
+
+      let questionsToSave = singleExam.questions;
+      // console.log("as it is from single exam", questionsToSave);
+
+      if (singleExam.uniqueQuestions) {
+        // console.log("hit the condition");
+        questionsToSave = shuffleArray(questionsToSave);
+      }
+
+      const saveRes = await axiosSecure.post("/submit/exam", {
+        create_at: new Date(),
+        examId: id,
+        email: user.email,
+        questions: questionsToSave,
+        status: "pending",
+      });
+      // console.log(saveRes?.data);
+
+      if (saveRes.data.insertedId) {
+        // console.log(saveRes?.data);
+        setSavedQuestions(questionsToSave);
+      }
+    } catch (err) {
+      console.error("Error preparing exam:", err);
+    }
+  };
+
+  // Auto-start logic
   useEffect(() => {
     if (singleExam?.examTitle && !started) {
+      prepareExam(); // Fetch or save questions before starting
+
       if (singleExam.faceCam) {
         navigator.mediaDevices
           .getUserMedia({ video: true })
@@ -51,7 +106,7 @@ const ExamLive = () => {
           if (prev === 1) {
             clearInterval(countdownInterval);
             setStarted(true);
-            setTimeLeft(parseInt(singleExam.duration) * 60); // duration in seconds
+            setTimeLeft(parseInt(singleExam.duration) * 60);
           }
           return prev - 1;
         });
@@ -59,7 +114,7 @@ const ExamLive = () => {
     }
   }, [singleExam, started]);
 
-  // Timer
+  // Timer logic
   useEffect(() => {
     let timer;
     if (started && timeLeft > 0) {
@@ -77,36 +132,25 @@ const ExamLive = () => {
     return `${h}:${m}:${s}`;
   };
 
-  const currentQuestion = singleExam?.questions?.[currentQuestionIndex];
+  const currentQuestion = savedQuestions?.[currentQuestionIndex];
 
-  const handleAnswerChange = (e) => {
-    const answer = e.target.value;
-    setAnswers((prevAnswers) => {
-      const updatedAnswers = [...prevAnswers];
-      updatedAnswers[currentQuestionIndex] = answer;
-      return updatedAnswers;
+  const handleAnswerChange = (option) => {
+    setAnswers((prev) => {
+      const updated = [...prev];
+      updated[currentQuestionIndex] = option;
+      return updated;
     });
   };
 
   const handleNextQuestion = () => {
-    // Check if an answer is selected
     if (answers[currentQuestionIndex]) {
-      if (currentQuestionIndex < singleExam?.questions?.length - 1) {
+      if (currentQuestionIndex < savedQuestions?.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
       }
     }
   };
 
-  const submitData = {
-    submitAt: new Date(),
-    answers,
-    email: user?.email,
-    examId: id,
-    questions: singleExam?.questions,
-  };
-
   const handleSubmitExam = () => {
-    // Show confirmation before submitting
     Swal.fire({
       title: "Are you sure to submit?",
       icon: "warning",
@@ -116,17 +160,22 @@ const ExamLive = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setExamSubmitted(true);
-        // Send answers to the server (you can call an API for this)
+        const submitData = {
+          modified_at: new Date(),
+          answers,
+        };
+
         axiosSecure
-          .post("/submit/exam", { submitData })
+          .patch(`/submit/exam?id=${id}&email=${user?.email}`, { submitData })
           .then((res) => {
-            if (res.data.insertedId) {
+            console.log(res.data);
+            if (res.data.modifiedCount > 0) {
               Swal.fire(
                 "Submitted!",
                 "Your exam has been submitted.",
                 "success"
               );
-              navigate("/exams");
+              navigate("/dashboard/my-exam");
             }
           })
           .catch(() => {
@@ -186,11 +235,10 @@ const ExamLive = () => {
             {currentQuestion && (
               <div className="p-4 border border-gray-300 rounded-xl bg-secondaryColor">
                 <p className="font-medium text-lg mb-2">
-                  Question {currentQuestionIndex + 1} of{" "}
-                  {singleExam.questions.length}
+                  Question {currentQuestionIndex + 1} of {savedQuestions.length}
                 </p>
                 <p className="text-gray-800 font-semibold mb-4">
-                  {currentQuestion.sl}. {currentQuestion.question}
+                  {currentQuestionIndex + 1}. {currentQuestion.question}
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-gray-700">
                   {["A", "B", "C", "D"].map((option) => (
@@ -201,13 +249,7 @@ const ExamLive = () => {
                           ? "bg-primaryColor/10 border-primaryColor"
                           : "bg-white border-gray-300"
                       }`}
-                      onClick={() =>
-                        setAnswers((prev) => {
-                          const updatedAnswers = [...prev];
-                          updatedAnswers[currentQuestionIndex] = option;
-                          return updatedAnswers;
-                        })
-                      }
+                      onClick={() => handleAnswerChange(option)}
                     >
                       <div className="flex items-center">
                         {answers[currentQuestionIndex] === option && (
@@ -223,11 +265,11 @@ const ExamLive = () => {
               </div>
             )}
 
-            {currentQuestionIndex < singleExam?.questions?.length - 1 && (
+            {currentQuestionIndex < savedQuestions?.length - 1 && (
               <div className="flex justify-end mt-4">
                 <button
                   onClick={handleNextQuestion}
-                  disabled={!answers[currentQuestionIndex]} // Disable if no answer is selected
+                  disabled={!answers[currentQuestionIndex]}
                   className="px-4 py-2 bg-primaryColor text-white rounded-lg hover:bg-primaryDarker btn"
                 >
                   Next
@@ -235,17 +277,15 @@ const ExamLive = () => {
               </div>
             )}
 
-            {/* {answers.length > 0 && ( */}
             <div className="mt-4 text-center">
               <button
                 onClick={handleSubmitExam}
-                disabled={!answers.length > 0}
+                disabled={answers.length < 0}
                 className="px-6 py-3 bg-accentColor text-white rounded-lg btn hover:bg-accentColor"
               >
                 Submit
               </button>
             </div>
-            {/* )} */}
           </div>
         ) : null}
       </div>
