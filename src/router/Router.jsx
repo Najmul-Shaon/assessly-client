@@ -37,6 +37,7 @@ import MyReadBlogs from "../Dashboard/RegularUser/MyReadBlogs/MyReadBlogs";
 import PaymentHistory from "../Dashboard/RegularUser/PaymentHistory/PaymentHistory";
 import MyProfile from "../Dashboard/RegularUser/MyProfile/MyProfile";
 import MyCertificate from "../Dashboard/RegularUser/MyCertificate/MyCertificate";
+import ExamLayout from "../layouts/ExamLayout";
 
 export const router = createBrowserRouter([
   {
@@ -280,5 +281,13 @@ export const router = createBrowserRouter([
       },
       // admin area end
     ],
+  },
+  {
+    path: "/exam/live/:id",
+    element: (
+      <PrivateRoute>
+        <ExamLayout />
+      </PrivateRoute>
+    ),
   },
 ]);

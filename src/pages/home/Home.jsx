@@ -5,6 +5,7 @@ import PopulerBlogs from "./PopulerBlogs/PopulerBlogs";
 import PopulerCourses from "./populerCourses/PopulerCourses";
 import PopulerExams from "./populerExams/PopulerExams";
 import WhyUs from "./whyUs/WhyUs";
+// import CourseCard2 from "../../components/CourseCard2";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <PopulerBlogs />
       <WhyUs />
       <Highliights />
+      {/* <CourseCard2/> */}
     </div>
   );
 };

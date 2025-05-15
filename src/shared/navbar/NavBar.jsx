@@ -149,8 +149,8 @@ const NavBar = () => {
         {/* <div className="navbar-center hidden lg:flex">
           <ul className="flex px-1 space-x-6">{navLinks}</ul>
         </div> */}
-        <div className="navbar-end ">
-          <div className="navbar-center hidden lg:flex">
+        <div className="navbar-end">
+          <div className="hidden lg:flex me-3">
             <ul className="flex px-1 space-x-6">{navLinks}</ul>
           </div>
           {user && (
