@@ -1,16 +1,12 @@
+import { FaCheck } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/axiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
-import CountdownMessage from "./CountdownMessage";
-import ExamHeader from "./ExamHeader";
-import FaceCam from "./FaceCam";
-import QuestionCard from "./QuestionCard";
-import NavigationButtons from "./NavigationButtons";
 
-const ExamLive = () => {
+const ExamLive2 = () => {
   const { user } = useAuth();
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
@@ -25,6 +21,8 @@ const ExamLive = () => {
   const [examSubmitted, setExamSubmitted] = useState(false);
   const [savedQuestions, setSavedQuestions] = useState([]);
 
+  const examSubmittedRef = useRef(false);
+
   const { data: singleExam = {}, isLoading } = useQuery({
     queryKey: ["singleExam", id],
     queryFn: async () => {
@@ -32,6 +30,10 @@ const ExamLive = () => {
       return res.data;
     },
   });
+
+  useEffect(() => {
+    examSubmittedRef.current = examSubmitted;
+  }, [examSubmitted]);
 
   const shuffleArray = (arr) => {
     const shuffled = [...arr];
@@ -53,6 +55,7 @@ const ExamLive = () => {
       }
 
       let questionsToSave = singleExam.questions;
+
       if (singleExam.uniqueQuestions) {
         questionsToSave = shuffleArray(questionsToSave);
       }
@@ -115,6 +118,64 @@ const ExamLive = () => {
     return () => clearInterval(timer);
   }, [started, timeLeft]);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (
+        document.visibilityState === "hidden" &&
+        started &&
+        !examSubmittedRef.current
+      ) {
+        autoSubmitExam();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [started, answers, id, user?.email, axiosSecure]);
+
+  const autoSubmitExam = async () => {
+    try {
+      setExamSubmitted(true);
+      const submitData = {
+        modified_at: new Date(),
+        answers,
+      };
+
+      const res = await axiosSecure.patch(
+        `/submit/exam?id=${id}&email=${user?.email}`,
+        { submitData }
+      );
+
+      if (res.data.modifiedCount > 0) {
+        await Swal.fire({
+          title: "Exam Auto Submitted",
+          text: "You switched tabs. Your exam has been auto-submitted.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        });
+        navigate("/dashboard/my-exam");
+      }
+    } catch (err) {
+      console.error("Auto-submit failed", err);
+      Swal.fire({
+        title: "Submission Error",
+        text: "There was an error auto-submitting your exam.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+    }
+  };
+
+  const formatTime = (seconds) => {
+    const h = String(Math.floor(seconds / 3600)).padStart(2, "0");
+    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
+    const s = String(seconds % 60).padStart(2, "0");
+    return `${h}:${m}:${s}`;
+  };
+
   const currentQuestion = savedQuestions?.[currentQuestionIndex];
 
   const handleAnswerChange = (option) => {
@@ -127,7 +188,9 @@ const ExamLive = () => {
 
   const handleNextQuestion = () => {
     if (answers[currentQuestionIndex]) {
-      setCurrentQuestionIndex((prev) => prev + 1);
+      if (currentQuestionIndex < savedQuestions?.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      }
     }
   };
 
@@ -171,6 +234,7 @@ const ExamLive = () => {
 
   if (isLoading)
     return <div className="text-center py-10">Loading exam...</div>;
+
   if (!singleExam?.examTitle)
     return (
       <div className="text-center py-10 text-red-500">Exam not found.</div>
@@ -184,31 +248,89 @@ const ExamLive = () => {
         </h1>
 
         {!started && countdown > 0 ? (
-          <CountdownMessage countdown={countdown} />
+          <div className="text-center text-2xl font-semibold text-textLightPrimary">
+            {countdown === 3 && "Get Ready! Exam will start soon..."}
+            {countdown === 2 && "Stay Focused. Preparing your exam..."}
+            {countdown === 1 && "Starting Exam Now!"}
+          </div>
         ) : started ? (
           <div className="space-y-4">
-            <ExamHeader timeLeft={timeLeft} />
-            {singleExam?.faceCam && <FaceCam />}
-            {currentQuestion && (
-              <QuestionCard
-                currentQuestionIndex={currentQuestionIndex}
-                question={currentQuestion}
-                selectedOption={answers[currentQuestionIndex]}
-                onOptionSelect={handleAnswerChange}
-              />
+            <div className="flex items-center justify-between">
+              <h2 className="text-base lg:text-xl font-semibold text-primaryColor">
+                Exam Started
+              </h2>
+              <span className="font-mono text-lg text-accentColor">
+                {formatTime(timeLeft)}
+              </span>
+            </div>
+
+            {singleExam?.faceCam && (
+              <div className="flex justify-end">
+                <video
+                  id="face-cam-video"
+                  autoPlay
+                  muted
+                  className="w-40 h-32 border rounded shadow"
+                ></video>
+              </div>
             )}
-            <NavigationButtons
-              currentIndex={currentQuestionIndex}
-              total={savedQuestions.length}
-              selectedOption={answers[currentQuestionIndex]}
-              onNext={handleNextQuestion}
-              onSubmit={handleSubmitExam}
-            />
+
+            {currentQuestion && (
+              <div className="p-4 border border-gray-300 rounded-xl bg-secondaryColor">
+                <p className="font-medium text-lg mb-2">
+                  Question {currentQuestionIndex + 1} of {savedQuestions.length}
+                </p>
+                <p className="text-gray-800 font-semibold mb-4">
+                  {currentQuestionIndex + 1}. {currentQuestion.question}
+                </p>
+                <div className="grid grid-cols-2 gap-4 text-gray-700">
+                  {["A", "B", "C", "D"].map((option) => (
+                    <div
+                      key={option}
+                      className={`p-4 border rounded-lg cursor-pointer hover:bg-primaryColor/10 transition ${
+                        answers[currentQuestionIndex] === option
+                          ? "bg-primaryColor/20 border-primaryColor"
+                          : "border-gray-300"
+                      }`}
+                      onClick={() => handleAnswerChange(option)}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <span className="font-bold">{option}.</span>
+                        <span>{currentQuestion[option.toLowerCase()]}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-between mt-6 space-x-4">
+              <button
+                onClick={handleNextQuestion}
+                disabled={!answers[currentQuestionIndex]}
+                className={`btn btn-primary ${
+                  !answers[currentQuestionIndex] ? "btn-disabled" : ""
+                }`}
+              >
+                Next
+              </button>
+              <button
+                onClick={handleSubmitExam}
+                disabled={!answers[currentQuestionIndex]}
+                className={`btn btn-success flex items-center ${
+                  !answers[currentQuestionIndex] ? "btn-disabled" : ""
+                }`}
+              >
+                Submit Exam <FaCheck className="ml-2" />
+              </button>
+            </div>
           </div>
-        ) : null}
+        ) : (
+          <div className="text-center">Preparing your exam...</div>
+        )}
       </div>
     </div>
   );
 };
 
-export default ExamLive;
+export default ExamLive2;
