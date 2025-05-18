@@ -38,6 +38,7 @@ import PaymentHistory from "../Dashboard/RegularUser/PaymentHistory/PaymentHisto
 import MyProfile from "../Dashboard/RegularUser/MyProfile/MyProfile";
 import MyCertificate from "../Dashboard/RegularUser/MyCertificate/MyCertificate";
 import ExamLayout from "../layouts/ExamLayout";
+import CourseVideoPage from "../Dashboard/RegularUser/MyCourses/CourseVideoPage";
 
 export const router = createBrowserRouter([
   {
@@ -136,6 +137,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyCourses />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-course/:id",
+        element: (
+          <PrivateRoute>
+            <CourseVideoPage />
           </PrivateRoute>
         ),
       },

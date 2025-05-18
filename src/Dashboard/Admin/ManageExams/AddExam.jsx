@@ -61,6 +61,7 @@ const AddExam = () => {
         examType: data.examType,
         faceCam: data.faceCam,
         fee: data.fee,
+        passMark: data.passMark,
         thumbnails: res?.data?.data?.display_url,
         totalMarks: data.totalMarks,
         uniqueQuestions: data.uniqueQuestions,
@@ -155,7 +156,7 @@ const AddExam = () => {
   ];
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg border border-gray-300">
       <Helmet>
         <title>Assessley | Add Exam</title>
       </Helmet>
@@ -173,7 +174,7 @@ const AddExam = () => {
                 message: "Title must be at least 5 characters",
               },
             })}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 rounded border border-gray-300"
           />
           <p className="text-red-500">{errors.examTitle?.message}</p>
         </div>
@@ -192,7 +193,7 @@ const AddExam = () => {
                   message: "Duration must be at least 1 minute",
                 },
               })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded border-gray-300"
             />
             <p className="text-red-500">{errors.duration?.message}</p>
           </div>
@@ -207,7 +208,7 @@ const AddExam = () => {
                 required: "Total marks are required",
                 min: { value: 1, message: "Marks must be at least 1" },
               })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded border-gray-300"
             />
             <p className="text-red-500">{errors.totalMarks?.message}</p>
           </div>
@@ -219,22 +220,34 @@ const AddExam = () => {
           <textarea
             placeholder="Exam description here"
             {...register("description")}
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded border-gray-300"
           />
           <p className="text-red-500">{errors.description?.message}</p>
         </div>
 
         {/* Exam Type (Single or Group) */}
-        <div>
-          <label className="block font-semibold">Exam Type:</label>
-          <select
-            {...register("examType", { required: "Exam type is required" })}
-            className="w-full p-2 border rounded"
-          >
-            <option value="single">Single Exam</option>
-            <option value="group">Group Exam</option>
-          </select>
-          <p className="text-red-500">{errors.examType?.message}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block font-semibold">Exam Type:</label>
+            <select
+              {...register("examType", { required: "Exam type is required" })}
+              className="w-full p-2 border rounded border-gray-300"
+            >
+              <option value="single">Single Exam</option>
+              <option value="group">Group Exam</option>
+            </select>
+            <p className="text-red-500">{errors.examType?.message}</p>
+          </div>
+          <div>
+            <label className="block font-semibold">Pass Mark:</label>
+            <input
+              placeholder="33"
+              type="number"
+              {...register("passMark", { required: "Pass Mark is required" })}
+              className="w-full p-2 border rounded border-gray-300"
+            />
+            <p className="text-red-500">{errors.fee?.message}</p>
+          </div>
         </div>
 
         {/* Price and Topic - only for Single Exam */}
@@ -247,7 +260,7 @@ const AddExam = () => {
                   placeholder="100.00"
                   type="number"
                   {...register("fee", { required: "Fee is required" })}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded border-gray-300"
                 />
                 <p className="text-red-500">{errors.fee?.message}</p>
               </div>
@@ -258,7 +271,7 @@ const AddExam = () => {
                   {...register("classTypes", {
                     required: "Please select a Class",
                   })}
-                  className="w-full border p-2 rounded"
+                  className="w-full border p-2 rounded border-gray-300"
                 >
                   <option value="">Class</option>
                   {classTypes.map((classType, index) => (
@@ -279,7 +292,7 @@ const AddExam = () => {
                   {...register("subjects", {
                     required: "Please select a subject",
                   })}
-                  className="w-full border p-2 rounded"
+                  className="w-full border p-2 rounded border-gray-300"
                 >
                   <option value="">Subject</option>
                   {subjects.map((subject, index) => (
@@ -301,29 +314,33 @@ const AddExam = () => {
         {/* Start and End Date - only for Group Exam */}
         {watchExamType === "group" && (
           <>
-            {/* start daate  */}
-            <div>
-              <label className="block font-semibold">
-                Start Date and Time:
-              </label>
-              <input
-                type="datetime-local"
-                {...register("startDate", {
-                  required: "Start date is required",
-                })}
-                className="w-full p-2 border rounded"
-              />
-              <p className="text-red-500">{errors.startDate?.message}</p>
-            </div>
-            {/* end date */}
-            <div>
-              <label className="block font-semibold">End Date and Time:</label>
-              <input
-                type="datetime-local"
-                {...register("endDate", { required: "End date is required" })}
-                className="w-full p-2 border rounded"
-              />
-              <p className="text-red-500">{errors.endDate?.message}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* start daate  */}
+              <div>
+                <label className="block font-semibold">
+                  Start Date and Time:
+                </label>
+                <input
+                  type="datetime-local"
+                  {...register("startDate", {
+                    required: "Start date is required",
+                  })}
+                  className="w-full p-2 border rounded border-gray-300"
+                />
+                <p className="text-red-500">{errors.startDate?.message}</p>
+              </div>
+              {/* end date */}
+              <div>
+                <label className="block font-semibold">
+                  End Date and Time:
+                </label>
+                <input
+                  type="datetime-local"
+                  {...register("endDate", { required: "End date is required" })}
+                  className="w-full p-2 border rounded border-gray-300"
+                />
+                <p className="text-red-500">{errors.endDate?.message}</p>
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -332,7 +349,7 @@ const AddExam = () => {
                   {...register("classTypes", {
                     required: "Please select a Class",
                   })}
-                  className="w-full border p-2 rounded"
+                  className="w-full border p-2 rounded border-gray-300"
                 >
                   <option value="">Class</option>
                   {classTypes.map((classType, index) => (
@@ -353,7 +370,7 @@ const AddExam = () => {
                   {...register("subjects", {
                     required: "Please select a subject",
                   })}
-                  className="w-full border p-2 rounded"
+                  className="w-full border p-2 rounded border-gray-300"
                 >
                   <option value="">Subject</option>
                   {subjects.map((subject, index) => (
@@ -415,7 +432,7 @@ const AddExam = () => {
                 "negativeMark",
                 isNegativeMark && { required: "Negative Mark is required" }
               )}
-              className={`w-full p-2 border rounded ${
+              className={`w-full p-2 border rounded border-gray-300 ${
                 isNegativeMark ? "cursor-pointer" : "cursor-not-allowed"
               } `}
               disabled={!isNegativeMark}
@@ -431,7 +448,7 @@ const AddExam = () => {
             type="file"
             accept="image/*"
             // onChange={handleImageChange}
-            className="w-full border rounded file-input border-black"
+            className="w-full border rounded file-input border-gray-300"
             {...register("thumbnails", {
               required: "Thumbnails img is required",
             })}
@@ -447,7 +464,7 @@ const AddExam = () => {
             type="file"
             accept=".xlsx, .xls"
             onChange={handleFileUpload}
-            className="w-full border rounded file-input border-black"
+            className="w-full border rounded file-input border-gray-300"
           />
         </div>
 
@@ -484,25 +501,27 @@ const AddExam = () => {
           </div>
         )}
 
-        {/* Download Sample Excel Button */}
-        <button
-          type="button"
-          onClick={downloadSampleExcel}
-          className="w-full py-2 text-black border hover:bg-primaryColor hover:text-white font-semibold rounded flex justify-center items-center cursor-pointer"
-        >
-          <span className="text-xl font-bold">
-            <IoMdArrowDown />
-          </span>
-          Sample Excel
-        </button>
+        <div className="grid grid-cols-2 gap-4">
+          {/* Download Sample Excel Button */}
+          <button
+            type="button"
+            onClick={downloadSampleExcel}
+            className="w-full py-2 text-black border hover:bg-accentColor hover:border-white hover:text-white font-semibold rounded flex justify-center items-center cursor-pointer border-gray-500"
+          >
+            <span className="text-xl font-bold">
+              <IoMdArrowDown />
+            </span>
+            Sample Excel
+          </button>
 
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full py-2 bg-primaryColor text-white font-semibold rounded cursor-pointer"
-        >
-          Create Exam
-        </button>
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full py-2 bg-primaryColor text-white font-semibold rounded cursor-pointer"
+          >
+            Create Exam
+          </button>
+        </div>
       </form>
     </div>
   );

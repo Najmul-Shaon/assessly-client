@@ -1,16 +1,22 @@
 import { FaCheck } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/axiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
+// import useIsExamSubmitted from "../../Hooks/useIsExamSubmitted";
 
 const ExamLive = () => {
   const { user } = useAuth();
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+
+  // const { isSubmitted } = useIsExamSubmitted(id);
+
+  // const hasHandledSubmission = useRef(false);
+  // tracks if the effect ran already
 
   const [started, setStarted] = useState(false);
   const [countdown, setCountdown] = useState(3);
@@ -20,8 +26,7 @@ const ExamLive = () => {
   const [answers, setAnswers] = useState([]);
   const [examSubmitted, setExamSubmitted] = useState(false);
   const [savedQuestions, setSavedQuestions] = useState([]);
-
-  // console.log("final question", savedQuestions);
+  const examSubmittedRef = useRef(false);
 
   const { data: singleExam = {}, isLoading } = useQuery({
     queryKey: ["singleExam", id],
@@ -31,9 +36,99 @@ const ExamLive = () => {
     },
   });
 
-  // console.log(singleExam?.uniqueQuestions);
+  // useEffect(() => {
+  //   if (isSubmitted) {
+  //     Swal.fire({
+  //       title: "Already Submitted!",
+  //       text: "You already attended this exam.",
+  //       icon: "success",
+  //     });
+  //     navigate("/dashboard/my-exam");
+  //   }
+  // }, [navigate, isSubmitted]);
 
-  // Utility: Shuffle array
+  // useEffect(() => {
+  //   if (isSubmitted && !hasHandledSubmission.current) {
+  //     hasHandledSubmission.current = true; // prevent future triggers
+
+  //     Swal.fire({
+  //       title: "Already Submitted!",
+  //       text: "You already attended this exam.",
+  //       icon: "success",
+  //     });
+
+  //     navigate("/dashboard/my-exam");
+  //   }
+  // }, [isSubmitted, navigate]);
+
+  const autoSubmitExam = useCallback(
+    async (
+      title = "Auto Submitted",
+      message = "Exam was submitted automatically.",
+      silent = false
+    ) => {
+      try {
+        setExamSubmitted(true);
+        const submitData = {
+          modified_at: new Date(),
+          answers,
+        };
+
+        await axiosSecure.patch(`/submit/exam?id=${id}&email=${user?.email}`, {
+          submitData,
+        });
+
+        if (!silent) {
+          await Swal.fire({
+            title,
+            text: message,
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
+        }
+
+        navigate("/dashboard/my-exam");
+      } catch (err) {
+        if (!silent) {
+          Swal.fire(
+            "Submission Error",
+            "There was an error submitting your exam.",
+            "error"
+          );
+        }
+      }
+    },
+    [answers, axiosSecure, id, user?.email, navigate]
+  );
+
+  useEffect(() => {
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+    return () =>
+      document.removeEventListener("contextmenu", (e) => e.preventDefault());
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      e.preventDefault();
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey &&
+          e.shiftKey &&
+          ["I", "J", "C", "K", "M"].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && ["U", "S", "P"].includes(e.key.toUpperCase()))
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    examSubmittedRef.current = examSubmitted;
+  }, [examSubmitted]);
+
   const shuffleArray = (arr) => {
     const shuffled = [...arr];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -43,23 +138,49 @@ const ExamLive = () => {
     return shuffled;
   };
 
-  // Save shuffled or original questions to DB
-  const prepareExam = async () => {
+  // const prepareExam = async () => {
+  //   try {
+  //     const res = await axiosSecure.get(
+  //       `/get/saved-exam/${id}?email=${user.email}`
+  //     );
+  //     if (res.data?.questions?.length > 0) {
+  //       setSavedQuestions(res.data.questions);
+  //       return;
+  //     }
+
+  //     let questionsToSave = singleExam.questions;
+  //     if (singleExam.uniqueQuestions) {
+  //       questionsToSave = shuffleArray(questionsToSave);
+  //     }
+
+  //     const saveRes = await axiosSecure.post("/submit/exam", {
+  //       create_at: new Date(),
+  //       examId: id,
+  //       email: user.email,
+  //       questions: questionsToSave,
+  //       status: "pending",
+  //     });
+
+  //     if (saveRes.data.insertedId) {
+  //       setSavedQuestions(questionsToSave);
+  //     }
+  //   } catch (err) {
+  //     console.error("Error preparing exam:", err);
+  //   }
+  // };
+
+  const prepareExam = useCallback(async () => {
     try {
       const res = await axiosSecure.get(
         `/get/saved-exam/${id}?email=${user.email}`
       );
       if (res.data?.questions?.length > 0) {
-        // console.log("as it it found:", res.data);
         setSavedQuestions(res.data.questions);
         return;
       }
 
       let questionsToSave = singleExam.questions;
-      // console.log("as it is from single exam", questionsToSave);
-
       if (singleExam.uniqueQuestions) {
-        // console.log("hit the condition");
         questionsToSave = shuffleArray(questionsToSave);
       }
 
@@ -70,21 +191,18 @@ const ExamLive = () => {
         questions: questionsToSave,
         status: "pending",
       });
-      // console.log(saveRes?.data);
 
       if (saveRes.data.insertedId) {
-        // console.log(saveRes?.data);
         setSavedQuestions(questionsToSave);
       }
     } catch (err) {
       console.error("Error preparing exam:", err);
     }
-  };
+  }, [axiosSecure, id, user?.email, singleExam]);
 
-  // Auto-start logic
   useEffect(() => {
     if (singleExam?.examTitle && !started) {
-      prepareExam(); // Fetch or save questions before starting
+      prepareExam();
 
       if (singleExam.faceCam) {
         navigator.mediaDevices
@@ -92,13 +210,9 @@ const ExamLive = () => {
           .then((mediaStream) => {
             setStream(mediaStream);
             const videoElement = document.getElementById("face-cam-video");
-            if (videoElement) {
-              videoElement.srcObject = mediaStream;
-            }
+            if (videoElement) videoElement.srcObject = mediaStream;
           })
-          .catch((err) => {
-            console.error("Camera access denied", err);
-          });
+          .catch((err) => console.error("Camera access denied", err));
       }
 
       const countdownInterval = setInterval(() => {
@@ -112,18 +226,119 @@ const ExamLive = () => {
         });
       }, 1000);
     }
-  }, [singleExam, started]);
+  }, [singleExam, started, prepareExam]);
 
-  // Timer logic
+  // useEffect(() => {
+  //   let timer;
+  //   if (started && timeLeft > 0) {
+  //     timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
+  //   }
+  //   return () => clearInterval(timer);
+  // }, [started, timeLeft]);
+
   useEffect(() => {
     let timer;
     if (started && timeLeft > 0) {
       timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            autoSubmitExam(
+              "Time Out!",
+              "Your time is up. Exam submitted automatically."
+            );
+            return 0;
+          }
+          return prev - 1;
+        });
       }, 1000);
     }
+
     return () => clearInterval(timer);
-  }, [started, timeLeft]);
+  }, [started, timeLeft, autoSubmitExam]);
+
+  // Visibility detection (switch tab)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (
+        document.visibilityState === "hidden" &&
+        started &&
+        !examSubmittedRef.current
+      ) {
+        autoSubmitExam(
+          "Cheating Detected!!",
+          "You switched tabs. Your exam has been auto-submitted."
+        );
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [started, answers, id, user?.email, axiosSecure, autoSubmitExam]);
+
+  // Reload or close tab detection
+  useEffect(() => {
+    const beforeUnloadHandler = (e) => {
+      if (!examSubmittedRef.current) {
+        e.preventDefault();
+        e.returnValue =
+          "Are you sure you want to leave? Your exam will be submitted.";
+      }
+    };
+
+    const unloadHandler = async () => {
+      if (!examSubmittedRef.current) {
+        await autoSubmitExam(null, null, true); // silent mode
+      }
+    };
+
+    window.addEventListener("beforeunload", beforeUnloadHandler);
+    window.addEventListener("unload", unloadHandler);
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadHandler);
+      window.removeEventListener("unload", unloadHandler);
+    };
+  }, [answers, autoSubmitExam]);
+
+  // const autoSubmitExam = async (
+  //   title = "Auto Submitted",
+  //   message = "Exam was submitted automatically.",
+  //   silent = false
+  // ) => {
+  //   try {
+  //     setExamSubmitted(true);
+  //     const submitData = {
+  //       modified_at: new Date(),
+  //       answers,
+  //     };
+
+  //     await axiosSecure.patch(`/submit/exam?id=${id}&email=${user?.email}`, {
+  //       submitData,
+  //     });
+
+  //     if (!silent) {
+  //       await Swal.fire({
+  //         title,
+  //         text: message,
+  //         icon: "warning",
+  //         confirmButtonText: "OK",
+  //       });
+  //     }
+
+  //     navigate("/dashboard/my-exam");
+  //   } catch (err) {
+  //     console.error("Auto-submit failed", err);
+  //     if (!silent) {
+  //       Swal.fire(
+  //         "Submission Error",
+  //         "There was an error submitting your exam.",
+  //         "error"
+  //       );
+  //     }
+  //   }
+  // };
 
   const formatTime = (seconds) => {
     const h = String(Math.floor(seconds / 3600)).padStart(2, "0");
@@ -168,7 +383,6 @@ const ExamLive = () => {
         axiosSecure
           .patch(`/submit/exam?id=${id}&email=${user?.email}`, { submitData })
           .then((res) => {
-            console.log(res.data);
             if (res.data.modifiedCount > 0) {
               Swal.fire(
                 "Submitted!",
@@ -191,7 +405,6 @@ const ExamLive = () => {
 
   if (isLoading)
     return <div className="text-center py-10">Loading exam...</div>;
-
   if (!singleExam?.examTitle)
     return (
       <div className="text-center py-10 text-red-500">Exam not found.</div>
@@ -203,7 +416,6 @@ const ExamLive = () => {
         <h1 className="text-3xl font-bold text-center text-textColor">
           {singleExam.examTitle}
         </h1>
-
         {!started && countdown > 0 ? (
           <div className="text-center text-2xl font-semibold text-textLightPrimary">
             {countdown === 3 && "Get Ready! Exam will start soon..."}
@@ -220,7 +432,6 @@ const ExamLive = () => {
                 {formatTime(timeLeft)}
               </span>
             </div>
-
             {singleExam?.faceCam && (
               <div className="flex justify-end">
                 <video
@@ -228,10 +439,9 @@ const ExamLive = () => {
                   autoPlay
                   muted
                   className="w-40 h-32 border rounded shadow"
-                ></video>
+                />
               </div>
             )}
-
             {currentQuestion && (
               <div className="p-4 border border-gray-300 rounded-xl bg-secondaryColor">
                 <p className="font-medium text-lg mb-2">
@@ -241,53 +451,49 @@ const ExamLive = () => {
                   {currentQuestionIndex + 1}. {currentQuestion.question}
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-gray-700">
-                  {["A", "B", "C", "D"].map((option) => (
+                  {["a", "b", "c", "d"].map((option) => (
                     <div
                       key={option}
                       className={`p-4 border rounded-lg cursor-pointer hover:bg-primaryColor/10 transition ${
                         answers[currentQuestionIndex] === option
-                          ? "bg-primaryColor/10 border-primaryColor"
-                          : "bg-white border-gray-300"
+                          ? "bg-primaryColor/20 border-primaryColor"
+                          : "border-gray-300"
                       }`}
                       onClick={() => handleAnswerChange(option)}
                     >
-                      <div className="flex items-center">
-                        {answers[currentQuestionIndex] === option && (
-                          <FaCheck className="text-green-600 mr-2" />
-                        )}
-                        <span className="font-medium text-lg">
-                          {currentQuestion[option.toLowerCase()]}
-                        </span>
+                      <div className="flex items-center space-x-2">
+                        <span className="font-bold">{option}.</span>
+                        <span>{currentQuestion[option.toLowerCase()]}</span>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
-
-            {currentQuestionIndex < savedQuestions?.length - 1 && (
-              <div className="flex justify-end mt-4">
-                <button
-                  onClick={handleNextQuestion}
-                  disabled={!answers[currentQuestionIndex]}
-                  className="px-4 py-2 bg-primaryColor text-white rounded-lg hover:bg-primaryDarker btn"
-                >
-                  Next
-                </button>
-              </div>
-            )}
-
-            <div className="mt-4 text-center">
+            <div className="flex justify-between mt-6 space-x-4">
+              <button
+                onClick={handleNextQuestion}
+                disabled={!answers[currentQuestionIndex]}
+                className={`btn btn-primary ${
+                  !answers[currentQuestionIndex] ? "btn-disabled" : ""
+                }`}
+              >
+                Next
+              </button>
               <button
                 onClick={handleSubmitExam}
-                disabled={answers.length < 0}
-                className="px-6 py-3 bg-accentColor text-white rounded-lg btn hover:bg-accentColor"
+                disabled={!answers[currentQuestionIndex]}
+                className={`btn btn-success flex items-center ${
+                  !answers[currentQuestionIndex] ? "btn-disabled" : ""
+                }`}
               >
-                Submit
+                Submit Exam <FaCheck className="ml-2" />
               </button>
             </div>
           </div>
-        ) : null}
+        ) : (
+          <div className="text-center">Preparing your exam...</div>
+        )}
       </div>
     </div>
   );
