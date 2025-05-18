@@ -1,8 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import useIsExamSubmitted from "../../../Hooks/useIsExamSubmitted";
 import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/axiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const MyExamRow = ({ exam, index }) => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { isSubmitted } = useIsExamSubmitted(exam?.examId);
 
@@ -15,6 +20,89 @@ const MyExamRow = ({ exam, index }) => {
       return "Expired";
     }
     return "Ongoing";
+  };
+
+  const showResult = async (examId, email) => {
+    try {
+      Swal.fire({
+        title: "Loading...",
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+      });
+
+      const res = await axiosSecure.get(
+        `/exam/result?id=${examId}&email=${email}`
+      );
+
+      const result = res.data;
+
+      if (!result) {
+        return Swal.fire(
+          "No Result Found",
+          "Result not available yet.",
+          "info"
+        );
+      }
+
+      const tableHTML = `
+        <table style="width:100%;border-collapse:collapse;text-align:center">
+          <thead>
+            <tr style="background:#f6f6f6">
+              <th style="border:1px solid #ddd;padding:8px">Total Marks</th>
+              <th style="border:1px solid #ddd;padding:8px">Answered</th>
+              <th style="border:1px solid #ddd;padding:8px">Obtained</th>
+              <th style="border:1px solid #ddd;padding:8px">Correct</th>
+              <th style="border:1px solid #ddd;padding:8px">Wrong</th>
+              <th style="border:1px solid #ddd;padding:8px">Skipped</th>
+              <th style="border:1px solid #ddd;padding:8px">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border:1px solid #ddd;padding:8px">${
+                result.totalMarks
+              }</td>
+              <td style="border:1px solid #ddd;padding:8px">${
+                result.totalAnswered
+              }</td>
+              <td style="border:1px solid #ddd;padding:8px">${
+                result.obtainMarks
+              }</td>
+              <td style="border:1px solid #ddd;padding:8px">${
+                result.totalRight
+              }</td>
+              <td style="border:1px solid #ddd;padding:8px">${
+                result.totalWrong
+              }</td>
+              <td style="border:1px solid #ddd;padding:8px">${
+                result.totalSkip
+              }</td>
+              <td style="border:1px solid #ddd;padding:8px">${
+                result.isPass ? "Passed" : "Failed"
+              }</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+
+      Swal.fire({
+        title: "Your Exam Result",
+        html: tableHTML,
+        icon: "success",
+        confirmButtonText: "Close",
+        width: "700px",
+        customClass: {
+          confirmButton: "custom-confirm-btn",
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching result:", error);
+      Swal.fire(
+        "Error",
+        "Something went wrong while fetching the result.",
+        "error"
+      );
+    }
   };
 
   const showExamRules = async (id) => {
@@ -74,7 +162,7 @@ const MyExamRow = ({ exam, index }) => {
         {isSubmitted ? (
           <button
             className="btn-md btn-link text-primaryColor cursor-pointer"
-            onClick={() => navigate(`/exam/result/${exam?.examId}`)}
+            onClick={() => showResult(exam?.examId, user?.email)}
           >
             View Result
           </button>

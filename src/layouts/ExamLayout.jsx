@@ -1,11 +1,10 @@
 // import ExamLive from "../pages/ExamLive/ExamLive";
-import ExamLive2 from "../pages/ExamLive/ExamLive2";
+import ExamLive from "../pages/ExamLive/ExamLive";
 
 const ExamLayout = () => {
   return (
     <div>
-      {/* <ExamLive /> */}
-      <ExamLive2 />
+      <ExamLive />
     </div>
   );
 };

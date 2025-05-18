@@ -82,6 +82,15 @@
   color: #ff6f61;
 }
 
+.custom-confirm-btn {
+  background-color: #008080 !important;
+  color: white !important;
+  padding: 8px 20px;
+  font-weight: 500;
+  border-radius: 4px;
+  border: none;
+}
+
 /* overall colors  */
 
 /*
