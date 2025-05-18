@@ -5,12 +5,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/axiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
+import useIsExamSubmitted from "../../Hooks/useIsExamSubmitted";
 
 const ExamLive2 = () => {
   const { user } = useAuth();
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+
+  const { isSubmitted } = useIsExamSubmitted(id);
+  console.log(isSubmitted);
 
   const [started, setStarted] = useState(false);
   const [countdown, setCountdown] = useState(3);
@@ -20,7 +24,6 @@ const ExamLive2 = () => {
   const [answers, setAnswers] = useState([]);
   const [examSubmitted, setExamSubmitted] = useState(false);
   const [savedQuestions, setSavedQuestions] = useState([]);
-
   const examSubmittedRef = useRef(false);
 
   const { data: singleExam = {}, isLoading } = useQuery({
@@ -30,6 +33,41 @@ const ExamLive2 = () => {
       return res.data;
     },
   });
+
+  useEffect(() => {
+    if (isSubmitted) {
+      Swal.fire({
+        title: "Already Submitted!",
+        text: "You already attended this exam.",
+        icon: "success",
+      });
+      navigate("/dashboard/my-exam");
+    }
+  }, [isSubmitted, navigate]);
+
+  useEffect(() => {
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+    return () =>
+      document.removeEventListener("contextmenu", (e) => e.preventDefault());
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      e.preventDefault();
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey &&
+          e.shiftKey &&
+          ["I", "J", "C", "K", "M"].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && ["U", "S", "P"].includes(e.key.toUpperCase()))
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   useEffect(() => {
     examSubmittedRef.current = examSubmitted;
@@ -55,7 +93,6 @@ const ExamLive2 = () => {
       }
 
       let questionsToSave = singleExam.questions;
-
       if (singleExam.uniqueQuestions) {
         questionsToSave = shuffleArray(questionsToSave);
       }
@@ -86,13 +123,9 @@ const ExamLive2 = () => {
           .then((mediaStream) => {
             setStream(mediaStream);
             const videoElement = document.getElementById("face-cam-video");
-            if (videoElement) {
-              videoElement.srcObject = mediaStream;
-            }
+            if (videoElement) videoElement.srcObject = mediaStream;
           })
-          .catch((err) => {
-            console.error("Camera access denied", err);
-          });
+          .catch((err) => console.error("Camera access denied", err));
       }
 
       const countdownInterval = setInterval(() => {
@@ -111,13 +144,12 @@ const ExamLive2 = () => {
   useEffect(() => {
     let timer;
     if (started && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
+      timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
     }
     return () => clearInterval(timer);
   }, [started, timeLeft]);
 
+  // Visibility detection (switch tab)
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (
@@ -125,18 +157,48 @@ const ExamLive2 = () => {
         started &&
         !examSubmittedRef.current
       ) {
-        autoSubmitExam();
+        autoSubmitExam(
+          "Cheating Detected!!",
+          "You switched tabs. Your exam has been auto-submitted."
+        );
       }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    return () => {
+    return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
   }, [started, answers, id, user?.email, axiosSecure]);
 
-  const autoSubmitExam = async () => {
+  // Reload or close tab detection
+  useEffect(() => {
+    const beforeUnloadHandler = (e) => {
+      if (!examSubmittedRef.current) {
+        e.preventDefault();
+        e.returnValue =
+          "Are you sure you want to leave? Your exam will be submitted.";
+      }
+    };
+
+    const unloadHandler = async () => {
+      if (!examSubmittedRef.current) {
+        await autoSubmitExam(null, null, true); // silent mode
+      }
+    };
+
+    window.addEventListener("beforeunload", beforeUnloadHandler);
+    window.addEventListener("unload", unloadHandler);
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadHandler);
+      window.removeEventListener("unload", unloadHandler);
+    };
+  }, [answers]);
+
+  const autoSubmitExam = async (
+    title = "Auto Submitted",
+    message = "Exam was submitted automatically.",
+    silent = false
+  ) => {
     try {
       setExamSubmitted(true);
       const submitData = {
@@ -144,28 +206,29 @@ const ExamLive2 = () => {
         answers,
       };
 
-      const res = await axiosSecure.patch(
-        `/submit/exam?id=${id}&email=${user?.email}`,
-        { submitData }
-      );
+      await axiosSecure.patch(`/submit/exam?id=${id}&email=${user?.email}`, {
+        submitData,
+      });
 
-      if (res.data.modifiedCount > 0) {
+      if (!silent) {
         await Swal.fire({
-          title: "Exam Auto Submitted",
-          text: "You switched tabs. Your exam has been auto-submitted.",
+          title,
+          text: message,
           icon: "warning",
           confirmButtonText: "OK",
         });
-        navigate("/dashboard/my-exam");
       }
+
+      navigate("/dashboard/my-exam");
     } catch (err) {
       console.error("Auto-submit failed", err);
-      Swal.fire({
-        title: "Submission Error",
-        text: "There was an error auto-submitting your exam.",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
+      if (!silent) {
+        Swal.fire(
+          "Submission Error",
+          "There was an error submitting your exam.",
+          "error"
+        );
+      }
     }
   };
 
@@ -234,7 +297,6 @@ const ExamLive2 = () => {
 
   if (isLoading)
     return <div className="text-center py-10">Loading exam...</div>;
-
   if (!singleExam?.examTitle)
     return (
       <div className="text-center py-10 text-red-500">Exam not found.</div>
@@ -246,7 +308,6 @@ const ExamLive2 = () => {
         <h1 className="text-3xl font-bold text-center text-textColor">
           {singleExam.examTitle}
         </h1>
-
         {!started && countdown > 0 ? (
           <div className="text-center text-2xl font-semibold text-textLightPrimary">
             {countdown === 3 && "Get Ready! Exam will start soon..."}
@@ -263,7 +324,6 @@ const ExamLive2 = () => {
                 {formatTime(timeLeft)}
               </span>
             </div>
-
             {singleExam?.faceCam && (
               <div className="flex justify-end">
                 <video
@@ -271,10 +331,9 @@ const ExamLive2 = () => {
                   autoPlay
                   muted
                   className="w-40 h-32 border rounded shadow"
-                ></video>
+                />
               </div>
             )}
-
             {currentQuestion && (
               <div className="p-4 border border-gray-300 rounded-xl bg-secondaryColor">
                 <p className="font-medium text-lg mb-2">
@@ -284,7 +343,7 @@ const ExamLive2 = () => {
                   {currentQuestionIndex + 1}. {currentQuestion.question}
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-gray-700">
-                  {["A", "B", "C", "D"].map((option) => (
+                  {["a", "b", "c", "d"].map((option) => (
                     <div
                       key={option}
                       className={`p-4 border rounded-lg cursor-pointer hover:bg-primaryColor/10 transition ${
@@ -303,7 +362,6 @@ const ExamLive2 = () => {
                 </div>
               </div>
             )}
-
             <div className="flex justify-between mt-6 space-x-4">
               <button
                 onClick={handleNextQuestion}
