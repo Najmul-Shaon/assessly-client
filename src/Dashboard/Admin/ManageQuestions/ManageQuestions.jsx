@@ -15,6 +15,8 @@ const ManageQuestions = () => {
       return res.data;
     },
   });
+
+  console.log(allExams);
   return (
     <div>
       <Helmet>
@@ -51,7 +53,6 @@ const ManageQuestions = () => {
                   <span className="text-accentColor">
                     <IoTrashBinOutline />
                   </span>
-              
                   <Link
                     to={`/dashboard/manage-questions/edit/${singleExam?.examId}`}
                   >
@@ -59,7 +60,6 @@ const ManageQuestions = () => {
                       <FaRegEdit />{" "}
                     </span>
                   </Link>{" "}
-              
                   <Link
                     to={`/dashboard/manage-questions/details/${singleExam?.examId}`}
                   >
