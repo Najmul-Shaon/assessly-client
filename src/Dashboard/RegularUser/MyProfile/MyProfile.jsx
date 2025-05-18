@@ -60,7 +60,6 @@ const MyProfile = () => {
   };
 
   const handleSave = async (email) => {
-    console.log(email);
     setIsEditing(false);
     // TODO: Call API or update logic here with `formData`
     // console.log("Updated Data", formData);

@@ -1,11 +1,11 @@
 import { FaCheck } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/axiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
-import useIsExamSubmitted from "../../Hooks/useIsExamSubmitted";
+// import useIsExamSubmitted from "../../Hooks/useIsExamSubmitted";
 
 const ExamLive = () => {
   const { user } = useAuth();
@@ -13,11 +13,10 @@ const ExamLive = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  const { isSubmitted } = useIsExamSubmitted(id);
+  // const { isSubmitted } = useIsExamSubmitted(id);
 
   // const hasHandledSubmission = useRef(false);
   // tracks if the effect ran already
-  console.log(isSubmitted);
 
   const [started, setStarted] = useState(false);
   const [countdown, setCountdown] = useState(3);
@@ -62,6 +61,46 @@ const ExamLive = () => {
   //   }
   // }, [isSubmitted, navigate]);
 
+  const autoSubmitExam = useCallback(
+    async (
+      title = "Auto Submitted",
+      message = "Exam was submitted automatically.",
+      silent = false
+    ) => {
+      try {
+        setExamSubmitted(true);
+        const submitData = {
+          modified_at: new Date(),
+          answers,
+        };
+
+        await axiosSecure.patch(`/submit/exam?id=${id}&email=${user?.email}`, {
+          submitData,
+        });
+
+        if (!silent) {
+          await Swal.fire({
+            title,
+            text: message,
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
+        }
+
+        navigate("/dashboard/my-exam");
+      } catch (err) {
+        if (!silent) {
+          Swal.fire(
+            "Submission Error",
+            "There was an error submitting your exam.",
+            "error"
+          );
+        }
+      }
+    },
+    [answers, axiosSecure, id, user?.email, navigate]
+  );
+
   useEffect(() => {
     document.addEventListener("contextmenu", (e) => e.preventDefault());
     return () =>
@@ -99,7 +138,38 @@ const ExamLive = () => {
     return shuffled;
   };
 
-  const prepareExam = async () => {
+  // const prepareExam = async () => {
+  //   try {
+  //     const res = await axiosSecure.get(
+  //       `/get/saved-exam/${id}?email=${user.email}`
+  //     );
+  //     if (res.data?.questions?.length > 0) {
+  //       setSavedQuestions(res.data.questions);
+  //       return;
+  //     }
+
+  //     let questionsToSave = singleExam.questions;
+  //     if (singleExam.uniqueQuestions) {
+  //       questionsToSave = shuffleArray(questionsToSave);
+  //     }
+
+  //     const saveRes = await axiosSecure.post("/submit/exam", {
+  //       create_at: new Date(),
+  //       examId: id,
+  //       email: user.email,
+  //       questions: questionsToSave,
+  //       status: "pending",
+  //     });
+
+  //     if (saveRes.data.insertedId) {
+  //       setSavedQuestions(questionsToSave);
+  //     }
+  //   } catch (err) {
+  //     console.error("Error preparing exam:", err);
+  //   }
+  // };
+
+  const prepareExam = useCallback(async () => {
     try {
       const res = await axiosSecure.get(
         `/get/saved-exam/${id}?email=${user.email}`
@@ -128,7 +198,7 @@ const ExamLive = () => {
     } catch (err) {
       console.error("Error preparing exam:", err);
     }
-  };
+  }, [axiosSecure, id, user?.email, singleExam]);
 
   useEffect(() => {
     if (singleExam?.examTitle && !started) {
@@ -156,7 +226,7 @@ const ExamLive = () => {
         });
       }, 1000);
     }
-  }, [singleExam, started]);
+  }, [singleExam, started, prepareExam]);
 
   // useEffect(() => {
   //   let timer;
@@ -185,7 +255,7 @@ const ExamLive = () => {
     }
 
     return () => clearInterval(timer);
-  }, [started, timeLeft]);
+  }, [started, timeLeft, autoSubmitExam]);
 
   // Visibility detection (switch tab)
   useEffect(() => {
@@ -205,7 +275,7 @@ const ExamLive = () => {
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, [started, answers, id, user?.email, axiosSecure]);
+  }, [started, answers, id, user?.email, axiosSecure, autoSubmitExam]);
 
   // Reload or close tab detection
   useEffect(() => {
@@ -230,45 +300,45 @@ const ExamLive = () => {
       window.removeEventListener("beforeunload", beforeUnloadHandler);
       window.removeEventListener("unload", unloadHandler);
     };
-  }, [answers]);
+  }, [answers, autoSubmitExam]);
 
-  const autoSubmitExam = async (
-    title = "Auto Submitted",
-    message = "Exam was submitted automatically.",
-    silent = false
-  ) => {
-    try {
-      setExamSubmitted(true);
-      const submitData = {
-        modified_at: new Date(),
-        answers,
-      };
+  // const autoSubmitExam = async (
+  //   title = "Auto Submitted",
+  //   message = "Exam was submitted automatically.",
+  //   silent = false
+  // ) => {
+  //   try {
+  //     setExamSubmitted(true);
+  //     const submitData = {
+  //       modified_at: new Date(),
+  //       answers,
+  //     };
 
-      await axiosSecure.patch(`/submit/exam?id=${id}&email=${user?.email}`, {
-        submitData,
-      });
+  //     await axiosSecure.patch(`/submit/exam?id=${id}&email=${user?.email}`, {
+  //       submitData,
+  //     });
 
-      if (!silent) {
-        await Swal.fire({
-          title,
-          text: message,
-          icon: "warning",
-          confirmButtonText: "OK",
-        });
-      }
+  //     if (!silent) {
+  //       await Swal.fire({
+  //         title,
+  //         text: message,
+  //         icon: "warning",
+  //         confirmButtonText: "OK",
+  //       });
+  //     }
 
-      navigate("/dashboard/my-exam");
-    } catch (err) {
-      console.error("Auto-submit failed", err);
-      if (!silent) {
-        Swal.fire(
-          "Submission Error",
-          "There was an error submitting your exam.",
-          "error"
-        );
-      }
-    }
-  };
+  //     navigate("/dashboard/my-exam");
+  //   } catch (err) {
+  //     console.error("Auto-submit failed", err);
+  //     if (!silent) {
+  //       Swal.fire(
+  //         "Submission Error",
+  //         "There was an error submitting your exam.",
+  //         "error"
+  //       );
+  //     }
+  //   }
+  // };
 
   const formatTime = (seconds) => {
     const h = String(Math.floor(seconds / 3600)).padStart(2, "0");

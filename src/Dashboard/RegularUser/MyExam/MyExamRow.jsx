@@ -3,7 +3,6 @@ import useIsExamSubmitted from "../../../Hooks/useIsExamSubmitted";
 import Swal from "sweetalert2";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/axiosSecure";
-import { useQuery } from "@tanstack/react-query";
 
 const MyExamRow = ({ exam, index }) => {
   const { user } = useAuth();
@@ -35,6 +34,7 @@ const MyExamRow = ({ exam, index }) => {
       );
 
       const result = res.data;
+      const obtainMarks = parseFloat(result?.obtainMarks).toFixed(2);
 
       if (!result) {
         return Swal.fire(
@@ -65,9 +65,7 @@ const MyExamRow = ({ exam, index }) => {
               <td style="border:1px solid #ddd;padding:8px">${
                 result.totalAnswered
               }</td>
-              <td style="border:1px solid #ddd;padding:8px">${
-                result.obtainMarks
-              }</td>
+              <td style="border:1px solid #ddd;padding:8px">${obtainMarks}</td>
               <td style="border:1px solid #ddd;padding:8px">${
                 result.totalRight
               }</td>
@@ -96,7 +94,6 @@ const MyExamRow = ({ exam, index }) => {
         },
       });
     } catch (error) {
-      console.error("Error fetching result:", error);
       Swal.fire(
         "Error",
         "Something went wrong while fetching the result.",

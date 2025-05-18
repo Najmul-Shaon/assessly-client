@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import { Link } from "react-router-dom";
+import MyCoursesRow from "./MyCoursesRow";
 
 const MyCourses = () => {
   const { user } = useAuth();
@@ -15,7 +16,6 @@ const MyCourses = () => {
       return res.data;
     },
   });
-
   useEffect(() => {
     refetch();
   }, [refetch, myCourse]);
@@ -37,35 +37,18 @@ const MyCourses = () => {
               <th>Fee</th>
               <th>Enrolled at</th>
               <th>Duration</th>
+              <th>Course Status</th>
+              <th>Exam Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {myCourse.map((singleCourse, i) => (
-              <tr key={singleCourse?._id}>
-                <th>{i + 1}</th>
-                <td>{singleCourse?.title}</td>
-                <td>{singleCourse?.class || "N/A"}</td>
-                <td>{singleCourse?.subject}</td>
-                <td>{singleCourse?.hasExam ? "Yes" : "No"}</td>
-                <td>{singleCourse?.fee}</td>
-
-                <td>
-                  {new Date(singleCourse?.enrolledAt).toLocaleDateString()}
-                </td>
-                <td>
-                  {singleCourse?.duration
-                    ? Number.parseFloat(singleCourse?.duration).toFixed(2)
-                    : "N/A"}
-                </td>
-                <td className="flex items-center gap-1 text-xl">
-                  <Link>
-                    <button className="btn-md btn-link text-accentColor cursor-pointer">
-                      Start
-                    </button>
-                  </Link>
-                </td>
-              </tr>
+              <MyCoursesRow
+                key={singleCourse?._id}
+                singleCourse={singleCourse}
+                i={i}
+              ></MyCoursesRow>
             ))}
           </tbody>
         </table>

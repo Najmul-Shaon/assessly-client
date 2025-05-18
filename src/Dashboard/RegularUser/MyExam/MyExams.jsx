@@ -7,9 +7,6 @@ import MyExamRow from "./MyExamRow";
 
 const MyExams = () => {
   const { myExams, refetch } = useMyExams();
-
-  console.log(myExams);
-
   useEffect(() => {
     refetch();
   }, [refetch, myExams]);
