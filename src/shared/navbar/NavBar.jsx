@@ -26,18 +26,6 @@ const NavBar = () => {
     <>
       <li>
         <NavLink
-          to="/video"
-          className={({ isActive }) =>
-            ` hover:text-primaryColor text-base font-normal font-questrial ${
-              isActive ? "text-primaryColor" : "text-textColor"
-            }`
-          }
-        >
-         Face
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
           to="/"
           className={({ isActive }) =>
             ` hover:text-primaryColor text-base font-normal font-questrial ${

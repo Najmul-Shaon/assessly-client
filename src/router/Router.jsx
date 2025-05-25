@@ -115,10 +115,6 @@ export const router = createBrowserRouter([
         path: "payment/cancel/:trxId",
         element: <PaymentCancel />,
       },
-      {
-        path: "video",
-        element: <FaceTracker />,
-      },
     ],
   },
 
