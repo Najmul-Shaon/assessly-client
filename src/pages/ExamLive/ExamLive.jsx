@@ -13,7 +13,7 @@ const ExamLive = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  const [tryLeft, setTryLeft] = useState(33300);
+  const [tryLeft, setTryLeft] = useState(3);
 
   // tracks if the effect ran already
 
@@ -318,10 +318,12 @@ const ExamLive = () => {
                 <h2 className="text-lg font-semibold text-primaryColor">
                   ✅ Exam Started
                 </h2>
-                <p className="text-sm md:text-base text-gray-700">
-                  <strong>Violations Left:</strong>{" "}
-                  <span className="text-red-600 font-bold">{tryLeft}</span>
-                </p>
+                {singleExam?.faceCam && (
+                  <p className="text-sm md:text-base text-gray-700">
+                    <strong>Violations Left:</strong>{" "}
+                    <span className="text-red-600 font-bold">{tryLeft}</span>
+                  </p>
+                )}
                 <p className="font-mono text-xl text-accentColor">
                   ⏰ {formatTime(timeLeft)}
                 </p>
