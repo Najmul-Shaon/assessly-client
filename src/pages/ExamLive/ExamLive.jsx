@@ -23,6 +23,7 @@ const ExamLive = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [stream, setStream] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
   const [answers, setAnswers] = useState([]);
   const [examSubmitted, setExamSubmitted] = useState(false);
   const [savedQuestions, setSavedQuestions] = useState([]);
@@ -348,6 +349,7 @@ const ExamLive = () => {
   };
 
   const currentQuestion = savedQuestions?.[currentQuestionIndex];
+  console.log(currentQuestion);
 
   const handleAnswerChange = (option) => {
     setAnswers((prev) => {
@@ -448,14 +450,15 @@ const ExamLive = () => {
                   Question {currentQuestionIndex + 1} of {savedQuestions.length}
                 </p>
                 <p className="text-gray-800 font-semibold mb-4">
-                  {currentQuestionIndex + 1}. {currentQuestion.question}
+                  {currentQuestionIndex + 1}.{" "}
+                  {currentQuestion.question || currentQuestion.Question}
                 </p>
                 <div className="grid grid-cols-2 gap-4 text-gray-700">
                   {["a", "b", "c", "d"].map((option) => (
                     <div
                       key={option}
                       className={`p-4 border rounded-lg cursor-pointer hover:bg-primaryColor/10 transition ${
-                        answers[currentQuestionIndex] === option
+                        answers[currentQuestionIndex] === option.toLowerCase()
                           ? "bg-primaryColor/20 border-primaryColor"
                           : "border-gray-300"
                       }`}

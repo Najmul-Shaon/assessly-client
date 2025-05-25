@@ -15,8 +15,9 @@ const IndividualQuestionDetails = () => {
     },
   });
 
-  const allQuestions = examQuestions?.questions || [];
+  console.log(examQuestions);
 
+  const allQuestions = examQuestions?.questions || [];
 
   const { control, handleSubmit, register } = useForm({
     defaultValues: { allQuestions },
@@ -27,11 +28,11 @@ const IndividualQuestionDetails = () => {
   };
 
   return (
-    <div>
+    <div className="max-w-xl mx-auto p-6">
       <SectionTitle header={"Question Details"} />
       <div className="flex justify-evenly my-2">
         <p>
-          <span className="font-bold">Exam Id:</span>
+          <span className="font-bold">Id:</span>
           {examQuestions.examId}
         </p>
         <p>
@@ -43,7 +44,10 @@ const IndividualQuestionDetails = () => {
       </div>
       <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
         {allQuestions.map((q, index) => (
-          <div key={index} className="border p-4 rounded-lg shadow-md">
+          <div
+            key={index}
+            className="border border-gray-300 p-4 rounded-lg shadow-md"
+          >
             {/* Question Field */}
             <label className="block font-semibold mb-2">
               Question: {index + 1}
@@ -52,7 +56,7 @@ const IndividualQuestionDetails = () => {
               disabled
               {...register(`questions[${index}].question`)}
               defaultValue={q.question}
-              className="border p-2 w-full rounded mb-3"
+              className="border border-gray-300 p-2 w-full rounded mb-3"
             />
 
             {/* Options */}
@@ -63,7 +67,7 @@ const IndividualQuestionDetails = () => {
                   disabled
                   {...register(`questions[${index}].${option}`)}
                   defaultValue={q[option]}
-                  className="border p-2 w-full rounded mr-2"
+                  className="border border-gray-300 p-2 w-full rounded mr-2"
                 />
 
                 {/* Select Correct Answer Radio Button */}
@@ -99,7 +103,7 @@ const IndividualQuestionDetails = () => {
           <Link to="/dashboard/manage-questions">
             <button
               type="submit"
-              className="mt-4 p-2 hover:text-white hover:bg-primaryColor border rounded cursor-pointer"
+              className="mt-4 p-2 hover:text-white hover:bg-primaryColor border border-gray-300 rounded cursor-pointer"
             >
               Back
             </button>

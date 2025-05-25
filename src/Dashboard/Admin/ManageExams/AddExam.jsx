@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { IoMdArrowDown } from "react-icons/io";
-import * as XLSX from "xlsx";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
 import useAxiosSecure from "../../../Hooks/axiosSecure";
 import useAxiosPublic from "../../../Hooks/axiosPublic";
@@ -14,31 +12,59 @@ const image_hosting_key = import.meta.env.VITE_Img_Host_Key;
 const imgHostingApi = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddExam = () => {
-  {
-    /* <span className="loading loading-spinner text-success"></span>; */
-  }
-
   const { user, setLoading } = useAuth();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
   const navigation = useNavigate();
+
+  const [totalQuestionsCount, setTotalQuestionsCount] = useState();
+
   const {
     register,
+    control,
     handleSubmit,
-    formState: { errors },
     reset,
     watch,
-  } = useForm();
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      questions: [],
+    },
+  });
 
-  const [questions, setQuestions] = useState([]);
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "questions",
+  });
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const count = parseInt(totalQuestionsCount);
+      if (!isNaN(count) && count > 0) {
+        setValue("questions", []);
+        for (let i = 0; i < count; i++) {
+          append({
+            question: "",
+            a: "",
+            b: "",
+            c: "",
+            d: "",
+            ans: "a",
+          });
+        }
+      }
+    }
+  };
+
   const [isNegativeMark, setIsNegativeMark] = useState(false);
-
-  //   const [image, setImage] = useState(null);
 
   // Watch exam type to dynamically change the form fields
   const watchExamType = watch("examType", "single"); // default to "single"
 
   const onSubmit = async (data) => {
+    console.log(data);
     setLoading(true);
     const thumbnails = { image: data.thumbnails[0] };
     // image upload to imgbb and then get an url
@@ -67,7 +93,7 @@ const AddExam = () => {
         uniqueQuestions: data.uniqueQuestions,
         isNegativeMarks: data.isNegativeMarks,
         negativeMark: data.negativeMark || null,
-        questions,
+        questions: data?.questions,
       };
       axiosSecure.post("/create/exam", examInfo).then((res) => {
         if (res.data.insertedId) {
@@ -84,61 +110,6 @@ const AddExam = () => {
         }
       });
     }
-  };
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-
-        setQuestions(sheet);
-      };
-      reader.readAsArrayBuffer(file);
-    }
-  };
-
-  const downloadSampleExcel = () => {
-    const sampleData = [
-      {
-        sl: 1,
-        question: "What is 2 + 2?",
-        a: "3",
-        b: "4",
-        c: "5",
-        d: "6",
-        ans: "b",
-      },
-      {
-        sl: 2,
-        question: "What is the capital of France?",
-        a: "Berlin",
-        b: "Madrid",
-        c: "Paris",
-        d: "Rome",
-        ans: "c",
-      },
-      {
-        sl: 3,
-        question: "Which is the largest planet?",
-        a: "Earth",
-        b: "Mars",
-        c: "Jupiter",
-        d: "Saturn",
-        ans: "c",
-      },
-    ];
-
-    const ws = XLSX.utils.json_to_sheet(sampleData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sample Questions");
-
-    // Trigger download
-    XLSX.writeFile(wb, "Sample_Questions.xlsx");
   };
 
   const classTypes = [6, 7, 8, 9, 10, 11, 12];
@@ -246,7 +217,7 @@ const AddExam = () => {
               {...register("passMark", { required: "Pass Mark is required" })}
               className="w-full p-2 border rounded border-gray-300"
             />
-            <p className="text-red-500">{errors.fee?.message}</p>
+            <p className="text-red-500">{errors.passMark?.message}</p>
           </div>
         </div>
 
@@ -447,7 +418,6 @@ const AddExam = () => {
           <input
             type="file"
             accept="image/*"
-            // onChange={handleImageChange}
             className="w-full border rounded file-input border-gray-300"
             {...register("thumbnails", {
               required: "Thumbnails img is required",
@@ -455,69 +425,94 @@ const AddExam = () => {
           />
         </div>
 
-        {/* File Upload */}
+        {/* dynamic question input field  */}
+        {/* ***************************************************************  */}
         <div>
-          <label className="block font-semibold">
-            Upload Questions (Excel):
-          </label>
+          <label className="font-medium">Total Sections</label>
           <input
-            type="file"
-            accept=".xlsx, .xls"
-            onChange={handleFileUpload}
-            className="w-full border rounded file-input border-gray-300"
+            type="number"
+            value={totalQuestionsCount}
+            onChange={(e) => setTotalQuestionsCount(e.target.value)}
+            onKeyDown={handleKeyDown}
+            className="w-full border border-gray-300 p-2 rounded mt-1"
+            placeholder="Enter total and press Enter"
           />
         </div>
 
-        {/* Uploaded Questions Table */}
-        {questions.length > 0 && (
-          <div className="p-3 bg-gray-100 rounded">
-            <h3 className="font-bold">Uploaded Questions Preview:</h3>
-            <table className="min-w-full table-auto border-collapse">
-              <thead>
-                <tr>
-                  <th className="border p-2">SL</th>
-                  <th className="border p-2">Question</th>
-                  <th className="border p-2">Option A</th>
-                  <th className="border p-2">Option B</th>
-                  <th className="border p-2">Option C</th>
-                  <th className="border p-2">Option D</th>
-                  <th className="border p-2">Answer</th>
-                </tr>
-              </thead>
-              <tbody>
-                {questions.slice(0, 5).map((q, index) => (
-                  <tr key={index}>
-                    <td className="border p-2">{q.sl}</td>
-                    <td className="border p-2">{q.question}</td>
-                    <td className="border p-2">{q.a}</td>
-                    <td className="border p-2">{q.b}</td>
-                    <td className="border p-2">{q.c}</td>
-                    <td className="border p-2">{q.d}</td>
-                    <td className="border p-2">{q.ans}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        <div className="grid grid-cols-2 gap-4">
-          {/* Download Sample Excel Button */}
-          <button
-            type="button"
-            onClick={downloadSampleExcel}
-            className="w-full py-2 text-black border hover:bg-accentColor hover:border-white hover:text-white font-semibold rounded flex justify-center items-center cursor-pointer border-gray-500"
+        {/* Render MCQ Fields */}
+        {fields.map((q, index) => (
+          <div
+            key={q.id}
+            className="border border-gray-300 p-4 rounded-lg shadow-sm space-y-2"
           >
-            <span className="text-xl font-bold">
-              <IoMdArrowDown />
-            </span>
-            Sample Excel
-          </button>
+            <div className="flex justify-between items-center mb-2">
+              <label className="font-semibold">Question {index + 1}</label>
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="text-red-500 text-sm"
+              >
+                ✕ Remove
+              </button>
+            </div>
 
+            <input
+              {...register(`questions[${index}].question`)}
+              placeholder="Write question"
+              className="border border-gray-300 p-2 w-full rounded"
+            />
+
+            {["a", "b", "c", "d"].map((opt) => (
+              <div key={opt} className="flex items-center space-x-2">
+                <input
+                  {...register(`questions[${index}].${opt}`)}
+                  placeholder={`Option ${opt.toUpperCase()}`}
+                  className="border border-gray-300 p-2 w-full rounded"
+                />
+                <Controller
+                  name={`questions[${index}].ans`}
+                  control={control}
+                  defaultValue="a"
+                  render={({ field }) => (
+                    <input
+                      type="radio"
+                      {...field}
+                      value={opt}
+                      checked={field.value === opt}
+                    />
+                  )}
+                />
+                <label className="text-sm">Correct</label>
+              </div>
+            ))}
+          </div>
+        ))}
+
+        {/* Manually add one MCQ */}
+        <button
+          type="button"
+          onClick={() =>
+            append({
+              question: "",
+              a: "",
+              b: "",
+              c: "",
+              d: "",
+              ans: "a",
+            })
+          }
+          className="text-blue-600"
+        >
+          + Add Question
+        </button>
+
+        {/* ***************************************************************  */}
+
+        <div className="flex flex-col items-end">
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 bg-primaryColor text-white font-semibold rounded cursor-pointer"
+            className="py-2 px-4 bg-primaryColor text-white font-semibold rounded cursor-pointer"
           >
             Create Exam
           </button>
