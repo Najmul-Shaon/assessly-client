@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/axiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
-// import useIsExamSubmitted from "../../Hooks/useIsExamSubmitted";
+import FaceDirectionDetector from "./FaceDirectionDetector/FaceDirectionDetector";
 
 const ExamLive = () => {
   const { user } = useAuth();
@@ -13,16 +13,15 @@ const ExamLive = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  // const { isSubmitted } = useIsExamSubmitted(id);
+  const [tryLeft, setTryLeft] = useState(33300);
 
-  // const hasHandledSubmission = useRef(false);
   // tracks if the effect ran already
 
   const [started, setStarted] = useState(false);
   const [countdown, setCountdown] = useState(3);
   const [timeLeft, setTimeLeft] = useState(0);
-  const [stream, setStream] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+
   const [answers, setAnswers] = useState([]);
   const [examSubmitted, setExamSubmitted] = useState(false);
   const [savedQuestions, setSavedQuestions] = useState([]);
@@ -35,31 +34,6 @@ const ExamLive = () => {
       return res.data;
     },
   });
-
-  // useEffect(() => {
-  //   if (isSubmitted) {
-  //     Swal.fire({
-  //       title: "Already Submitted!",
-  //       text: "You already attended this exam.",
-  //       icon: "success",
-  //     });
-  //     navigate("/dashboard/my-exam");
-  //   }
-  // }, [navigate, isSubmitted]);
-
-  // useEffect(() => {
-  //   if (isSubmitted && !hasHandledSubmission.current) {
-  //     hasHandledSubmission.current = true; // prevent future triggers
-
-  //     Swal.fire({
-  //       title: "Already Submitted!",
-  //       text: "You already attended this exam.",
-  //       icon: "success",
-  //     });
-
-  //     navigate("/dashboard/my-exam");
-  //   }
-  // }, [isSubmitted, navigate]);
 
   const autoSubmitExam = useCallback(
     async (
@@ -138,37 +112,6 @@ const ExamLive = () => {
     return shuffled;
   };
 
-  // const prepareExam = async () => {
-  //   try {
-  //     const res = await axiosSecure.get(
-  //       `/get/saved-exam/${id}?email=${user.email}`
-  //     );
-  //     if (res.data?.questions?.length > 0) {
-  //       setSavedQuestions(res.data.questions);
-  //       return;
-  //     }
-
-  //     let questionsToSave = singleExam.questions;
-  //     if (singleExam.uniqueQuestions) {
-  //       questionsToSave = shuffleArray(questionsToSave);
-  //     }
-
-  //     const saveRes = await axiosSecure.post("/submit/exam", {
-  //       create_at: new Date(),
-  //       examId: id,
-  //       email: user.email,
-  //       questions: questionsToSave,
-  //       status: "pending",
-  //     });
-
-  //     if (saveRes.data.insertedId) {
-  //       setSavedQuestions(questionsToSave);
-  //     }
-  //   } catch (err) {
-  //     console.error("Error preparing exam:", err);
-  //   }
-  // };
-
   const prepareExam = useCallback(async () => {
     try {
       const res = await axiosSecure.get(
@@ -204,17 +147,6 @@ const ExamLive = () => {
     if (singleExam?.examTitle && !started) {
       prepareExam();
 
-      if (singleExam.faceCam) {
-        navigator.mediaDevices
-          .getUserMedia({ video: true })
-          .then((mediaStream) => {
-            setStream(mediaStream);
-            const videoElement = document.getElementById("face-cam-video");
-            if (videoElement) videoElement.srcObject = mediaStream;
-          })
-          .catch((err) => console.error("Camera access denied", err));
-      }
-
       const countdownInterval = setInterval(() => {
         setCountdown((prev) => {
           if (prev === 1) {
@@ -227,14 +159,6 @@ const ExamLive = () => {
       }, 1000);
     }
   }, [singleExam, started, prepareExam]);
-
-  // useEffect(() => {
-  //   let timer;
-  //   if (started && timeLeft > 0) {
-  //     timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-  //   }
-  //   return () => clearInterval(timer);
-  // }, [started, timeLeft]);
 
   useEffect(() => {
     let timer;
@@ -301,44 +225,6 @@ const ExamLive = () => {
       window.removeEventListener("unload", unloadHandler);
     };
   }, [answers, autoSubmitExam]);
-
-  // const autoSubmitExam = async (
-  //   title = "Auto Submitted",
-  //   message = "Exam was submitted automatically.",
-  //   silent = false
-  // ) => {
-  //   try {
-  //     setExamSubmitted(true);
-  //     const submitData = {
-  //       modified_at: new Date(),
-  //       answers,
-  //     };
-
-  //     await axiosSecure.patch(`/submit/exam?id=${id}&email=${user?.email}`, {
-  //       submitData,
-  //     });
-
-  //     if (!silent) {
-  //       await Swal.fire({
-  //         title,
-  //         text: message,
-  //         icon: "warning",
-  //         confirmButtonText: "OK",
-  //       });
-  //     }
-
-  //     navigate("/dashboard/my-exam");
-  //   } catch (err) {
-  //     console.error("Auto-submit failed", err);
-  //     if (!silent) {
-  //       Swal.fire(
-  //         "Submission Error",
-  //         "There was an error submitting your exam.",
-  //         "error"
-  //       );
-  //     }
-  //   }
-  // };
 
   const formatTime = (seconds) => {
     const h = String(Math.floor(seconds / 3600)).padStart(2, "0");
@@ -411,88 +297,111 @@ const ExamLive = () => {
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-slate-100 py-10 px-4 flex items-center justify-center">
-      <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-6 space-y-4">
-        <h1 className="text-3xl font-bold text-center text-textColor">
+    <div className="min-h-screen bg-gradient-to-br from-white to-slate-200 py-10 px-4 flex items-center justify-center">
+      <div className="w-full max-w-7xl mx-auto bg-white/80 backdrop-blur-md rounded-3xl p-6 md:p-10 space-y-6">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-center text-primaryColor drop-shadow-sm">
           {singleExam.examTitle}
         </h1>
+
+        {/* Countdown */}
         {!started && countdown > 0 ? (
-          <div className="text-center text-2xl font-semibold text-textLightPrimary">
-            {countdown === 3 && "Get Ready! Exam will start soon..."}
-            {countdown === 2 && "Stay Focused. Preparing your exam..."}
-            {countdown === 1 && "Starting Exam Now!"}
+          <div className="text-center text-2xl font-semibold text-textLightPrimary animate-pulse">
+            {countdown === 3 && "🎯 Get Ready! Exam will start soon..."}
+            {countdown === 2 && "💡 Stay Focused. Preparing your exam..."}
+            {countdown === 1 && "🚀 Starting Exam Now!"}
           </div>
         ) : started ? (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-base lg:text-xl font-semibold text-primaryColor">
-                Exam Started
-              </h2>
-              <span className="font-mono text-lg text-accentColor">
-                {formatTime(timeLeft)}
-              </span>
-            </div>
-            {singleExam?.faceCam && (
-              <div className="flex justify-end">
-                <video
-                  id="face-cam-video"
-                  autoPlay
-                  muted
-                  className="w-40 h-32 border rounded shadow"
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Panel: Info and Face Cam */}
+            <div className="lg:col-span-1 space-y-6">
+              <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm space-y-3">
+                <h2 className="text-lg font-semibold text-primaryColor">
+                  ✅ Exam Started
+                </h2>
+                <p className="text-sm md:text-base text-gray-700">
+                  <strong>Violations Left:</strong>{" "}
+                  <span className="text-red-600 font-bold">{tryLeft}</span>
+                </p>
+                <p className="font-mono text-xl text-accentColor">
+                  ⏰ {formatTime(timeLeft)}
+                </p>
               </div>
-            )}
-            {currentQuestion && (
-              <div className="p-4 border border-gray-300 rounded-xl bg-secondaryColor">
-                <p className="font-medium text-lg mb-2">
-                  Question {currentQuestionIndex + 1} of {savedQuestions.length}
-                </p>
-                <p className="text-gray-800 font-semibold mb-4">
-                  {currentQuestionIndex + 1}. {currentQuestion.question}
-                </p>
-                <div className="grid grid-cols-2 gap-4 text-gray-700">
-                  {["a", "b", "c", "d"].map((option) => (
-                    <div
-                      key={option}
-                      className={`p-4 border rounded-lg cursor-pointer hover:bg-primaryColor/10 transition ${
-                        answers[currentQuestionIndex] === option
-                          ? "bg-primaryColor/20 border-primaryColor"
-                          : "border-gray-300"
-                      }`}
-                      onClick={() => handleAnswerChange(option)}
-                    >
-                      <div className="flex items-center space-x-2">
-                        <span className="font-bold">{option}.</span>
-                        <span>{currentQuestion[option.toLowerCase()]}</span>
-                      </div>
-                    </div>
-                  ))}
+
+              {singleExam?.faceCam && (
+                <div className="w-full md:h-64 rounded-xl overflow-hidden hidden lg:block bg-white">
+                  <FaceDirectionDetector
+                    tryLeft={tryLeft}
+                    setTryLeft={setTryLeft}
+                    autoSubmitExam={autoSubmitExam}
+                  />
                 </div>
+              )}
+            </div>
+
+            {/* Right Panel: Quiz Area */}
+            <div className="lg:col-span-2 space-y-6">
+              {currentQuestion && (
+                <div className="p-6 border border-gray-200 rounded-2xl bg-white/60 backdrop-blur shadow-inner">
+                  <p className="font-medium text-lg mb-3">
+                    Question {currentQuestionIndex + 1} of{" "}
+                    {savedQuestions.length}
+                  </p>
+                  <p className="text-gray-900 font-semibold mb-5 text-xl">
+                    {currentQuestionIndex + 1}.{" "}
+                    {currentQuestion.question || currentQuestion.Question}
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {["a", "b", "c", "d"].map((option) => (
+                      <div
+                        key={option}
+                        onClick={() => handleAnswerChange(option)}
+                        className={`p-4 rounded-xl border transition cursor-pointer hover:scale-[1.01] hover:shadow-md ${
+                          answers[currentQuestionIndex] === option.toLowerCase()
+                            ? "bg-primaryColor/10 border-primaryColor"
+                            : "border-gray-300 bg-white"
+                        }`}
+                      >
+                        <div className="flex items-start space-x-2">
+                          <span className="font-bold">{option}.</span>
+                          <span>{currentQuestion[option.toLowerCase()]}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Navigation Buttons */}
+              <div className="flex flex-col sm:flex-row justify-between mt-4 space-y-4 sm:space-y-0 sm:space-x-4">
+                <button
+                  onClick={handleNextQuestion}
+                  disabled={!answers[currentQuestionIndex]}
+                  className={`btn btn-primary w-full sm:w-auto ${
+                    !answers[currentQuestionIndex]
+                      ? "btn-disabled opacity-50"
+                      : ""
+                  }`}
+                >
+                  Next
+                </button>
+                <button
+                  onClick={handleSubmitExam}
+                  disabled={!answers[currentQuestionIndex]}
+                  className={`btn btn-success w-full sm:w-auto flex items-center justify-center ${
+                    !answers[currentQuestionIndex]
+                      ? "btn-disabled opacity-50"
+                      : ""
+                  }`}
+                >
+                  Submit Exam <FaCheck className="ml-2" />
+                </button>
               </div>
-            )}
-            <div className="flex justify-between mt-6 space-x-4">
-              <button
-                onClick={handleNextQuestion}
-                disabled={!answers[currentQuestionIndex]}
-                className={`btn btn-primary ${
-                  !answers[currentQuestionIndex] ? "btn-disabled" : ""
-                }`}
-              >
-                Next
-              </button>
-              <button
-                onClick={handleSubmitExam}
-                disabled={!answers[currentQuestionIndex]}
-                className={`btn btn-success flex items-center ${
-                  !answers[currentQuestionIndex] ? "btn-disabled" : ""
-                }`}
-              >
-                Submit Exam <FaCheck className="ml-2" />
-              </button>
             </div>
           </div>
         ) : (
-          <div className="text-center">Preparing your exam...</div>
+          <div className="text-center text-xl text-gray-600">
+            Preparing your exam...
+          </div>
         )}
       </div>
     </div>

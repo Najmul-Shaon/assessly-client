@@ -80,7 +80,7 @@ const AddBlog = () => {
           <input
             type="file"
             {...register("thumbnails")}
-            className="w-full border border-black rounded file-input"
+            className="w-full border border-gray-300 rounded file-input"
             accept="image/*"
           />
         </div>
@@ -91,7 +91,7 @@ const AddBlog = () => {
           <input
             type="text"
             {...register("title", { required: true })}
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 p-2 rounded"
             placeholder="Enter blog title"
           />
         </div>
@@ -101,7 +101,7 @@ const AddBlog = () => {
           <label className="block font-medium">Summary</label>
           <textarea
             {...register("summary", { required: true })}
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 p-2 rounded"
             placeholder="Enter a short summary"
           ></textarea>
         </div>
@@ -113,7 +113,7 @@ const AddBlog = () => {
             <input
               type="number"
               {...register("readingTime", { required: true })}
-              className="w-full border p-2 rounded"
+              className="w-full border border-gray-300 p-2 rounded"
               min="1"
               placeholder="e.g. 10"
             />
@@ -123,7 +123,7 @@ const AddBlog = () => {
             <input
               type="text"
               {...register("topic", { required: true })}
-              className="w-full border p-2 rounded"
+              className="w-full border border-gray-300 p-2 rounded"
               min="1"
               placeholder="e.g. Physics"
             />
@@ -134,7 +134,7 @@ const AddBlog = () => {
               defaultValue={new Date().toISOString().split("T")[0]}
               disabled
               type="date"
-              className="w-full border p-2 rounded cursor-not-allowed"
+              className="w-full border border-gray-300 p-2 rounded cursor-not-allowed"
             />
           </div>
           <div>
@@ -143,7 +143,7 @@ const AddBlog = () => {
               defaultValue={user?.displayName}
               type="text"
               disabled
-              className="w-full border p-2 rounded cursor-not-allowed"
+              className="w-full border border-gray-300 p-2 rounded cursor-not-allowed"
             />
           </div>
         </div>
@@ -152,19 +152,22 @@ const AddBlog = () => {
         <div>
           <label className="block font-medium">Content Sections</label>
           {fields.map((item, index) => (
-            <div key={item.id} className="mb-4 p-3 border rounded">
+            <div
+              key={item.id}
+              className="mb-4 p-3 border border-gray-300 rounded"
+            >
               <input
                 type="text"
                 {...register(`content[${index}].title`)}
                 defaultValue={item.title}
                 placeholder="Section title"
-                className="w-full border p-2 rounded mb-2"
+                className="w-full border border-gray-300 p-2 rounded mb-2"
               />
               <textarea
                 {...register(`content[${index}].text`)}
                 defaultValue={item.text}
                 placeholder="Section content"
-                className="w-full border p-2 rounded mb-2"
+                className="w-full border border-gray-300 p-2 rounded mb-2"
               ></textarea>
               {index > 0 && (
                 <button
@@ -191,7 +194,7 @@ const AddBlog = () => {
           <label className="block font-medium">Quote</label>
           <textarea
             {...register("quote")}
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 p-2 rounded"
             placeholder="Enter a quote"
           ></textarea>
         </div>
@@ -202,7 +205,7 @@ const AddBlog = () => {
           <input
             type="text"
             {...register("quoteAuthor")}
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 p-2 rounded"
             placeholder="Enter quote author"
           />
         </div>
@@ -213,7 +216,7 @@ const AddBlog = () => {
           <input
             type="text"
             {...register("tags")}
-            className="w-full border p-2 rounded"
+            className="w-full border border-gray-300 p-2 rounded"
             placeholder="e.g. Education, LifelongLearning"
           />
         </div>

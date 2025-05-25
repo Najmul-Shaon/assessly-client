@@ -39,6 +39,7 @@ import MyProfile from "../Dashboard/RegularUser/MyProfile/MyProfile";
 import MyCertificate from "../Dashboard/RegularUser/MyCertificate/MyCertificate";
 import ExamLayout from "../layouts/ExamLayout";
 import CourseVideoPage from "../Dashboard/RegularUser/MyCourses/CourseVideoPage";
+import FaceTracker from "../pages/ExamLive/FaceDirectionDetector/FaceDirectionDetector";
 
 export const router = createBrowserRouter([
   {
@@ -113,6 +114,10 @@ export const router = createBrowserRouter([
       {
         path: "payment/cancel/:trxId",
         element: <PaymentCancel />,
+      },
+      {
+        path: "video",
+        element: <FaceTracker />,
       },
     ],
   },
