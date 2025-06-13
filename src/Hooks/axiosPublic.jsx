@@ -5,7 +5,8 @@ const axiosPublic = axios.create({
   // baseURL: "http://localhost:5000",
   // live api
   // baseURL: "https://assessly-server.vercel.app",
-  baseURL: "https://assessly-server-production.up.railway.app",
+  // baseURL: "https://assessly-server-production.up.railway.app",
+  baseURL: "https://assessly-server.onrender.com",
 });
 
 const useAxiosPublic = () => {
