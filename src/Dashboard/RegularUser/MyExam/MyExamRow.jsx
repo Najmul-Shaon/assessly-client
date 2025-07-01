@@ -60,23 +60,23 @@ const MyExamRow = ({ exam, index }) => {
           <tbody>
             <tr>
               <td style="border:1px solid #ddd;padding:8px">${
-                result.totalMarks
+                result?.totalMarks
               }</td>
               <td style="border:1px solid #ddd;padding:8px">${
-                result.totalAnswered
+                result?.totalAnswered
               }</td>
               <td style="border:1px solid #ddd;padding:8px">${obtainMarks}</td>
               <td style="border:1px solid #ddd;padding:8px">${
-                result.totalRight
+                result?.totalRight
               }</td>
               <td style="border:1px solid #ddd;padding:8px">${
-                result.totalWrong
+                result?.totalWrong
               }</td>
               <td style="border:1px solid #ddd;padding:8px">${
-                result.totalSkip
+                result?.totalSkip
               }</td>
               <td style="border:1px solid #ddd;padding:8px">${
-                result.isPass ? "Passed" : "Failed"
+                result?.status || "Wait"
               }</td>
             </tr>
           </tbody>

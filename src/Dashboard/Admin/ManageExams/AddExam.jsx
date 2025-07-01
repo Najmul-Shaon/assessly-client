@@ -428,7 +428,7 @@ const AddExam = () => {
         {/* dynamic question input field  */}
         {/* ***************************************************************  */}
         <div>
-          <label className="font-medium">Total Sections</label>
+          <label className="font-medium">Total Questions</label>
           <input
             type="number"
             value={totalQuestionsCount}

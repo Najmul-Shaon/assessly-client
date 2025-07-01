@@ -28,7 +28,7 @@ const NavBar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-base font-normal font-questrial ${
+            ` hover:text-primaryColor text-lg font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -41,7 +41,7 @@ const NavBar = () => {
         <NavLink
           to="/exams"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-base font-normal font-questrial ${
+            ` hover:text-primaryColor text-lg font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -53,7 +53,7 @@ const NavBar = () => {
         <NavLink
           to="/courses"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-base font-normal font-questrial ${
+            ` hover:text-primaryColor text-lg font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -66,7 +66,7 @@ const NavBar = () => {
         <NavLink
           to="/blogs"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-base font-normal font-questrial ${
+            ` hover:text-primaryColor text-lg font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -78,7 +78,7 @@ const NavBar = () => {
         <NavLink
           to="/features"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-base font-normal font-questrial ${
+            ` hover:text-primaryColor text-lg font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
@@ -90,7 +90,7 @@ const NavBar = () => {
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            ` hover:text-primaryColor text-base font-normal font-questrial ${
+            ` hover:text-primaryColor text-lg font-normal font-questrial ${
               isActive ? "text-primaryColor" : "text-textColor"
             }`
           }
