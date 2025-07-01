@@ -3,12 +3,13 @@ import useAxiosSecure from "../../../Hooks/axiosSecure";
 import { useEffect } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import SectionTitle from "../../../components/sectionTiltle/SectionTitle";
-import { Link } from "react-router-dom";
 import { CiSaveDown1 } from "react-icons/ci";
 
 const MyCertificate = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+
+  // Fetch user certificates
   const { data: MyCertificates = [], refetch } = useQuery({
     queryKey: ["MyCertificates", user?.email],
     queryFn: async () => {
@@ -21,51 +22,78 @@ const MyCertificate = () => {
     refetch();
   }, [refetch]);
 
+  // Download certificate PDF for a specific row
+  const downloadPDF = async ({ name, course, date }) => {
+    try {
+      const res = await axiosSecure.post(
+        "/api/generate-certificate",
+        { name, course, date },
+        { responseType: "blob" }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `certificate-${name}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Failed to download certificate:", error);
+    }
+  };
+
   return (
     <div>
       <SectionTitle header={"My Certificates"} />
 
       <div className="overflow-x-auto">
         <table className="table table-zebra">
-          {/* head */}
           <thead>
             <tr>
               <th>Sl</th>
-              <th>Name</th>
-              <th>Course Type</th>
-              <th>Complete At</th>
+              <th>Exam Title</th>
+              <th>Completed At</th>
               <th>Marks</th>
-              <th>Class</th>
-              <th>Subject</th>
               <th>Download</th>
             </tr>
           </thead>
           <tbody>
             {MyCertificates.map((singleCertificate, i) => (
               <tr key={singleCertificate?._id}>
-                <th>{i + 1}</th>
-                <td>{singleCertificate?.examId}</td>
-                <td>{singleCertificate?.trxId}</td>
-                <td>{singleCertificate?.examTitle}</td>
-                <td>{singleCertificate?.examType}</td>
-                <td>{new Date(singleCertificate?.paymentAt).toLocaleDateString()}</td>
+                <td>{i + 1}</td>
+                <td>{singleCertificate?.examTitle || "Unknown"}</td>
+                <td>
+                  {new Date(singleCertificate?.create_at).toLocaleDateString()}
+                </td>
+                <td>{singleCertificate?.obtainMarks}</td>
                 <td className="flex items-center gap-1 text-xl">
-                  <Link>
-                    <button className="btn-md btn-link text-accentColor cursor-pointer">
-                      <span className="text-2xl text-black hover:text-accentColor">
-                        <CiSaveDown1 />
-                      </span>
-                    </button>
-                  </Link>
+                  <button
+                    onClick={() =>
+                      downloadPDF({
+                        name: user?.displayName || "Student Name",
+                        // name: "Najmul Hasan Shaon",
+                        course: singleCertificate?.examTitle || "This is the test course name",
+                        date: new Date(
+                          singleCertificate?.create_at
+                        ).toLocaleDateString(),
+                      })
+                    }
+                    className="btn-md btn-link text-accentColor cursor-pointer"
+                    title="Download Certificate"
+                  >
+                    <span className="text-2xl text-black hover:text-accentColor">
+                      <CiSaveDown1 />
+                    </span>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {MyCertificates.length <= 0 && (
-          <>
-            <h3 className="text-center my-4">There are no Certificates.</h3>
-          </>
+
+        {MyCertificates.length === 0 && (
+          <h3 className="text-center my-4">There are no certificates.</h3>
         )}
       </div>
     </div>

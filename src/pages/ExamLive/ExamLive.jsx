@@ -129,7 +129,8 @@ const ExamLive = () => {
 
       const saveRes = await axiosSecure.post("/submit/exam", {
         create_at: new Date(),
-        examId: id,
+        // examId: id,
+        examId: Number(id),
         email: user.email,
         questions: questionsToSave,
         status: "pending",

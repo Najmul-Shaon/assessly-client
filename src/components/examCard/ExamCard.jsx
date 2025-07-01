@@ -1,49 +1,103 @@
+// import { FaArrowRight } from "react-icons/fa";
+// import { FaBangladeshiTakaSign } from "react-icons/fa6";
+// import { Link } from "react-router-dom";
+
+// const ExamCard = ({ exam }) => {
+//   return (
+//     <div className="bg-primaryColor/10 rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primaryColor/40 flex flex-col">
+//       <Link to={`/exam/details/1`}>
+//         <img
+//           className="w-full h-48 object-cover"
+//           src={exam?.thumbnails}
+//           alt="Course"
+//         />
+//       </Link>
+//       <div className="p-4 flex flex-col flex-1">
+//         <div className="flex gap-2 mb-2">
+//           <span className="bg-red-100 text-red-700 text-xs font-medium px-3 py-1 rounded-md">
+//             {exam?.examTopic}
+//           </span>
+//         </div>
+//         <div className="flex-1">
+//           <h3 className="text-lg font-semibold text-gray-800">
+//             {exam?.examTitle}
+//           </h3>
+//         </div>
+
+//         <div className="flex justify-between items-center">
+//           <div>
+//             {/* done: make exam id dynamic  */}
+//             <Link to={`/exam/details/${exam?.examId}`}>
+//               <button className="btn primary-btn my-4">
+//                 <span>View Details</span>
+//                 <FaArrowRight />
+//               </button>
+//             </Link>
+//           </div>
+//           <div className="text-xl font-bold text-accentColor flex items-center">
+//             <span>
+//               <FaBangladeshiTakaSign></FaBangladeshiTakaSign>
+//             </span>
+//             {exam?.fee}
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ExamCard;
+
 import { FaArrowRight } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-const ExamCard = ({ exam }) => {
+const PremiumExamCard = ({ exam }) => {
   return (
-    <div className="bg-primaryColor/10 rounded-xl overflow-hidden border border-gray-200 hover:scale-101 shadow-lg hover:shadow-lg hover:shadow-primaryColor/40 flex flex-col">
-      <Link to={`/exam/details/1`}>
+    <div className="group bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col">
+      <div className="relative">
         <img
-          className="w-full h-48 object-cover"
+          className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
           src={exam?.thumbnails}
-          alt="Course"
+          alt={exam?.examTitle}
         />
-      </Link>
-      <div className="p-4 flex flex-col flex-1">
-        <div className="flex gap-2 mb-2">
-          <span className="bg-red-100 text-red-700 text-xs font-medium px-3 py-1 rounded-md">
-            {exam?.examTopic}
+
+        {/* Topic badge top-left */}
+        {exam?.examTopic && (
+          <span className="absolute top-4 left-4 bg-gradient-to-r from-primaryColor to-accentColor text-white text-xs font-semibold px-3 py-1 rounded-full shadow">
+            {exam.examTopic}
           </span>
-        </div>
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold text-gray-800">
-            {exam?.examTitle}
-          </h3>
+        )}
+
+        {/* Price badge top-right */}
+        <div className="absolute top-4 right-4 bg-primaryColor text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+          <FaBangladeshiTakaSign className="inline" />
+          <span>{exam?.fee}</span>
         </div>
 
-        <div className="flex justify-between items-center">
-          <div>
-            {/* done: make exam id dynamic  */}
-            <Link to={`/exam/details/${exam?.examId}`}>
-              <button className="btn primary-btn my-4">
-                <span>View Details</span>
-                <FaArrowRight />
-              </button>
-            </Link>
-          </div>
-          <div className="text-xl font-bold text-accentColor flex items-center">
-            <span>
-              <FaBangladeshiTakaSign></FaBangladeshiTakaSign>
+        {/* Hover overlay with View Details button */}
+        <Link to={`/exam/details/${exam?.examId}`}>
+          <button className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer">
+            <span className="btn primary-btn inline-flex items-center gap-2 bg-primaryColor hover:bg-primaryColor/90 text-white font-semibold px-4 py-2 rounded-full shadow hover:shadow-md">
+              View Details <FaArrowRight />
             </span>
-            {exam?.fee}
-          </div>
-        </div>
+          </button>
+        </Link>
+      </div>
+
+      {/* Content */}
+      <div className="p-5 flex flex-col flex-1">
+        <h3 className="text-xl font-bold text-gray-800 mb-2">
+          {exam?.examTitle}
+        </h3>
+        {exam?.description && (
+          <p className="text-gray-600 text-sm flex-1">
+            {exam?.description.slice(0, 100)}...
+          </p>
+        )}
       </div>
     </div>
   );
 };
 
-export default ExamCard;
+export default PremiumExamCard;
