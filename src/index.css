@@ -91,6 +91,18 @@
   border: none;
 }
 
+@layer utilities {
+  .drawer-slide {
+    transition: transform 0.3s ease-in-out;
+  }
+  .drawer-slide {
+    transform: translateX(-100%);
+  }
+  input:checked ~ .drawer-slide {
+    transform: translateX(0);
+  }
+}
+
 /* overall colors  */
 
 /*
