@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BlogCard from "../../components/blogCard/BlogCard";
 import SectionTitle from "../../components/sectionTiltle/SectionTitle";
 import FilterArea from "../../components/FilterArea/FilterArea";
@@ -13,13 +13,127 @@ const Blogs = () => {
   const [isFilterView, setIsFilterView] = useState(false);
   const axiosPublic = useAxiosPublic();
 
-  const { data: allBlogs = [], isLoading: allBlogsLoading } = useQuery({
+  // ********************************************
+
+  const [itemsPerPage, setItemsPerPage] = useState(12);
+  const [currentPage, setCurrentPage] = useState(0);
+  // const [selectedSortValue, setSelectedSortValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+
+  // search handler
+  const handleSearch = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  // filters default value
+  const [filters, setFilters] = useState({
+    class: {
+      class6: false,
+      class7: false,
+      class8: false,
+      class9: false,
+      class10: false,
+      class11: false,
+      class12: false,
+    },
+    subject: {
+      Ict: false,
+      Bangla: false,
+      English: false,
+      Math: false,
+      Biology: false,
+      Physics: false,
+      Chemistry: false,
+      Accounting: false,
+      Economics: false,
+    },
+  });
+
+  console.log(filters);
+
+  const transformToQuery = (filters) => {
+    const params = new URLSearchParams();
+
+    // add search value/keyword to the params
+    if (searchValue) {
+      params.append("search", searchValue);
+    }
+
+    // Add class filters to the params
+    const selectedClasses = Object.keys(filters.class)
+      .filter((key) => filters.class[key])
+      .join(",");
+    if (selectedClasses) {
+      params.append("class", selectedClasses);
+    }
+
+    // Add subject filters to the params
+    const selectedSubjects = Object.keys(filters.subject)
+      .filter((key) => filters.subject[key])
+      .join(",");
+    if (selectedSubjects) {
+      params.append("subject", selectedSubjects);
+    }
+
+    // Add current page to the params
+    if (currentPage !== undefined) {
+      params.append("currentPage", currentPage.toString());
+    }
+
+    // Add items per page to the params
+    if (itemsPerPage !== undefined) {
+      params.append("itemsPerPage", itemsPerPage.toString());
+    }
+
+    return params.toString();
+  };
+
+  // transform filters into query string
+  const queryString = transformToQuery(filters);
+
+  console.log(queryString);
+
+  const blogCount = 100;
+
+  // calculate number of page and page sequence
+  const numberOfPage = Math.ceil(blogCount?.count / itemsPerPage);
+  const pagesSequence = !isNaN(numberOfPage)
+    ? [...Array(numberOfPage).keys()]
+    : [];
+
+  const handlePrev = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const handleNext = () => {
+    if (currentPage + 1 < pagesSequence.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // ********************************************
+
+  const {
+    data: allBlogs = [],
+    isLoading: allBlogsLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["allBlogs"],
     queryFn: async () => {
       const res = await axiosPublic.get("/get/blogs?limit=all");
       return res.data;
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [queryString, refetch]);
+
+  const handleItemsPerPage = (e) => {
+    setItemsPerPage(parseInt(e.target.value));
+    setCurrentPage(0);
+  };
 
   return (
     <div className="mt-20 scroll-smooth">
@@ -33,7 +147,7 @@ const Blogs = () => {
       {/* filter section  */}
       {isFilterView && (
         <div className="flex absolute z-40 lg:hidden">
-          <FilterArea></FilterArea>
+          <FilterArea filters={filters} setFilters={setFilters} />
           <span
             onClick={() => setIsFilterView(false)}
             className="right-4 absolute top-4 text-2xl text-accentColor cursor-pointer"
@@ -64,6 +178,8 @@ const Blogs = () => {
           {/* search area  */}
           <div className="join">
             <input
+              type="search"
+              onChange={handleSearch}
               className="input input-bordered join-item"
               placeholder="Search"
             />
@@ -76,7 +192,7 @@ const Blogs = () => {
         {/* blogs card area  */}
         <div className="grid grid-cols-12 gap-6 mt-8">
           <div className="lg:col-span-3 hidden lg:inline">
-            <FilterArea></FilterArea>
+            <FilterArea filters={filters} setFilters={setFilters} />
           </div>
           {allBlogsLoading && (
             <div className="col-span-9">
