@@ -7,7 +7,11 @@ const FilterArea = ({ setFilters, filters }) => {
     setFilters((prev) => {
       // Determine which group the filter belongs to: class or subject
       const group =
-        name in prev.class ? "class" : name in prev.subject ? "subject" : null;
+        name in prev.classs
+          ? "classs"
+          : name in prev.subject
+          ? "subject"
+          : null;
 
       if (!group) return prev; // safety check
 
@@ -32,70 +36,70 @@ const FilterArea = ({ setFilters, filters }) => {
       <div>
         <div>
           <input
-            checked={filters.class.class6}
+            checked={filters.classs.class6}
             onChange={handleFilterChange}
             type="checkbox"
-            name="class6"
+            name="6"
             id="class6"
           />
           <label htmlFor="class6"> Class 6</label>
         </div>
         <div>
           <input
-            checked={filters.class.class7}
+            checked={filters.classs.class7}
             onChange={handleFilterChange}
             type="checkbox"
-            name="class7"
+            name="7"
             id="class7"
           />
           <label htmlFor="class7"> Class 7</label>
         </div>
         <div>
           <input
-            checked={filters.class.class8}
+            checked={filters.classs.class8}
             onChange={handleFilterChange}
             type="checkbox"
-            name="class8"
+            name="8"
             id="class8"
           />
           <label htmlFor="class8"> Class 8</label>
         </div>
         <div>
           <input
-            checked={filters.class.class9}
+            checked={filters.classs.class9}
             onChange={handleFilterChange}
             type="checkbox"
-            name="class9"
+            name="9"
             id="class9"
           />
           <label htmlFor="class9"> Class 9</label>
         </div>
         <div>
           <input
-            checked={filters.class.class10}
+            checked={filters.classs.class10}
             onChange={handleFilterChange}
             type="checkbox"
-            name="class10"
+            name="10"
             id="class10"
           />
           <label htmlFor="class10"> Class 10</label>
         </div>
         <div>
           <input
-            checked={filters.class.class11}
+            checked={filters.classs.class11}
             onChange={handleFilterChange}
             type="checkbox"
-            name="class11"
+            name="11"
             id="class11"
           />
           <label htmlFor="class11"> Class 11</label>
         </div>
         <div>
           <input
-            checked={filters.class.class12}
+            checked={filters.classs.class12}
             onChange={handleFilterChange}
             type="checkbox"
-            name="class12"
+            name="12"
             id="class12"
           />
           <label htmlFor="class12"> Class 12</label>

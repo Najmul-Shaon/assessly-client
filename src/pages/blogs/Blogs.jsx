@@ -27,7 +27,7 @@ const Blogs = () => {
 
   // filters default value
   const [filters, setFilters] = useState({
-    class: {
+    classs: {
       class6: false,
       class7: false,
       class8: false,
@@ -60,11 +60,11 @@ const Blogs = () => {
     }
 
     // Add class filters to the params
-    const selectedClasses = Object.keys(filters.class)
-      .filter((key) => filters.class[key])
+    const selectedClasses = Object.keys(filters.classs)
+      .filter((key) => filters.classs[key])
       .join(",");
     if (selectedClasses) {
-      params.append("class", selectedClasses);
+      params.append("classs", selectedClasses);
     }
 
     // Add subject filters to the params
