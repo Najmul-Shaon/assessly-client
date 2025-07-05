@@ -31,14 +31,15 @@ const Exams = () => {
 
   // filters default value
   const [filters, setFilters] = useState({
-    class: {
-      class6: false,
-      class7: false,
-      class8: false,
-      class9: false,
-      class10: false,
-      class11: false,
-      class12: false,
+    type: "single",
+    classs: {
+      6: false,
+      7: false,
+      8: false,
+      9: false,
+      10: false,
+      11: false,
+      12: false,
     },
     subject: {
       Ict: false,
@@ -58,17 +59,22 @@ const Exams = () => {
   const transformToQuery = (filters) => {
     const params = new URLSearchParams();
 
+    // Add type to the params
+    if (filters.type) {
+      params.append("type", filters.type);
+    }
+
     // Add sort by to the params
     if (selectedSortValue) {
       params.append("sortBy", selectedSortValue);
     }
 
     // Add class filters to the params
-    const selectedClasses = Object.keys(filters.class)
-      .filter((key) => filters.class[key])
+    const selectedClasses = Object.keys(filters.classs)
+      .filter((key) => filters.classs[key])
       .join(",");
     if (selectedClasses) {
-      params.append("class", selectedClasses);
+      params.append("classs", selectedClasses);
     }
 
     // Add subject filters to the params
@@ -99,18 +105,18 @@ const Exams = () => {
   // const queryString = transformToQuery(filters);
 
   // get total books count based on queries::: this will be need to calc pagination
-  // const { data: booksCount = {}, refetch } = useQuery({
-  //   queryKey: ["booksCount", queryString],
-  //   queryFn: async () => {
-  //     const res = await axiosPublic.get(
-  //       // `/api/books-count?${queryString}&count=1`
-  //       `/api/books?${queryString}&count=1`
-  //     );
-  //     return res.data;
-  //   },
-  // });
+  const { data: examCount = {}, refetch: refetchExamCount } = useQuery({
+    queryKey: ["examCount", queryString],
+    queryFn: async () => {
+      const res = await axiosPublic.get(
+        `/get/all-exams?${queryString}&count=1`
+      );
+      return res.data;
+    },
+  });
 
-  const examCount = 100;
+  console.log(examCount?.count);
+  // const examCount = 100;
 
   // calculate number of page and page sequence
   const numberOfPage = Math.ceil(examCount?.count / itemsPerPage);
@@ -146,18 +152,20 @@ const Exams = () => {
   const {
     data: allExams = [],
     isLoading: allExamsLoading,
-    refetch,
+    refetch: refetchAllExam,
   } = useQuery({
     queryKey: ["allExams"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/get/all-exams?type=single");
+      // const res = await axiosPublic.get("/get/all-exams?type=single");
+      const res = await axiosPublic.get(`/get/all-exams?${queryString}`);
       return res.data;
     },
   });
 
   useEffect(() => {
-    refetch();
-  }, [queryString, refetch]);
+    refetchExamCount();
+    refetchAllExam();
+  }, [queryString, refetchAllExam, refetchExamCount]);
 
   const handleItemsPerPage = (e) => {
     setItemsPerPage(parseInt(e.target.value));
@@ -242,12 +250,10 @@ const Exams = () => {
                 className="rounded-lg px-2 py-1 bg-white"
               >
                 <option value="Default">Default</option>
-                <option value="Class (Small → Large)">
-                  Class (Small → Large)
-                </option>
-                <option value="Class (Large → Small)">
-                  Class (Large → Small)
-                </option>
+                <option value="pl2h">Price (Low → High)</option>
+                <option value="ph2l">Price (High → Low)</option>
+                <option value="cs2l">Class (Small → Large)</option>
+                <option value="cl2s">Class (Large → Small)</option>
               </select>
             </div>
           </div>

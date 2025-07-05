@@ -25,7 +25,7 @@ const Exams = () => {
 
   // filters default value
   const [filters, setFilters] = useState({
-    class: {
+    classs: {
       class6: false,
       class7: false,
       class8: false,
@@ -131,6 +131,8 @@ const Exams = () => {
     setItemsPerPage(parseInt(e.target.value));
     setCurrentPage(0);
   };
+
+  console.log(queryString);
 
   return (
     <div>
