@@ -8,16 +8,13 @@ import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../shared/spinner/Spinner";
 import { Helmet } from "react-helmet-async";
+import Pagination from "../../components/pagination";
 
 const Blogs = () => {
   const [isFilterView, setIsFilterView] = useState(false);
   const axiosPublic = useAxiosPublic();
-
-  // ********************************************
-
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(0);
-  // const [selectedSortValue, setSelectedSortValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
   // search handler
@@ -28,13 +25,13 @@ const Blogs = () => {
   // filters default value
   const [filters, setFilters] = useState({
     classs: {
-      class6: false,
-      class7: false,
-      class8: false,
-      class9: false,
-      class10: false,
-      class11: false,
-      class12: false,
+      6: false,
+      7: false,
+      8: false,
+      9: false,
+      10: false,
+      11: false,
+      12: false,
     },
     subject: {
       Ict: false,
@@ -93,7 +90,14 @@ const Blogs = () => {
 
   console.log(queryString);
 
-  const blogCount = 100;
+  // get total blogs count based on queries::: this will be need to calc pagination
+  const { data: blogCount = {}, refetch: refetchBlogCount } = useQuery({
+    queryKey: ["blogCount", queryString],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/get/blogs?${queryString}&count=1`);
+      return res.data;
+    },
+  });
 
   // calculate number of page and page sequence
   const numberOfPage = Math.ceil(blogCount?.count / itemsPerPage);
@@ -112,8 +116,6 @@ const Blogs = () => {
     }
   };
 
-  // ********************************************
-
   const {
     data: allBlogs = [],
     isLoading: allBlogsLoading,
@@ -121,14 +123,15 @@ const Blogs = () => {
   } = useQuery({
     queryKey: ["allBlogs"],
     queryFn: async () => {
-      const res = await axiosPublic.get("/get/blogs?limit=all");
+      const res = await axiosPublic.get(`/get/blogs?${queryString}`);
       return res.data;
     },
   });
 
   useEffect(() => {
     refetch();
-  }, [queryString, refetch]);
+    refetchBlogCount();
+  }, [queryString, refetch, refetchBlogCount]);
 
   const handleItemsPerPage = (e) => {
     setItemsPerPage(parseInt(e.target.value));
@@ -175,6 +178,7 @@ const Blogs = () => {
               <FaFilter className="inline-flex"></FaFilter> Filter
             </span>
           </div>
+          
           {/* search area  */}
           <div className="join">
             <input
@@ -187,6 +191,8 @@ const Blogs = () => {
               Search
             </button>
           </div>
+
+        
         </div>
 
         {/* blogs card area  */}
@@ -207,14 +213,13 @@ const Blogs = () => {
           </div>
         </div>
         {/* pagination  */}
-        <div className="flex items-center justify-center mt-12">
-          <div className="join">
-            <button className="join-item btn btn-sm btn-active">1</button>
-            <button className="join-item btn btn-sm">2</button>
-            <button className="join-item btn btn-sm">3</button>
-            <button className="join-item btn btn-sm">4</button>
-          </div>
-        </div>
+        <Pagination
+          pagesSequence={pagesSequence}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          handlePrev={handlePrev}
+          handleNext={handleNext}
+        />
       </div>
     </div>
   );
