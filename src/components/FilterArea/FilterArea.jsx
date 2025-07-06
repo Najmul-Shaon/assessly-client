@@ -198,6 +198,16 @@ const FilterArea = ({ setFilters, filters }) => {
           />
           <label htmlFor="Economics"> Economics</label>
         </div>
+        <div>
+          <input
+            checked={filters.subject.History}
+            onChange={handleFilterChange}
+            type="checkbox"
+            name="History"
+            id="History"
+          />
+          <label htmlFor="History"> History</label>
+        </div>
       </div>
     </div>
   );

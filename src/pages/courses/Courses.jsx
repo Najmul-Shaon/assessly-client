@@ -8,12 +8,11 @@ import { useQuery } from "@tanstack/react-query";
 import CourseCard from "../../components/courseCard/CourseCard";
 import Spinner from "../../shared/spinner/Spinner";
 import { Helmet } from "react-helmet-async";
+import Pagination from "../../components/pagination";
 
 const Exams = () => {
   const axiosPublic = useAxiosPublic();
   const [isFilterView, setIsFilterView] = useState(false);
-
-  // ********************************************
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedSortValue, setSelectedSortValue] = useState("");
@@ -25,14 +24,15 @@ const Exams = () => {
 
   // filters default value
   const [filters, setFilters] = useState({
+    type: "all",
     classs: {
-      class6: false,
-      class7: false,
-      class8: false,
-      class9: false,
-      class10: false,
-      class11: false,
-      class12: false,
+      6: false,
+      7: false,
+      8: false,
+      9: false,
+      10: false,
+      11: false,
+      12: false,
     },
     subject: {
       Ict: false,
@@ -58,11 +58,11 @@ const Exams = () => {
     }
 
     // Add class filters to the params
-    const selectedClasses = Object.keys(filters.class)
-      .filter((key) => filters.class[key])
+    const selectedClasses = Object.keys(filters.classs)
+      .filter((key) => filters.classs[key])
       .join(",");
     if (selectedClasses) {
-      params.append("class", selectedClasses);
+      params.append("classs", selectedClasses);
     }
 
     // Add subject filters to the params
@@ -89,7 +89,16 @@ const Exams = () => {
   // transform filters into query string
   const queryString = transformToQuery(filters);
 
-  const courseCount = 100;
+  // get total course count based on queries::: this will be need to calc pagination
+  const { data: courseCount = {}, refetch: refetchCourseCount } = useQuery({
+    queryKey: ["courseCount", queryString],
+    queryFn: async () => {
+      const res = await axiosPublic.get(
+        `/get-all-courses?${queryString}&count=1`
+      );
+      return res.data;
+    },
+  });
 
   // calculate number of page and page sequence
   const numberOfPage = Math.ceil(courseCount?.count / itemsPerPage);
@@ -108,8 +117,6 @@ const Exams = () => {
     }
   };
 
-  // ********************************************
-
   const {
     data: allCourses = [],
     isLoading: allCourseLoading,
@@ -117,15 +124,15 @@ const Exams = () => {
   } = useQuery({
     queryKey: ["allCourses"],
     queryFn: async () => {
-      // const res = await axiosPublic("/get/all-exams?type=single");
-      const res = await axiosPublic.get("/get-all-courses?type=all");
+      const res = await axiosPublic.get(`/get-all-courses?${queryString}`);
       return res.data;
     },
   });
 
   useEffect(() => {
     refetch();
-  }, [queryString, refetch]);
+    refetchCourseCount();
+  }, [queryString, refetch, refetchCourseCount]);
 
   const handleItemsPerPage = (e) => {
     setItemsPerPage(parseInt(e.target.value));
@@ -209,12 +216,10 @@ const Exams = () => {
                 className="rounded-lg px-2 py-1 bg-white"
               >
                 <option value="Default">Default</option>
-                <option value="Class (Small → Large)">
-                  Class (Small → Large)
-                </option>
-                <option value="Class (Large → Small)">
-                  Class (Large → Small)
-                </option>
+                <option value="pl2h">Price (Low → High)</option>
+                <option value="ph2l">Price (High → Low)</option>
+                <option value="cs2l">Class (Small → Large)</option>
+                <option value="cl2s">Class (Large → Small)</option>
               </select>
             </div>
           </div>
@@ -227,44 +232,13 @@ const Exams = () => {
         </div>
       </div>
       {/* pagination  */}
-      {/* pagination section  */}
-      <div className="join flex items-center justify-center mt-6">
-        {/* <button className="join-item btn btn-sm">1</button> */}
-        {pagesSequence.length > 1 && (
-          // pagesSequence?.map((serial) => (
-          <button
-            onClick={() => handlePrev()}
-            className={`join-item btn btn-sm ${
-              currentPage === 0 && "btn-disabled"
-            }`}
-          >
-            Prev
-          </button>
-        )}
-        {pagesSequence.length > 1 &&
-          pagesSequence?.map((serial) => (
-            <button
-              key={serial}
-              onClick={() => setCurrentPage(serial)}
-              className={`join-item btn btn-sm ${
-                currentPage === serial && "btn-active"
-              }`}
-            >
-              {serial + 1}
-            </button>
-          ))}
-        {pagesSequence.length > 1 && (
-          // pagesSequence?.map((serial) => (
-          <button
-            onClick={handleNext}
-            className={`join-item btn btn-sm ${
-              currentPage === pagesSequence.length - 1 && "btn-disabled"
-            }`}
-          >
-            Next
-          </button>
-        )}
-      </div>
+      <Pagination
+        pagesSequence={pagesSequence}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
+      />
     </div>
   );
 };

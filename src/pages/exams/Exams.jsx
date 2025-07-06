@@ -8,16 +8,14 @@ import useAxiosPublic from "../../Hooks/axiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../shared/spinner/Spinner";
 import { Helmet } from "react-helmet-async";
+import Pagination from "../../components/pagination";
 
 const Exams = () => {
   const axiosPublic = useAxiosPublic();
   const [isFilterView, setIsFilterView] = useState(false);
-
-  // ********************************************
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedSortValue, setSelectedSortValue] = useState("");
-  // const [searchValue, setSearchValue] = useState("");
 
   // sorting handler
   const handleSort = (e) => {
@@ -101,10 +99,8 @@ const Exams = () => {
   // transform filters into query string
   const queryString = transformToQuery(filters);
 
-  // transform filters into query string
-  // const queryString = transformToQuery(filters);
 
-  // get total books count based on queries::: this will be need to calc pagination
+  // get total exam count based on queries::: this will be need to calc pagination
   const { data: examCount = {}, refetch: refetchExamCount } = useQuery({
     queryKey: ["examCount", queryString],
     queryFn: async () => {
@@ -115,27 +111,11 @@ const Exams = () => {
     },
   });
 
-  console.log(examCount?.count);
-  // const examCount = 100;
-
   // calculate number of page and page sequence
   const numberOfPage = Math.ceil(examCount?.count / itemsPerPage);
   const pagesSequence = !isNaN(numberOfPage)
     ? [...Array(numberOfPage).keys()]
     : [];
-
-  // get all books from db based on query
-  // const {
-  //   data: allBooks = [],
-  //   isLoading: allBooksLoading,
-  //   refetch,
-  // } = useQuery({
-  //   queryKey: ["allBooks", queryString],
-  //   queryFn: async () => {
-  //     const res = await axiosPublic.get(`/api/books?${queryString}`);
-  //     return res.data;
-  //   },
-  // });
 
   const handlePrev = () => {
     if (currentPage > 0) {
@@ -148,7 +128,6 @@ const Exams = () => {
     }
   };
 
-  // *************************************************
   const {
     data: allExams = [],
     isLoading: allExamsLoading,
@@ -156,7 +135,6 @@ const Exams = () => {
   } = useQuery({
     queryKey: ["allExams"],
     queryFn: async () => {
-      // const res = await axiosPublic.get("/get/all-exams?type=single");
       const res = await axiosPublic.get(`/get/all-exams?${queryString}`);
       return res.data;
     },
@@ -172,8 +150,6 @@ const Exams = () => {
     setCurrentPage(0);
   };
 
-  console.log(queryString);
-
   return (
     <div>
       <Helmet>
@@ -182,7 +158,6 @@ const Exams = () => {
       <div className="mt-18 bg-primaryColor/10 py-8">
         <SectionTitle header={"All Exams"}></SectionTitle>{" "}
       </div>
-
       {isFilterView && (
         <div className="flex absolute z-40 lg:hidden">
           <FilterArea filters={filters} setFilters={setFilters} />
@@ -194,7 +169,6 @@ const Exams = () => {
           </span>
         </div>
       )}
-
       {isFilterView && (
         <div
           onClick={() => setIsFilterView(false)}
@@ -266,45 +240,22 @@ const Exams = () => {
           {/* </div> */}
         </div>
       </div>
+      {allExams.length <= 0 && (
+        <>
+          <h3 className="text-center my-4">
+            No exam found. Try remove filters.
+          </h3>
+        </>
+      )}
       {/* pagination  */}
-      {/* pagination section  */}
-      <div className="join flex items-center justify-center mt-6">
-        {/* <button className="join-item btn btn-sm">1</button> */}
-        {pagesSequence.length > 1 && (
-          // pagesSequence?.map((serial) => (
-          <button
-            onClick={() => handlePrev()}
-            className={`join-item btn btn-sm ${
-              currentPage === 0 && "btn-disabled"
-            }`}
-          >
-            Prev
-          </button>
-        )}
-        {pagesSequence.length > 1 &&
-          pagesSequence?.map((serial) => (
-            <button
-              key={serial}
-              onClick={() => setCurrentPage(serial)}
-              className={`join-item btn btn-sm ${
-                currentPage === serial && "btn-active"
-              }`}
-            >
-              {serial + 1}
-            </button>
-          ))}
-        {pagesSequence.length > 1 && (
-          // pagesSequence?.map((serial) => (
-          <button
-            onClick={handleNext}
-            className={`join-item btn btn-sm ${
-              currentPage === pagesSequence.length - 1 && "btn-disabled"
-            }`}
-          >
-            Next
-          </button>
-        )}
-      </div>
+
+      <Pagination
+        pagesSequence={pagesSequence}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        handlePrev={handlePrev}
+        handleNext={handleNext}
+      />
     </div>
   );
 };
