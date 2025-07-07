@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import { IoStatsChartOutline } from "react-icons/io5";
 import { LiaClipboardSolid } from "react-icons/lia";
+import { HiOutlineDocumentReport } from "react-icons/hi";
 import {
   IoIosArrowDown,
   IoIosArrowUp,
@@ -217,6 +218,22 @@ const AdminMenu = ({
               <IoMdCard />
             </span>
             Manage Payments
+          </NavLink>
+
+          {/* Reports  */}
+          <NavLink
+            to={pathname ? "dashboard/reports" : "reports"}
+            onClick={toggleSidebar} // Auto-close on mobile
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-3 py-2 rounded-md transition ${
+                isActive ? " text-accentColor" : "hover:text-accentColor"
+              }`
+            }
+          >
+            <span>
+              <HiOutlineDocumentReport />
+            </span>
+            Reports
           </NavLink>
         </>
       )}
