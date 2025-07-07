@@ -19,6 +19,7 @@
     "aos": "^2.3.4",
     "axios": "^1.7.9",
     "face-api.js": "^0.22.2",
+    "file-saver": "^2.0.5",
     "firebase": "^11.3.1",
     "framer-motion": "^12.4.1",
     "html2canvas": "^1.4.1",

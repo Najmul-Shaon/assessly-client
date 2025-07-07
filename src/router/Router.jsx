@@ -40,6 +40,8 @@ import MyCertificate from "../Dashboard/RegularUser/MyCertificate/MyCertificate"
 import ExamLayout from "../layouts/ExamLayout";
 import CourseVideoPage from "../Dashboard/RegularUser/MyCourses/CourseVideoPage";
 import FaceTracker from "../pages/ExamLive/FaceDirectionDetector/FaceDirectionDetector";
+import Reports from "../Dashboard/Admin/Reports/Reports";
+import ManagePayments from "../Dashboard/Admin/ManagePayments/ManagePayments";
 
 export const router = createBrowserRouter([
   {
@@ -285,7 +287,15 @@ export const router = createBrowserRouter([
         path: "manage-payments",
         element: (
           <AdminRoute>
-            <CommingSoon />
+            <ManagePayments />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "reports",
+        element: (
+          <AdminRoute>
+            <Reports></Reports>
           </AdminRoute>
         ),
       },

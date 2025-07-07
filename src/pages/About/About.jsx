@@ -1,58 +1,105 @@
 import { Helmet } from "react-helmet-async";
+import aboutUsImg from "../../assets/close-up-portrait-man-packing-suitcase-making-notes-checklist-items-he-wants-take-holiday-packing-luggage.jpg";
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <div className="mt-20">
+    <div>
       <Helmet>
-        <title>Assessley | About</title>
+        <title>Assessly | About</title>
+        <meta
+          name="description"
+          content="Learn about Assessly's mission, vision, and commitment to providing secure and smart online examination experiences for students and educators."
+        />
       </Helmet>
-      <div className=" py-10 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          {/* Header Section */}
-          <h1 className="text-4xl font-bold text-textColor mb-4">
+
+      {/* Hero Section */}
+      <div className="relative bg-secondaryColor">
+        <img
+          src={aboutUsImg} // Replace with your own image
+          alt="Online exam platform"
+          className="w-full h-96 object-cover opacity-60"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-black px-4">
+          <h1 className="text-5xl font-bold mb-4">
             Welcome to <span className="text-primaryColor">Assessly</span>
           </h1>
-          <p className="text-lg text-textColor">Assess with Confidence</p>
-        </div>
-
-        {/* Content Section */}
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {/* Mission */}
-          <div className="bg-secondaryColor shadow-lg rounded-lg p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-              Our Mission
-            </h2>
-            <p className="text-text_contrast">
-              Our mission is to provide a robust and efficient online
-              examination system that enables students and educators to conduct
-              exams easily, securely, and with advanced analytics for better
-              assessment.
-            </p>
-          </div>
-
-          {/* Vision */}
-          <div className="bg-secondaryColor shadow-lg rounded-lg p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-3">
-              Our Vision
-            </h2>
-            <p className="text-text_contrast">
-              Our vision is to revolutionize online examinations by providing a
-              seamless, secure, and efficient platform for students and
-              educators. We strive to make assessments more accessible,
-              transparent, and insightful through innovative technology,
-              ensuring a fair and stress-free exam experience for all.
-            </p>
-          </div>
-        </div>
-        {/* CTA */}
-        <div className="bg-secondaryColor shadow-lg rounded-lg p-6 flex items-center justify-center mt-10 max-w-6xl mx-auto">
-          <p className="text-xl font-medium text-gray-800">
-            Ready to take challenge?
-            <br />
-            <span className="text-primaryColor font-semibold">
-              Join Assessly today!
-            </span>
+          <p className="text-xl max-w-2xl">
+            Empowering exams with technology — secure, smart, and stress-free.
           </p>
+        </div>
+      </div>
+
+      {/* Core Sections */}
+      <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Mission */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+            alt="Mission"
+            className="w-16 mb-4"
+          />
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            Our Mission
+          </h2>
+          <p className="text-gray-600">
+            To deliver a robust online examination ecosystem that promotes
+            fairness, ease of use, and actionable insights for both learners and
+            educators.
+          </p>
+        </div>
+
+        {/* Vision */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135717.png"
+            alt="Vision"
+            className="w-16 mb-4"
+          />
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            Our Vision
+          </h2>
+          <p className="text-gray-600">
+            To redefine assessments through innovation — building an accessible,
+            intelligent, and transparent exam system for a smarter future.
+          </p>
+        </div>
+
+        {/* Why Choose Us */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-shadow">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png"
+            alt="Why Choose Us"
+            className="w-16 mb-4"
+          />
+          <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+            Why Choose Assessly?
+          </h2>
+          <p className="text-gray-600">
+            AI-based monitoring, real-time analytics, smooth user experience,
+            and fraud-proof exam security — everything you need, all in one
+            place.
+          </p>
+        </div>
+      </div>
+
+      {/* Quote / CTA */}
+      <div className="bg-primaryColor text-white py-14 px-6 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h3 className="text-3xl font-semibold mb-4">
+            "Assessment should be a bridge, not a barrier."
+          </h3>
+          <p className="text-lg mb-6">
+            Join thousands of learners and educators using Assessly to unlock
+            better learning outcomes through smarter exams.
+          </p>
+
+          <Link
+            to={"/register"}
+            className="inline-block bg-white text-primaryColor font-semibold px-6 py-3 rounded-full hover:bg-gray-100 transition"
+          >
+            Get Started with Assessly
+          </Link>
         </div>
       </div>
     </div>
