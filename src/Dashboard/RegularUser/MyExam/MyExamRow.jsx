@@ -10,6 +10,7 @@ const MyExamRow = ({ exam, index }) => {
   const navigate = useNavigate();
   const { isSubmitted } = useIsExamSubmitted(exam?.examId);
 
+
   const getExamStatus = (startDate, endDate) => {
     const now = new Date();
     if (new Date(startDate) > now) {
@@ -137,14 +138,11 @@ const MyExamRow = ({ exam, index }) => {
     }
   };
 
-  //   console.log(exam?.paymentAt);
-  //   console.log(exam);
-
   return (
     <tr>
       <th>{index + 1}</th>
       <td>{exam?.examTitle}</td>
-      <td>{exam?.class || "N/A"}</td>
+      <td>{exam?.examClass || "N/A"}</td>
       <td>{exam?.examTopic}</td>
       <td>{exam?.examMarks}</td>
       <td>{exam?.examType === "single" ? "Single" : "Group"}</td>

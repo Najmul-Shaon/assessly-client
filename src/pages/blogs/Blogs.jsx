@@ -46,7 +46,6 @@ const Blogs = () => {
     },
   });
 
-  console.log(filters);
 
   const transformToQuery = (filters) => {
     const params = new URLSearchParams();
@@ -88,7 +87,7 @@ const Blogs = () => {
   // transform filters into query string
   const queryString = transformToQuery(filters);
 
-  console.log(queryString);
+
 
   // get total blogs count based on queries::: this will be need to calc pagination
   const { data: blogCount = {}, refetch: refetchBlogCount } = useQuery({

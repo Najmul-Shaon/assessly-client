@@ -47,7 +47,6 @@ const Exams = () => {
     },
   });
 
-  console.log(filters);
 
   const transformToQuery = (filters) => {
     const params = new URLSearchParams();
@@ -139,7 +138,6 @@ const Exams = () => {
     setCurrentPage(0);
   };
 
-  console.log(queryString);
 
   return (
     <div>

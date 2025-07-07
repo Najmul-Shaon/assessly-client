@@ -52,7 +52,6 @@ const Exams = () => {
     },
   });
 
-  console.log(filters);
 
   const transformToQuery = (filters) => {
     const params = new URLSearchParams();

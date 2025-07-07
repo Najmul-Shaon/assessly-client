@@ -15,7 +15,6 @@ const IndividualQuestionDetails = () => {
     },
   });
 
-  console.log(examQuestions);
 
   const allQuestions = examQuestions?.questions || [];
 

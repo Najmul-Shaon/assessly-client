@@ -10,7 +10,8 @@ const RegularUserHome = () => {
   const axiosSecure = useAxiosSecure();
   const { data: userDashboardStats = [] } = useQuery({
     queryKey: ["userDashboardStats", user?.email],
-    enabled: !!user?.email && !!localStorage.getItem("token"),
+    // enabled: !!user?.email && !!localStorage.getItem("token"),
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/get/dashboard-stats/regular-user?user=${user?.email}`
@@ -18,7 +19,7 @@ const RegularUserHome = () => {
       return res.data;
     },
   });
-  console.log(userDashboardStats);
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -49,7 +50,7 @@ const RegularUserHome = () => {
       {/* Table */}
       <div className="mt-6">
         <h2 className="text-xl font-bold mb-3">Recent Purchase</h2>
-        <Table />
+        {/* <Table /> */}
       </div>
     </div>
   );

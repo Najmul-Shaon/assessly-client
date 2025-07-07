@@ -18,6 +18,7 @@ const MyCertificate = () => {
     },
   });
 
+
   useEffect(() => {
     refetch();
   }, [refetch]);
@@ -60,7 +61,8 @@ const MyCertificate = () => {
           </thead>
           <tbody>
             {MyCertificates.map((singleCertificate, i) => (
-              <tr key={singleCertificate?._id}>
+              // <tr key={singleCertificate?._id}>
+              <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{singleCertificate?.examTitle || "Unknown"}</td>
                 <td>
@@ -72,11 +74,38 @@ const MyCertificate = () => {
                     onClick={() =>
                       downloadPDF({
                         name: user?.displayName || "Student Name",
-                        // name: "Najmul Hasan Shaon",
-                        course: singleCertificate?.examTitle || "This is the test course name",
-                        date: new Date(
-                          singleCertificate?.create_at
-                        ).toLocaleDateString(),
+                        course:
+                          singleCertificate?.examTitle ||
+                          "This is the test course name",
+                        date: (() => {
+                          const createdAt = new Date(
+                            singleCertificate?.create_at
+                          );
+                          const day = createdAt
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0");
+                          const month = createdAt.toLocaleString("en-GB", {
+                            month: "long",
+                          });
+                          const year = createdAt.getFullYear();
+                          const getOrdinal = (d) => {
+                            if (d > 3 && d < 21) return "th";
+                            switch (d % 10) {
+                              case 1:
+                                return "st";
+                              case 2:
+                                return "nd";
+                              case 3:
+                                return "rd";
+                              default:
+                                return "th";
+                            }
+                          };
+                          return `${day}${getOrdinal(
+                            createdAt.getDate()
+                          )} ${month} ${year}`;
+                        })(),
                       })
                     }
                     className="btn-md btn-link text-accentColor cursor-pointer"
