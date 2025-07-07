@@ -64,7 +64,6 @@ const AddExam = () => {
   const watchExamType = watch("examType", "single"); // default to "single"
 
   const onSubmit = async (data) => {
-    console.log(data);
     setLoading(true);
     const thumbnails = { image: data.thumbnails[0] };
     // image upload to imgbb and then get an url

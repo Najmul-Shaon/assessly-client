@@ -16,7 +16,6 @@ const ExamLive = () => {
   const [tryLeft, setTryLeft] = useState(3);
 
   // tracks if the effect ran already
-
   const [started, setStarted] = useState(false);
   const [countdown, setCountdown] = useState(3);
   const [timeLeft, setTimeLeft] = useState(0);
@@ -270,6 +269,7 @@ const ExamLive = () => {
         axiosSecure
           .patch(`/submit/exam?id=${id}&email=${user?.email}`, { submitData })
           .then((res) => {
+
             if (res.data.modifiedCount > 0) {
               Swal.fire(
                 "Submitted!",

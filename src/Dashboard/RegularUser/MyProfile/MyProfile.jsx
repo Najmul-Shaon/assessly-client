@@ -14,8 +14,8 @@ const MyProfile = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: userInfo = {}, refetch } = useQuery({
-    // enabled: !!user?.email,
-    enabled: !!user?.email && !!localStorage.getItem("token"),
+    enabled: !!user?.email,
+    // enabled: !!user?.email && !!localStorage.getItem("token"),
     queryKey: ["userInfo", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/api/user?email=${user?.email}`);

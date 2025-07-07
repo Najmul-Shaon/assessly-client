@@ -59,7 +59,6 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         const userInfo = { email: currentUser.email };
         axiosPublic.post("/jwt", userInfo).then((res) => {
-          console.log(res.data);
           if (res.data.token) {
             localStorage.setItem("token", res.data.token);
           }
@@ -67,7 +66,7 @@ const AuthProvider = ({ children }) => {
       } else {
         localStorage.removeItem("token");
       }
-      console.log("current user from the authpage", currentUser);
+
       setLoading(false);
     });
     return () => {

@@ -11,6 +11,7 @@ const MyExams = () => {
     refetch();
   }, [refetch, myExams]);
 
+
   return (
     <div>
       <SectionTitle header={"My Exams"} />

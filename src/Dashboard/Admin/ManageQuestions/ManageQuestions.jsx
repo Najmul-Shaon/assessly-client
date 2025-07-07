@@ -16,7 +16,6 @@ const ManageQuestions = () => {
     },
   });
 
-  console.log(allExams);
   return (
     <div>
       <Helmet>
